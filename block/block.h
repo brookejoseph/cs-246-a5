@@ -6,29 +6,27 @@
 
 using namespace std;
 
-enum state
-{
-    ccw,
-    cw,
-    left,
-    right,
-    rotate
-};
-
 class Block
 {
 private:
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>>> cells;
-    state state;
+    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> cells;
 
 public:
-    Block();
+    Block(
+        vector<tuple<pair<int, int>>> a,
+        vector<tuple<pair<int, int>>> b,
+        vector<tuple<pair<int, int>>> c,
+        vector<tuple<pair<int, int>>> d);
     ~Block();
     Block(Block const &other) {};
     Block(Block &&other) {};
     Block &operator=(const Block &other) {};
     Block &operator+=(const Block &other) {}; // potentially useful for merging the board and block
     Block &operator-=(const Block &other) {};
+
+    bool getHeavy();
+    void setHeavy();
+    virtual char getChar() = 0;
 
     void heavy();
     void virtual rotateccw();
