@@ -1,6 +1,10 @@
-// the main block interface file
 #include <vector>
+#include <tuple>
+#include <iostream>
+#include <ostream>
 #include "cell/cell.h" // to add
+
+using namespace std;
 
 enum state
 {
@@ -14,7 +18,7 @@ enum state
 class Block
 {
 private:
-    vector<Cell> cells;
+    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>>> cells;
     state state;
 
 public:
@@ -29,8 +33,8 @@ public:
     void heavy();
     void virtual rotateccw();
     void virtual rotatecw();
-    void virtual left();
-    void virtual right();
-    void virtual down();
-    void virtual drop();
+    void left();
+    void right();
+    void down();
+    void drop();
 };
