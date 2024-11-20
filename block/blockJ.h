@@ -6,6 +6,7 @@
 #include <iostream>
 #include <ostream>
 #include "cell/cell.h" // to add
+#include "block.h"
 
 using namespace std;
 
@@ -18,7 +19,7 @@ enum state
     rotate
 };
 
-class Block
+class JBlock : public Block
 {
 private:
     vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>>> cells;
