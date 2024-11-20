@@ -7,32 +7,12 @@
 
 using namespace std;
 
-class Block
-{
-private:
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> cells;
-
-public:
-    Block(
-        vector<tuple<pair<int, int>>> a,
-        vector<tuple<pair<int, int>>> b,
-        vector<tuple<pair<int, int>>> c,
-        vector<tuple<pair<int, int>>> d);
-    ~Block();
-    Block(Block const &other) {};
-    Block(Block &&other) {};
-    Block &operator=(const Block &other) {};
-    Block &operator+=(const Block &other) {}; // potentially useful for merging the board and block
-    Block &operator-=(const Block &other) {};
-
-    bool getHeavy();
-    void setHeavy();
-    char getChar() override;
-
-    void heavy();
-    void virtual rotateccw();
-    void virtual rotatecw();
-};
+Block::Block(
+    vector<tuple<pair<int, int>>> a,
+    vector<tuple<pair<int, int>>> b,
+    vector<tuple<pair<int, int>>> c,
+    vector<tuple<pair<int, int>>> d)
+    : cells{{make_pair(0, 0), make_pair(1, 0), make_pair(2, 0), make_pair(2, 1)}} {};
 
 char Block::getChar()
 {
