@@ -1,11 +1,49 @@
 #include "level0.h"
-#include <fstream>
-#include <string>
+#include <vector>
+#include <memory>
 
-int Level0::getLevel() const { return level; }
+Level0::Level0(std::vector<char> sequence): Level{sequence}, position{0} {}
 
-Block *Level0::createBlock() {
+Level0::~Level0() {}
 
+int Level0::getLevel() const { return 0; }
+
+std::shared_ptr<Block> Level0::createBlock() {
+    std::shared_ptr<Block> nextBlock;
+    char blockType = sequence.at(position);
+
+    switch (blockType) {
+        case 'I':
+            nextBlock = std::make_shared<IBlock>();
+            break;
+        case 'J':
+            nextBlock = std::make_shared<JBlock>();
+            break;
+        case 'L':
+            nextBlock = std::make_shared<LBlock>();
+            break;
+        case 'O':
+            nextBlock = std::make_shared<OBlock>();
+            break;
+        case 'S':
+            nextBlock = std::make_shared<SBlock>();
+            break;
+        case 'Z':
+            nextBlock = std::make_shared<ZBlock>();
+            break;
+        case 'T':
+            nextBlock = std::make_shared<TBlock>();
+            break;
+    }
+
+    // increment position in sequence file
+    if (position < sequence.size() - 1) {
+        ++position;
+    } else {
+        position = 0;
+    }
+
+    return nextBlock;
 }
 
-Level0::Level0(string sequenceFile): sequenceFile{sequenceFile}, moves{sequenceFile} {}
+void Level0::setPosition(int n) { position = n; }
