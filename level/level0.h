@@ -1,22 +1,17 @@
 #ifndef LEVEL0_H
 #define LEVEL0_H
 #include "level.h"
-#include "block.h"
-#include <fstream>
-#include <string>
 
 class Level0: public Level {
-    const int level = 0;
-    const string sequenceFile;
-    std::ifstream moves;
-
+    unsigned int position; // position in sequence file
 
     public:
-        virtual int getLevel() const override;
-        virtual Block *createBlock() override;
-
-        Level0(string sequenceFile);
+        explicit Level0(std::vector<char> sequence);
         ~Level0();
+
+        virtual int getLevel() const override;
+        virtual std::shared_ptr<Block> createBlock() override;
+        void setPosition(int n); // set position to n
 };
 
 #endif

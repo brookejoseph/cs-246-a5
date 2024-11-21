@@ -2,7 +2,7 @@
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "cell/cell.h" // to add
+// #include "cell/cell.h" // to add
 
 using namespace std;
 
@@ -35,4 +35,9 @@ public:
     void right();
     void down();
     void drop();
+
+    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> getCoord()
+    {
+        return this->cells;
+    };
 };
