@@ -5,16 +5,10 @@
 #include "block/block.h"
 #include "level/level.h"
 #include "cell/cell.h"
+#include "observer/subject.h"
 
-class Board
+class Board : public Subject
 {
-private:
-    Block *current_block;
-    Block *next_block;
-    Level *current_level;
-    vector<vector<cell>> board;
-    int score;
-
 public:
     Board();
     ~Board();
@@ -28,19 +22,19 @@ public:
     void levelUp() {};
     Level getLevelPtr() {};
 
-    void left(int amount) {};
-    void right(int amount) {};
-    void down(int amount) {};
-    void cw(int amount) {};
-    void ccw(int amount) {};
-    void drop(int amount) {};
+    void left(int amount) {};  // done
+    void right(int amount) {}; // done
+    void down(int amount) {};  // done
+    void cw(int amount) {};    // done
+    void ccw(int amount) {};   // done
+    void drop() {};            // done
 
-    void saveGame() {};
-    void restart() {};
+    void saveGame() {}; //??
+    void restart() {};  // done
     void loadGame() {};
 
-    void eraseBlock() {};
-    void addCell(Board &block) {};
+    void eraseBlock() {};          // whats the difference between this and restart idk
+    void addCell(Board &block) {}; // done
     void addToTurnCount() {};
     int getTurnCount() {};
 };
