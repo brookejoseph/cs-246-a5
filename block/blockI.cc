@@ -1,3 +1,10 @@
+#include <vector>
+#include <tuple>
+#include <iostream>
+#include <ostream>
+#include "block.h"
+#include "../cell/cell.h"
+
 void IBlock::rotateccw()
 {
     int old_min_x = 0, old_max_y = 0;

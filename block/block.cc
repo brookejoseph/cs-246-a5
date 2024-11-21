@@ -35,6 +35,12 @@ public:
 };
 
 Block::Block(vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> a) : cells{a} {};
+
+vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> Block::getCoord()
+{
+    return cells;
+};
+
 Block::~Block() = default;
 Block::Block(Block const &other)
 {

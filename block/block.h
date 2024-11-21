@@ -36,8 +36,5 @@ public:
     void down();
     void drop();
 
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> getCoord()
-    {
-        return this->cells;
-    };
+    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> getCoord();
 };
