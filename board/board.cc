@@ -41,7 +41,6 @@ public:
 
     void eraseBlock() {};
     void addCell(Block *thisBlock) {};
-    void setVal(char &c) {};
 
     void addToTurnCount() {};
     int getTurnCount() {};
@@ -98,7 +97,7 @@ void Board::ccw(int amount)
     };
 };
 
-void Board::ccw(int amount)
+void Board::cw(int amount)
 {
     for (int i = 0; i < amount; i++)
     {
