@@ -1,6 +1,4 @@
 #include "level0.h"
-#include <vector>
-#include <memory>
 
 Level0::Level0(std::vector<char> sequence): Level{sequence}, position{0} {}
 

@@ -1,6 +1,4 @@
 #include "level1.h"
-#include <vector>
-#include <cstdlib>
 
 Level1::Level1(int seed): seed{seed} { srand(seed); }
 

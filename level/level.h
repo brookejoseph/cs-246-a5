@@ -3,6 +3,7 @@
 #include "block.h"
 #include <vector>
 #include <memory>
+#include <cstdlib>
 
 class Level {
     protected:
@@ -12,6 +13,7 @@ class Level {
     public:
         Level() = default; // default ctor
         explicit Level(std::vector<char> sequence);
+        Level(std::vector<char> sequence, bool isRandom);
         virtual ~Level() = 0; // default dtor
 
         void setRandom(bool isRandom); // set random generation

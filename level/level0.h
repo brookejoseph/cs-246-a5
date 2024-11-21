@@ -1,9 +1,6 @@
 #ifndef LEVEL0_H
 #define LEVEL0_H
 #include "level.h"
-#include "block.h"
-#include <vector>
-#include <memory>
 
 class Level0: public Level {
     unsigned int position; // position in sequence file
