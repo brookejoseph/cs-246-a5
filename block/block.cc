@@ -4,13 +4,15 @@
 #include <ostream>
 #include "cell/cell.h" // to add
 #include "block.h"
+#include "board/board.h"
 
 using namespace std;
 
 class Block
 {
 private:
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> cells;
+    // vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> cells;
+    Board *cells;
 
 public:
     Block(vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> a) {} // done;

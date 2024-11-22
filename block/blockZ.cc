@@ -1,22 +1,33 @@
 
-
 #include <vector>
 #include <tuple>
 #include <iostream>
 #include <ostream>
 #include "cell/cell.h" // to add
 #include "block.h"
+#include "blockZ.h"
+#include "cell/cell.h"
+#include "board/board.h"
+
 
 using namespace std;
 
-Block::Block(
-    vector<tuple<pair<int, int>>> a,
-    vector<tuple<pair<int, int>>> b,
-    vector<tuple<pair<int, int>>> c,
-    vector<tuple<pair<int, int>>> d)
-    : cells{{make_pair(1, 1), make_pair(1, 0), make_pair(0, 1), make_pair(3, 1)}} {};
 
-char Block::getChar()
-{
+ZBlock::ZBlock(Cell *cell,
+               pair<int, int> a,
+               pair<int, int> b,
+               pair<int, int> c,
+               pair<int, int> d): Block(cell), a{a}, b{b}, c{c}, d{d} {};
+
+char ZBlock::getChar(int x, int y){
+    if(((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first)) && (y == d.second)){
+        return 'Z';
+    };
+    else{
+        return cell->getChar(x, y);
+    };
+};
+
+char ZBlock::getType(){
     return 'Z';
 };

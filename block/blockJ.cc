@@ -6,17 +6,28 @@
 #include "cell/cell.h" // to add
 #include "block.h"
 #include "blockJ.h"
+#include "cell/cell.h"
+#include "board/board.h"
+
 
 using namespace std;
 
-JBlock::JBlock(
-    vector<tuple<pair<int, int>>> a,
-    vector<tuple<pair<int, int>>> b,
-    vector<tuple<pair<int, int>>> c,
-    vector<tuple<pair<int, int>>> d)
-    : cells{{make_pair(0, 0), make_pair(1, 0), make_pair(2, 0), make_pair(0, 1)}} {};
 
-char JBlock::getChar()
-{
+JBlock::JBlock(Cell *cell,
+               pair<int, int> a,
+               pair<int, int> b,
+               pair<int, int> c,
+               pair<int, int> d): Block(cell), a{a}, b{b}, c{c}, d{d} {};
+
+char JBlock::getChar(int x, int y){
+    if(((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first)) && (y == d.second)){
+        return 'J';
+    };
+    else{
+        return cell->getChar(x, y);
+    };
+};
+
+char JBlock::getType(){
     return 'J';
 };

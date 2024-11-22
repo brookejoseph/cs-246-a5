@@ -6,16 +6,25 @@
 #include "cell/cell.h" // to add
 #include "block.h"
 
+
 using namespace std;
 
-Block::Block(
-    vector<tuple<pair<int, int>>> a,
-    vector<tuple<pair<int, int>>> b,
-    vector<tuple<pair<int, int>>> c,
-    vector<tuple<pair<int, int>>> d)
-    : cells{{make_pair(0, 0), make_pair(1, 0), make_pair(1, 1), make_pair(0, 1)}} {};
 
-char Block::getChar()
-{
+Block::JBlock(Cell *cell,
+               pair<int, int> a,
+               pair<int, int> b,
+               pair<int, int> c,
+               pair<int, int> d): Block(cell), a{a}, b{b}, c{c}, d{d} {};
+
+char JBlock::getChar(int x, int y){
+    if(((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first)) && (y == d.second)){
+        return 'O';
+    };
+    else{
+        return cell->getChar(x, y);
+    };
+};
+
+char JBlock::getType(){
     return 'O';
 };
