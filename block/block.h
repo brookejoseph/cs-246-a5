@@ -1,3 +1,6 @@
+#ifndef BLOCK_H
+#define BLOCK_H
+
 #include <vector>
 #include <tuple>
 #include <iostream>
@@ -7,19 +10,19 @@
 
 using namespace std;
 
-class Block:public Board
+class Block : public Board
 {
-    protected:
+protected:
     Board *board;
 
 public:
-Block(Board *cells): board{cells} {};
+    Block(Board *cells) : board{cells} {};
     virtual ~Block() {};
 
     bool getHeavy();
     void setHeavy();
     virtual char getChar(int x, int y) = 0;
-    virtual char getType() =0; 
+    virtual char getType() = 0;
 
     void heavy();
     void virtual rotateccw() = 0;
@@ -31,3 +34,5 @@ Block(Board *cells): board{cells} {};
 
     vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> getCoord();
 };
+
+#endif
