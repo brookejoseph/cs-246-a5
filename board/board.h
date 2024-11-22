@@ -32,6 +32,7 @@ public:
     void saveGame() {}; //??
     void restart() {};  // done
     void loadGame() {};
+    char getChar(int x, int y) {};
 
     void eraseBlock() {};          // whats the difference between this and restart idk
     void addCell(Board &block) {}; // done

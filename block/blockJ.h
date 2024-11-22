@@ -21,14 +21,18 @@ private:
     pair<int, int> d;
 
 public:
-    JBlock(pair<int, int> a,
+    JBlock(Board *cell,
+           pair<int, int> a,
            pair<int, int> b,
            pair<int, int> c,
-           pair<int, int> d) : Block(cell), a{make_pair(0, 0)}, b{make_pair(1, 0)}, c{make_pair(2, 0)}, d{make_pair(0, 1)} {};
+           pair<int, int> d); // to change
     void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;
     char getType() override;
+    void left() override;
+    void right() override;
+    void down() override;
+    void drop() override;
 };
-
 #endif

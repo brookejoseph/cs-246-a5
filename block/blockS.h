@@ -14,21 +14,26 @@ using namespace std;
 class SBlock : public Block
 {
 private:
-    Cell *cell;
+    Board *cell;
     pair<int, int> a;
     pair<int, int> b;
     pair<int, int> c;
     pair<int, int> d;
 
 public:
-    SBlock(pair<int, int> a,
+    SBlock(Board *cell,
+           pair<int, int> a,
            pair<int, int> b,
            pair<int, int> c,
-           pair<int, int> d) : Block(), a{make_pair(0, 0)}, b{make_pair(1, 0)}, c{make_pair(2, 0)}, d{make_pair(0, 1)} {}; // to change
-    void rotateccw() overide;
+           pair<int, int> d); // to change
+    void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;
     char getType() override;
+    void left() override;
+    void right() override;
+    void down() override;
+    void drop() override;
 };
 
 #endif

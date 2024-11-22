@@ -6,30 +6,56 @@
 #include "../cell/cell.h"
 #include "blockI.h"
 
-
 using namespace std;
 
-
-IBlock::IBlock(Cell *cell,
+IBlock::IBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
-               pair<int, int> d): Block(cell), a{a}, b{b}, c{c}, d{d} {};
+               pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
 
-char IBlock::getChar(int x, int y){
-    if(((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first)) && (y == d.second)){
+char IBlock::getChar(int x, int y)
+{
+    if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
+    {
         return 'I';
-    };
-    else{
+    }
+    else
+    {
         return cell->getChar(x, y);
     };
 };
 
-char IBlock::getType(){
+char IBlock::getType()
+{
     return 'I';
 };
 
+void IBlock::left()
+{
+    --a.first;
+    --b.first;
+    --c.first;
+    --d.first;
+};
 
+void IBlock::right()
+{
+    ++a.first;
+    ++b.first;
+    ++c.first;
+    ++d.first;
+};
+
+void IBlock::down()
+{
+    ++a.second;
+    ++b.second;
+    ++c.second;
+    ++d.second;
+};
+
+/*
 void IBlock::rotateccw()
 {
     int old_min_x = 0, old_max_y = 0;
@@ -101,3 +127,4 @@ void IBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
+*/
