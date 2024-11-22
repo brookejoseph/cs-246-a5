@@ -10,13 +10,13 @@
 using namespace std;
 
 
-Block::JBlock(Cell *cell,
+OBlock::OBlock(Cell *cell,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
                pair<int, int> d): Block(cell), a{a}, b{b}, c{c}, d{d} {};
 
-char JBlock::getChar(int x, int y){
+char OBlock::getChar(int x, int y){
     if(((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first)) && (y == d.second)){
         return 'O';
     };
@@ -25,6 +25,6 @@ char JBlock::getChar(int x, int y){
     };
 };
 
-char JBlock::getType(){
+char OBlock::getType(){
     return 'O';
 };

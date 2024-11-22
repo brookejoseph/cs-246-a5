@@ -19,7 +19,7 @@ Block(Board *cells): board{cells} {};
     bool getHeavy();
     void setHeavy();
     virtual char getChar(int x, int y) = 0;
-    
+    virtual char getType() =0; 
 
     void heavy();
     void virtual rotateccw() = 0;
