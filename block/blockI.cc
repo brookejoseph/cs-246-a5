@@ -55,7 +55,7 @@ void IBlock::down()
     ++d.second;
 };
 
-/*
+
 void IBlock::rotateccw()
 {
     int old_min_x = 0, old_max_y = 0;
@@ -127,4 +127,4 @@ void IBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
-*/
+

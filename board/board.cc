@@ -7,63 +7,36 @@
 #include "level/level.h"
 #include "observer/subject.h"
 
-class Board : public Subject
-{
-private:
-    Block *current_block;
-    Block *next_block;
-    Level *current_level;
-    vector<vector<Cell>> board;
-    int score;
-    int player;
-
-public:
-    Board() : board(11, vector<Cell>(15, Cell())) {};
-    ~Board();
-
-    bool isValidMove() {};
-    int findScore() {};
-
-    void levelDown() {};
-    void levelUp() {};
-    Level getLevelPtr() {};
-
-    void left(int amount) {};
-    void right(int amount) {};
-    void down(int amount) {};
-    void cw(int amount) {};
-    void ccw(int amount) {};
-    void drop() {};
-
-    void saveGame() {};
-    void restart() {};
-    void loadGame() {};
-
-    void eraseBlock() {};
-    void addCell(Block *thisBlock) {};
-
-    void addToTurnCount() {};
-    int getTurnCount() {};
-};
-
 Board::Board() : board(11, vector<Cell>(15)) {};
 
-bool Board::isValidMove()
-{
-    for (auto &t : current_block->getCoord())
+bool Board::isValidMove() {
+    //make these class variables later
+    int dimX = 11;
+    int dimY = 15;
+
+    //for loop is unnecessary -- can be removed later, because we are only moving one block at a time
+    for (auto &t : current_block->getCoord()) 
     {
         auto &[p1, p2, p3, p4] = t;
-        if ((p1.first > 11) || (p2.first > 11) || (p3.first > 11) || (p4.first > 11))
+        if (((p1.first > dimX) || (p2.first > dimX) || (p3.first > dimX) || (p4.first > dimX)) ||
+            ((p1.first < 0) || (p2.first < 0) || (p3.first < 0) || (p4.first < 0))) 
         {
             return false;
-        };
-        if ((p1.second > 15) || (p2.second > 15) || (p3.second > 15) || (p4.second > 15))
+        }
+        if (((p1.second > dimY) || (p2.second > dimY) || (p3.second > dimY) || (p4.second > dimY))) 
         {
             return false;
-        };
-        return true;
-    };
-};
+        }
+        if ((board[p1.first][p1.second].getValue() != ' ') ||
+            (board[p2.first][p2.second].getValue() != ' ') ||
+            (board[p3.first][p3.second].getValue() != ' ') ||
+            (board[p4.first][p4.second].getValue() != ' ')) 
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
 void Board::left(int amount)
 {
@@ -120,11 +93,13 @@ void Board::addCell(Block *thisBlock)
     };
 };
 
+
 void Board::drop()
 {
     for (auto &t : current_block->getCoord())
     {
         auto &[p1, p2, p3, p4] = t;
+        //negation of the condition is required
         while ((board[p1.first][p1.second].getValue() != ' ') ||
                (board[p2.first][p2.second].getValue() != ' ') ||
                (board[p3.first][p3.second].getValue() != ' ') ||
