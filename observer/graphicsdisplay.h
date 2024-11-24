@@ -1,4 +1,0 @@
-#ifndef GRAPHICSDISPLAY_H
-#define GRAPHICSDISPLAY_H
-
-#endif

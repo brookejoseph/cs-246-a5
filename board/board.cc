@@ -7,7 +7,7 @@
 #include "level/level.h"
 #include "observer/subject.h"
 
-Board::Board() : board(11, vector<Cell>(15)) {};
+Board::Board(int cols, int rows): grid{rows, vector<Cell>(cols)} {};
 
 bool Board::isValidMove() {
     //make these class variables later
