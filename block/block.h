@@ -31,6 +31,7 @@ public:
     virtual void right() = 0;
     virtual void down() = 0;
     virtual void drop() = 0;
+    virtual vector<pair<int, int>> getCoord() const = 0;
 };
 
 #endif

@@ -11,6 +11,11 @@
 
 using namespace std;
 
+vector<pair<int, int>> SBlock::getCoord()
+{
+    return {a, b, c, d};
+};
+
 SBlock::SBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -57,7 +62,6 @@ void SBlock::down()
     ++c.second;
     ++d.second;
 };
-
 
 void SBlock::rotateccw()
 {
@@ -130,4 +134,3 @@ void SBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
-

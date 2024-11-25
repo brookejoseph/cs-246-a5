@@ -34,6 +34,7 @@ public:
     void right() override;
     void down() override;
     void drop() override;
+    vector<pair<int, int>> getCoord();
 };
 
 #endif

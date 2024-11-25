@@ -9,6 +9,11 @@
 
 using namespace std;
 
+vector<pair<int, int>> OBlock::getCoord()
+{
+    return {a, b, c, d};
+};
+
 OBlock::OBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -55,7 +60,6 @@ void OBlock::down()
     ++c.second;
     ++d.second;
 };
-
 
 void OBlock::rotateccw()
 {
@@ -128,4 +132,3 @@ void OBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
-

@@ -11,6 +11,11 @@
 
 using namespace std;
 
+vector<pair<int, int>> ZBlock::getCoord()
+{
+    return {a, b, c, d};
+}
+
 ZBlock::ZBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -57,7 +62,6 @@ void ZBlock::down()
     ++c.second;
     ++d.second;
 };
-
 
 void ZBlock::rotateccw()
 {
@@ -130,4 +134,3 @@ void ZBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
-

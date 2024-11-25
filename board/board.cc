@@ -9,6 +9,16 @@
 
 Board::Board() {};
 
+void Board::setValue(char newValue, int x, int y)
+{
+    grid[x][y] = newValue;
+};
+
+char Board::getValue(int x, int y)
+{
+    return grid[x][y];
+};
+
 bool Board::isValidMove()
 {
     // for loop is unnecessary -- can be removed later, because we are only moving one block at a time
@@ -39,7 +49,7 @@ void Board::left(int amount)
 {
     for (int i = 0; i < amount; i++)
     {
-        current_block->left();
+        currentBlock->left();
     };
 };
 
@@ -47,7 +57,7 @@ void Board::right(int amount)
 {
     for (int i = 0; i < amount; i++)
     {
-        current_block->right();
+        currentBlock->right();
     };
 };
 
@@ -55,7 +65,7 @@ void Board::down(int amount)
 {
     for (int i = 0; i < amount; i++)
     {
-        current_block->down();
+        currentBlock->down();
     };
 };
 
@@ -63,7 +73,7 @@ void Board::ccw(int amount)
 {
     for (int i = 0; i < amount; i++)
     {
-        current_block->rotateccw();
+        currentBlock->rotateccw();
     };
 };
 
@@ -71,35 +81,35 @@ void Board::cw(int amount)
 {
     for (int i = 0; i < amount; i++)
     {
-        current_block->rotatecw();
+        currentBlock->rotatecw();
     };
 };
 
 // LOGIC NEEDS TO BE FIXED HERE
 // um I just need someone to here to help me make sure that we're putting in the proper letters for all the values
-void Board::addCell(Block *thisBlock)
+void Board::addCell(Block &thisBlock)
 {
-    for (auto &t : thisBlock->getCoord())
+    for (auto &t : thisBlock.getCoord())
     {
         auto &[p1, p2, p3, p4] = t;
-        char letter = thisBlock->getChar();
-        board[p1.first][p1.second].setValue(letter);
-        board[p2.first][p2.second].setValue(letter);
-        board[p3.first][p3.second].setValue(letter);
-        board[p4.first][p4.second].setValue(letter);
+        char letter = thisBlock.getType();
+        setValue(p1.first, p1.second, letter);
+        setValue(p2.first, p2.second, letter);
+        setValue(p3.first, p3.second, letter);
+        setValue(p4.first, p4.second, letter);
     };
 };
 
 void Board::drop()
 {
-    for (auto &t : current_block->getCoord())
+    for (auto &t : currentBlock->getCoord())
     {
         auto &[p1, p2, p3, p4] = t;
         // negation of the condition is required
-        while ((board[p1.first][p1.second].getValue() != ' ') ||
-               (board[p2.first][p2.second].getValue() != ' ') ||
-               (board[p3.first][p3.second].getValue() != ' ') ||
-               (board[p4.first][p4.second].getValue() != ' '))
+        while ((getValue(p1.first, p1.second) != ' ') ||
+               (getValue(p2.first, p2.second) != ' ') ||
+               (getValue(p3.first, p3.second) != ' ') ||
+               (getValue(p4.first, p4.second) != ' '))
         {
             ++p1.second;
             ++p2.second;
@@ -107,17 +117,12 @@ void Board::drop()
             ++p4.second;
         };
     };
-    addCell(current_block);
-    if (player == 1)
-    {
-        player = 0;
-    };
-    player = 1;
+    addCell(*currentBlock);
 };
 
 void Board::restart()
 {
-    board.clear();
+    grid.clear();
 };
 
 int Board::findScore()

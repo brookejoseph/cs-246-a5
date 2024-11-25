@@ -11,6 +11,11 @@
 
 using namespace std;
 
+vector<pair<int, int>> TBlock::getCoord()
+{
+    return {a, b, c, d};
+};
+
 TBlock::TBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -57,7 +62,6 @@ void TBlock::down()
     ++c.second;
     ++d.second;
 };
-
 
 void TBlock::rotateccw()
 {
@@ -130,4 +134,3 @@ void TBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
-

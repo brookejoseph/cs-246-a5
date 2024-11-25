@@ -61,9 +61,12 @@ public:
     virtual char getChar(int x, int y);
 
     void eraseBlock();          // whats the difference between this and restart idk
-    void addCell(Board &block); // done
+    void addCell(Block &block); // done
     void addToTurnCount();
     int getTurnCount();
     virtual void setDimX(int x);
     virtual void setDimY(int y);
+
+    void setValue(char newValue, int x, int y);
+    char getValue(int x, int y);
 };
