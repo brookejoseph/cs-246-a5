@@ -22,22 +22,17 @@ char Board::getValue(int x, int y)
 bool Board::isValidMove()
 {
     // for loop is unnecessary -- can be removed later, because we are only moving one block at a time
-    for (auto &t : currentblock->getCoord())
+    for (auto &t : currentBlock->getCoord())
     {
-        auto &[p1, p2, p3, p4] = t;
-        if (((p1.first > dimX) || (p2.first > dimX) || (p3.first > dimX) || (p4.first > dimX)) ||
-            ((p1.first < 0) || (p2.first < 0) || (p3.first < 0) || (p4.first < 0)))
+        if ((t.first > dimX) || (t.first < 0))
         {
             return false;
         }
-        if (((p1.second > dimY) || (p2.second > dimY) || (p3.second > dimY) || (p4.second > dimY)))
+        if (t.second > dimY)
         {
             return false;
         }
-        if ((grid[p1.first][p1.second] != ' ') ||
-            (grid[p2.first][p2.second] != ' ') ||
-            (grid[p3.first][p3.second] != ' ') ||
-            (grid[p4.first][p4.second] != ' '))
+        if (grid[t.first][t.second] != ' ')
         {
             return false;
         }
@@ -91,12 +86,8 @@ void Board::addCell(Block &thisBlock)
 {
     for (auto &t : thisBlock.getCoord())
     {
-        auto &[p1, p2, p3, p4] = t;
         char letter = thisBlock.getType();
-        setValue(p1.first, p1.second, letter);
-        setValue(p2.first, p2.second, letter);
-        setValue(p3.first, p3.second, letter);
-        setValue(p4.first, p4.second, letter);
+        setValue(t.first, t.second, letter);
     };
 };
 
@@ -104,17 +95,10 @@ void Board::drop()
 {
     for (auto &t : currentBlock->getCoord())
     {
-        auto &[p1, p2, p3, p4] = t;
         // negation of the condition is required
-        while ((getValue(p1.first, p1.second) != ' ') ||
-               (getValue(p2.first, p2.second) != ' ') ||
-               (getValue(p3.first, p3.second) != ' ') ||
-               (getValue(p4.first, p4.second) != ' '))
+        while (getValue(t.first, t.second) != ' ')
         {
-            ++p1.second;
-            ++p2.second;
-            ++p3.second;
-            ++p4.second;
+            ++t.second;
         };
     };
     addCell(*currentBlock);
