@@ -11,7 +11,7 @@ using namespace std;
 vector<pair<int, int>> IBlock::getCoord()
 {
     return {a, b, c, d};
-}
+};
 
 IBlock::IBlock(Board *cell,
                pair<int, int> a,
