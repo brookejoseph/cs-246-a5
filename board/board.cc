@@ -7,30 +7,27 @@
 #include "level/level.h"
 #include "observer/subject.h"
 
-Board::Board(int cols, int rows): grid{rows, vector<Cell>(cols)} {};
+Board::Board() {};
 
-bool Board::isValidMove() {
-    //make these class variables later
-    int dimX = 11;
-    int dimY = 15;
-
-    //for loop is unnecessary -- can be removed later, because we are only moving one block at a time
-    for (auto &t : current_block->getCoord()) 
+bool Board::isValidMove()
+{
+    // for loop is unnecessary -- can be removed later, because we are only moving one block at a time
+    for (auto &t : currentblock->getCoord())
     {
         auto &[p1, p2, p3, p4] = t;
         if (((p1.first > dimX) || (p2.first > dimX) || (p3.first > dimX) || (p4.first > dimX)) ||
-            ((p1.first < 0) || (p2.first < 0) || (p3.first < 0) || (p4.first < 0))) 
+            ((p1.first < 0) || (p2.first < 0) || (p3.first < 0) || (p4.first < 0)))
         {
             return false;
         }
-        if (((p1.second > dimY) || (p2.second > dimY) || (p3.second > dimY) || (p4.second > dimY))) 
+        if (((p1.second > dimY) || (p2.second > dimY) || (p3.second > dimY) || (p4.second > dimY)))
         {
             return false;
         }
-        if ((board[p1.first][p1.second].getValue() != ' ') ||
-            (board[p2.first][p2.second].getValue() != ' ') ||
-            (board[p3.first][p3.second].getValue() != ' ') ||
-            (board[p4.first][p4.second].getValue() != ' ')) 
+        if ((grid[p1.first][p1.second] != ' ') ||
+            (grid[p2.first][p2.second] != ' ') ||
+            (grid[p3.first][p3.second] != ' ') ||
+            (grid[p4.first][p4.second] != ' '))
         {
             return false;
         }
@@ -93,13 +90,12 @@ void Board::addCell(Block *thisBlock)
     };
 };
 
-
 void Board::drop()
 {
     for (auto &t : current_block->getCoord())
     {
         auto &[p1, p2, p3, p4] = t;
-        //negation of the condition is required
+        // negation of the condition is required
         while ((board[p1.first][p1.second].getValue() != ' ') ||
                (board[p2.first][p2.second].getValue() != ' ') ||
                (board[p3.first][p3.second].getValue() != ' ') ||
