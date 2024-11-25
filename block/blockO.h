@@ -1,4 +1,5 @@
-
+#ifndef BLOCKO_H
+#define BLOCKO_H
 
 // the main block interface file
 #include <vector>
@@ -6,25 +7,33 @@
 #include <iostream>
 #include <ostream>
 #include "cell/cell.h" // to add
+#include "block.h"
 
 using namespace std;
 
-enum state
-{
-    ccw,
-    cw,
-    left,
-    right,
-    rotate
-};
-
-class Block
+class OBlock : public Block
 {
 private:
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>>> cells;
-    state state;
+    Board *cell;
+    pair<int, int> a;
+    pair<int, int> b;
+    pair<int, int> c;
+    pair<int, int> d;
 
 public:
-    void virtual rotateccw();
-    void virtual rotatecw();
+    OBlock(Board *cell,
+           pair<int, int> a,
+           pair<int, int> b,
+           pair<int, int> c,
+           pair<int, int> d); // to change
+    void rotateccw() override;
+    void rotatecw() override;
+    char getChar(int x, int y) override;
+    char getType() override;
+    void left() override;
+    void right() override;
+    void down() override;
+    void drop() override;
 };
+
+#endif

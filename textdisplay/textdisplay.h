@@ -18,4 +18,7 @@ class TextDisplay: public Observer {
         virtual void notify() override;
 }
 
+
+
 #endif
+

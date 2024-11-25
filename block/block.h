@@ -1,43 +1,36 @@
+#ifndef BLOCK_H
+#define BLOCK_H
+
 #include <vector>
 #include <tuple>
 #include <iostream>
 #include <ostream>
+#include "board.h"
 // #include "cell/cell.h" // to add
 
 using namespace std;
 
-class Block
+class Block : public Board
 {
-private:
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> cells;
+protected:
+    Board *cells;
 
 public:
-    Block(
-        vector<tuple<pair<int, int>>> a,
-        vector<tuple<pair<int, int>>> b,
-        vector<tuple<pair<int, int>>> c,
-        vector<tuple<pair<int, int>>> d);
-    ~Block();
-    Block(Block const &other) {};
-    Block(Block &&other) {};
-    Block &operator=(const Block &other) {};
-    Block &operator+=(const Block &other) {}; // potentially useful for merging the board and block
-    Block &operator-=(const Block &other) {};
+    explicit Block(Board *cells);
+    virtual ~Block() {};
 
-    bool getHeavy();
-    void setHeavy();
-    virtual char getChar() = 0;
+    virtual bool getHeavy();
+    virtual void setHeavy();
+    virtual char getChar(int x, int y) = 0;
+    virtual char getType() = 0;
 
     void heavy();
-    void virtual rotateccw();
-    void virtual rotatecw();
-    void left();
-    void right();
-    void down();
-    void drop();
-
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> getCoord()
-    {
-        return this->cells;
-    };
+    void virtual rotateccw() = 0;
+    void virtual rotatecw() = 0;
+    virtual void left() = 0;
+    virtual void right() = 0;
+    virtual void down() = 0;
+    virtual void drop() = 0;
 };
+
+#endif
