@@ -8,6 +8,6 @@
 
 using namespace std;
 
-Block::Block(Board *cells) : cells{cells} {};
+Block::Block(Board *cells) : Board(), cells{cells} {};
 
 Block::~Block() = default;

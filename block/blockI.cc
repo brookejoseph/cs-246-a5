@@ -8,6 +8,11 @@
 
 using namespace std;
 
+vector<pair<int, int>> IBlock::getCoord()
+{
+    return {a, b, c, d};
+}
+
 IBlock::IBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -55,11 +60,10 @@ void IBlock::down()
     ++d.second;
 };
 
-
 void IBlock::rotateccw()
 {
     int old_min_x = 0, old_max_y = 0;
-    for (const auto &t : this->cells)
+    for (const auto &t : cells)
     {
         for (const auto &[x, y] : {get<0>(t), get<1>(t), get<2>(t), get<3>(t)})
         {
@@ -127,4 +131,3 @@ void IBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
-

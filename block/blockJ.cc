@@ -11,6 +11,10 @@
 
 using namespace std;
 
+vector<pair<int, int>> JBlock::getCoord()
+{
+    return {a, b, c, d};
+}
 JBlock::JBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -57,7 +61,6 @@ void JBlock::down()
     ++c.second;
     ++d.second;
 };
-
 
 void JBlock::rotateccw()
 {
@@ -130,4 +133,3 @@ void JBlock::rotatecw()
     this->rotateccw();
     this->rotateccw();
 }
-

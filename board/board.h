@@ -8,51 +8,65 @@
 #include "cell/cell.h"
 #include "observer/subject.h"
 
-class Board : public Subject {
-    private:
+class Board : public Subject
+{
+private:
+    /*
         int cols = 11;
         int rows = 18;
-        std::vector<std::vector<Cell>> grid;
+        std::vector<std::vector<char>> grid; */
 
-        std::shared_ptr<Block> currentBlock;
-        std::shared_ptr<Block> nextBlock;
+    std::vector<std::vector<char>> grid;
 
-        int level;
-        std::vector<std::unique_ptr<Level>> levelList;
+    std::shared_ptr<Block> currentBlock;
+    std::shared_ptr<Block> nextBlock;
 
-        int score;
-        int highScore;
+    int level;
+    std::vector<std::unique_ptr<Level>> levelList;
 
-        int noClearCount;
+    int score;
+    int highScore;
 
-    public:
-        Board(int cols, int rows);
-        ~Board();
-        Board(Board const &other);
-        Board(Board &&other);
+    int noClearCount;
 
-        bool isValidMove();
-        int findScore();
+protected:
+    int dimX;
+    int dimY;
 
-        void levelDown();
-        void levelUp();
-        Level getLevelPtr();
-        int getLevel() const;
+public:
+    Board();
+    ~Board();
+    Board(Board const &other);
+    Board(Board &&other);
 
-        void left(int amount);  // done
-        void right(int amount); // done
-        void down(int amount);  // done
-        void cw(int amount);    // done
-        void ccw(int amount);   // done
-        void drop();            // done
+    bool isValidMove();
+    int findScore();
 
-        void saveGame(); //??
-        void restart();  // done
-        void loadGame();
-        virtual char getState(int x, int y) const override; // 
+    void levelDown();
+    void levelUp();
+    Level getLevelPtr();
+    int getLevel() const;
 
-        void eraseBlock();          // whats the difference between this and restart idk
-        void addCell(Board &block); // done
-        void addToTurnCount();
-        int getTurnCount();
+    void left(int amount);  // done
+    void right(int amount); // done
+    void down(int amount);  // done
+    void cw(int amount);    // done
+    void ccw(int amount);   // done
+    void drop();            // done
+
+    void saveGame(); //??
+    void restart();  // done
+    void loadGame();
+    virtual char getState(int x, int y) const override;
+    virtual char getChar(int x, int y);
+
+    void eraseBlock();          // whats the difference between this and restart idk
+    void addCell(Block &block); // done
+    void addToTurnCount();
+    int getTurnCount();
+    virtual void setDimX(int x);
+    virtual void setDimY(int y);
+
+    void setValue(char newValue, int x, int y);
+    char getValue(int x, int y);
 };
