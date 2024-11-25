@@ -63,70 +63,46 @@ void ZBlock::down()
     ++d.second;
 };
 
+
 void ZBlock::rotateccw()
 {
-    int old_min_x = 0, old_max_y = 0;
-    for (const auto &t : this->cells)
-    {
-        for (const auto &[x, y] : {get<0>(t), get<1>(t), get<2>(t), get<3>(t)})
-        {
-            old_min_x = min(old_min_x, x);
-            old_max_y = max(old_max_y, y);
-        }
-    }
+    int old_min_x = min({a.first, b.first, c.first, d.first});
+    int old_max_y = max({a.second, b.second, c.second, d.second});
+
     // (x, y) --> (y, -x)
-    vector<tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>>> transformed_cells;
-    for (auto &t : this->cells)
-    {
-        tuple<pair<int, int>, pair<int, int>, pair<int, int>, pair<int, int>> transformed_tuple;
+    int temp_a_x = a.second, temp_a_y = -a.first;
+    int temp_b_x = b.second, temp_b_y = -b.first;
+    int temp_c_x = c.second, temp_c_y = -c.first;
+    int temp_d_x = d.second, temp_d_y = -d.first;
 
-        for (int i = 0; i < 4; ++i)
-        {
-            const auto &[x, y] = i == 0 ? get<0>(t) : i == 1 ? get<1>(t)
-                                                  : i == 2   ? get<2>(t)
-                                                             : get<3>(t);
+    a.first = temp_a_x;
+    a.second = temp_a_y;
+    b.first = temp_b_x;
+    b.second = temp_b_y;
+    c.first = temp_c_x;
+    c.second = temp_c_y;
+    d.first = temp_d_x;
+    d.second = temp_d_y;
 
-            int new_x = y;
-            int new_y = -x;
 
-            if (i == 0)
-                get<0>(transformed_tuple) = {new_x, new_y};
-            if (i == 1)
-                get<1>(transformed_tuple) = {new_x, new_y};
-            if (i == 2)
-                get<2>(transformed_tuple) = {new_x, new_y};
-            if (i == 3)
-                get<3>(transformed_tuple) = {new_x, new_y};
-        }
-
-        transformed_cells.push_back(transformed_tuple);
-    }
-
-    int new_min_x = 0, new_max_y = 0;
-    for (const auto &t : transformed_cells)
-    {
-        for (const auto &[x, y] : {get<0>(t), get<1>(t), get<2>(t), get<3>(t)})
-        {
-            new_min_x = min(new_min_x, x);
-            new_max_y = max(new_max_y, y);
-        }
-    }
+    int new_min_x = min({a.first, b.first, c.first, d.first});
+    int new_max_y = max({a.second, b.second, c.second, d.second});
 
     // x = x - |(new_min_x - old_min_x)|
     // y = y + |(new_max_y - old_max_y)|
-    for (auto &t : transformed_cells)
-    {
-        for (int i = 0; i < 4; ++i)
-        {
-            auto &[x, y] = i == 0 ? get<0>(t) : i == 1 ? get<1>(t)
-                                            : i == 2   ? get<2>(t)
-                                                       : get<3>(t);
-            x = x - abs(new_min_x - old_min_x);
-            y = y + abs(new_max_y - old_max_y);
-        }
-    }
-    this->cells = transformed_cells;
+    int shift_x = abs(new_min_x - old_min_x);
+    int shift_y = abs(new_max_y - old_max_y);
+
+    a.first -= shift_x;
+    a.second += shift_y;
+    b.first -= shift_x;
+    b.second += shift_y;
+    c.first -= shift_x;
+    c.second += shift_y;
+    d.first -= shift_x;
+    d.second += shift_y;
 }
+
 
 void ZBlock::rotatecw()
 {
