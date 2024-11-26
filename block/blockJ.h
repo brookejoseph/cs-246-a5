@@ -25,6 +25,8 @@ public:
            pair<int, int> b,
            pair<int, int> c,
            pair<int, int> d); // to change
+
+    JBlock();
     void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;

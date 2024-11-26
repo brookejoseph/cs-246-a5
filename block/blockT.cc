@@ -22,6 +22,9 @@ TBlock::TBlock(Board *cell,
                pair<int, int> c,
                pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
 
+TBlock::TBlock() : Block(nullptr),
+                   a{0, 4}, b{1, 4}, c{2, 4}, d{1, 3} {}
+
 char TBlock::getChar(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
