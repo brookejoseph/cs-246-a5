@@ -2,12 +2,12 @@
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "block/block.h"
-#include "cell/cell.h"
-#include "level/level.h"
-#include "observer/subject.h"
+#include "../block/block.h"
+#include "../cell/cell.h"
+#include "../level/level.h"
+#include "../observer/subject.h"
 
-Board::Board() {};
+Board::Board() noexcept {};
 
 void Board::setValue(char newValue, int x, int y)
 {

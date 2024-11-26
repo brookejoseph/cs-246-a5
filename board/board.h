@@ -1,12 +1,15 @@
+
+#ifndef BOARD_H // Add this line
+#define BOARD_H // Add this line
 #include <vector>
 #include <tuple>
 #include <iostream>
 #include <ostream>
 #include <memory>
-#include "block/block.h"
-#include "level/level.h"
-#include "cell/cell.h"
-#include "observer/subject.h"
+#include "../level/level.h"
+#include "../observer/subject.h"
+
+class Block; // forward declaration
 
 class Board : public Subject
 {
@@ -34,10 +37,8 @@ protected:
     int dimY;
 
 public:
-    Board();
-    ~Board();
-    Board(Board const &other);
-    Board(Board &&other);
+    Board() noexcept;
+    ~Board() = default;
 
     bool isValidMove();
     int findScore();
@@ -57,7 +58,7 @@ public:
     void saveGame(); //??
     void restart();  // done
     void loadGame();
-    virtual char getState(int x, int y) const override;
+    // virtual char getState(int x, int y) const override;
     virtual char getChar(int x, int y);
 
     void eraseBlock();          // whats the difference between this and restart idk
@@ -70,3 +71,5 @@ public:
     void setValue(char newValue, int x, int y);
     char getValue(int x, int y);
 };
+
+#endif
