@@ -30,7 +30,7 @@ char TBlock::getChar(int x, int y)
     }
     else
     {
-        return cell->getChar(x, y);
+        return cell->getValue(x, y);
     };
 };
 
@@ -63,7 +63,6 @@ void TBlock::down()
     ++d.second;
 };
 
-
 void TBlock::rotateccw()
 {
     int old_min_x = min({a.first, b.first, c.first, d.first});
@@ -84,7 +83,6 @@ void TBlock::rotateccw()
     d.first = temp_d_x;
     d.second = temp_d_y;
 
-
     int new_min_x = min({a.first, b.first, c.first, d.first});
     int new_max_y = max({a.second, b.second, c.second, d.second});
 
@@ -102,7 +100,6 @@ void TBlock::rotateccw()
     d.first -= shift_x;
     d.second += shift_y;
 }
-
 
 void TBlock::rotatecw()
 {

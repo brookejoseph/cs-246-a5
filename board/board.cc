@@ -5,9 +5,18 @@
 #include "../block/block.h"
 #include "../cell/cell.h"
 #include "../level/level.h"
-#include "../observer/subject.h"
 
-Board::Board() noexcept {};
+void Board::setDimX(int x)
+{
+    dimX = x;
+}
+
+void Board::setDimY(int y)
+{
+    dimY = y;
+}
+
+Board::Board() noexcept : dimX(11), dimY(18), grid(dimX, std::vector<char>(dimY, ' ')), level(0), score(0), highScore(0), noClearCount(0) {}
 
 void Board::setValue(char newValue, int x, int y)
 {
@@ -16,6 +25,10 @@ void Board::setValue(char newValue, int x, int y)
 
 char Board::getValue(int x, int y)
 {
+    if (x < 0 || x >= dimX || y < 0 || y >= dimY)
+    {
+        throw std::out_of_range("Coordinates out of bounds");
+    }
     return grid[x][y];
 };
 

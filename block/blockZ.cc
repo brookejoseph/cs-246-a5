@@ -28,7 +28,7 @@ char ZBlock::getChar(int x, int y)
     }
     else
     {
-        return cell->getChar(x, y);
+        return cell->getValue(x, y);
     };
 };
 

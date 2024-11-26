@@ -7,11 +7,10 @@
 #include <ostream>
 #include <memory>
 #include "../level/level.h"
-#include "../observer/subject.h"
 
 class Block; // forward declaration
 
-class Board : public Subject
+class Board
 {
 private:
     /*
@@ -33,8 +32,8 @@ private:
     int noClearCount;
 
 protected:
-    int dimX;
-    int dimY;
+    int dimX = 11;
+    int dimY = 18;
 
 public:
     Board() noexcept;
@@ -59,7 +58,6 @@ public:
     void restart();  // done
     void loadGame();
     // virtual char getState(int x, int y) const override;
-    virtual char getChar(int x, int y);
 
     void eraseBlock();          // whats the difference between this and restart idk
     void addCell(Block &block); // done
@@ -69,7 +67,7 @@ public:
     virtual void setDimY(int y);
 
     void setValue(char newValue, int x, int y);
-    char getValue(int x, int y);
+    virtual char getValue(int x, int y);
 };
 
 #endif

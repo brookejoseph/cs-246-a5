@@ -4,11 +4,11 @@
 void Subject::attach(Observer *o)
 {
     observers.push_back(o);
-}
+};
 
 void Subject::detach(Observer *o)
 {
-    for (auto it = observers.begin(); it != observers.end(); )
+    for (auto it = observers.begin(); it != observers.end();)
     {
         if (*it == o)
         {
@@ -19,4 +19,17 @@ void Subject::detach(Observer *o)
             ++it;
         }
     }
-}
+};
+
+void Subject::notifyObservers()
+{
+    for (auto i : observers)
+    {
+        i->notify();
+    };
+};
+
+char Subject::getState(int x, int y)
+{
+    return getValue(x, y);
+};

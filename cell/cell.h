@@ -6,6 +6,7 @@
 #include <iostream>
 #include <ostream>
 #include <memory>
+#include "../board/board.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ public:
     virtual ~Cell() = default;
     Cell(int row, int col);
     virtual void setValue(char newValue, int x, int y);
-    virtual char getValue(int x, int y);
+    char getValue(int x, int y) override;
 
     void setDimX(int x) override;
     void setDimY(int y) override;
