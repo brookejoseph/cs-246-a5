@@ -14,11 +14,6 @@ class Block; // forward declaration
 class Board : public Subject
 {
 private:
-    /*
-        int cols = 11;
-        int rows = 18;
-        std::vector<std::vector<char>> grid; */
-
     std::vector<std::vector<char>> grid;
 
     Block *currentBlock;
@@ -70,7 +65,7 @@ public:
     void setCurrentBlock(Block *block);
 
     void setValue(char newValue, int x, int y);
-    virtual char getValue(int x, int y);
+    virtual char getValue(int x, int y) override;
 };
 
 #endif

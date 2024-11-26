@@ -28,3 +28,8 @@ void Subject::notifyObservers()
         i->notify();
     };
 };
+
+char Subject::getState(int x, int y)
+{
+    return getValue(x, y);
+};
