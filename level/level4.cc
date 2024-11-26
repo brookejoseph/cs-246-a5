@@ -1,11 +1,11 @@
 #include "level4.h"
-#include "block/blockJ.h"
-#include "block/blockI.h"
-#include "block/blockS.h"
-#include "block/blockO.h"
-#include "block/blockL.h"
-#include "block/blockT.h"
-#include "block/blockZ.h"
+#include "../block/blockJ.h"
+#include "../block/blockI.h"
+#include "../block/blockS.h"
+#include "../block/blockO.h"
+#include "../block/blockL.h"
+#include "../block/blockT.h"
+#include "../block/blockZ.h"
 
 Level4::Level4(std::vector<char> sequence, bool isRandom, int seed) : Level{sequence, isRandom}, position{0}, seed{seed}
 {

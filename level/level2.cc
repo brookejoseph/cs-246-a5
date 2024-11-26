@@ -1,11 +1,11 @@
 #include "level2.h"
-#include "block/blockJ.h"
-#include "block/blockI.h"
-#include "block/blockS.h"
-#include "block/blockO.h"
-#include "block/blockL.h"
-#include "block/blockT.h"
-#include "block/blockZ.h"
+#include "../block/blockJ.h"
+#include "../block/blockI.h"
+#include "../block/blockS.h"
+#include "../block/blockO.h"
+#include "../block/blockL.h"
+#include "../block/blockT.h"
+#include "../block/blockZ.h"
 
 Level2::Level2(int seed) : seed{seed} { srand(seed); }
 
