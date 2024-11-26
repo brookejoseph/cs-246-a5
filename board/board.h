@@ -7,10 +7,11 @@
 #include <ostream>
 #include <memory>
 #include "../level/level.h"
+#include "../observer/subject.h"
 
 class Block; // forward declaration
 
-class Board
+class Board : public Subject
 {
 private:
     /*
@@ -20,7 +21,7 @@ private:
 
     std::vector<std::vector<char>> grid;
 
-    std::shared_ptr<Block> currentBlock;
+    Block *currentBlock;
     std::shared_ptr<Block> nextBlock;
 
     int level;
@@ -65,6 +66,8 @@ public:
     int getTurnCount();
     virtual void setDimX(int x);
     virtual void setDimY(int y);
+
+    void setCurrentBlock(Block *block);
 
     void setValue(char newValue, int x, int y);
     virtual char getValue(int x, int y);

@@ -6,6 +6,11 @@
 #include "../cell/cell.h"
 #include "../level/level.h"
 
+void Board::setCurrentBlock(Block *block)
+{
+    currentBlock = block;
+};
+
 void Board::setDimX(int x)
 {
     dimX = x;
@@ -16,25 +21,27 @@ void Board::setDimY(int y)
     dimY = y;
 }
 
-Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(dimX, std::vector<char>(dimY, ' ')), level(0), score(0), highScore(0), noClearCount(0) {}
+Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), score(0), highScore(0), noClearCount(0) {}
 
 void Board::setValue(char newValue, int x, int y)
 {
     grid[x][y] = newValue;
 };
 
-char Board::getValue(int x, int y)
-{
+/*
     if (x < 0 || x >= dimX || y < 0 || y >= dimY)
     {
         throw std::out_of_range("Coordinates out of bounds");
     }
+*/
+
+char Board::getValue(int x, int y)
+{
     return grid[x][y];
 };
 
 bool Board::isValidMove()
 {
-    // for loop is unnecessary -- can be removed later, because we are only moving one block at a time
     for (auto &t : currentBlock->getCoord())
     {
         if ((t.first > dimX) || (t.first < 0))
@@ -59,6 +66,7 @@ void Board::left(int amount)
     {
         currentBlock->left();
     };
+    addCell(*currentBlock);
 };
 
 void Board::right(int amount)
@@ -67,6 +75,7 @@ void Board::right(int amount)
     {
         currentBlock->right();
     };
+    addCell(*currentBlock);
 };
 
 void Board::down(int amount)
@@ -83,6 +92,7 @@ void Board::ccw(int amount)
     {
         currentBlock->rotateccw();
     };
+    addCell(*currentBlock);
 };
 
 void Board::cw(int amount)
@@ -91,6 +101,7 @@ void Board::cw(int amount)
     {
         currentBlock->rotatecw();
     };
+    addCell(*currentBlock);
 };
 
 // LOGIC NEEDS TO BE FIXED HERE
@@ -100,7 +111,7 @@ void Board::addCell(Block &thisBlock)
     for (auto &t : thisBlock.getCoord())
     {
         char letter = thisBlock.getType();
-        setValue(t.first, t.second, letter);
+        setValue(letter, t.first, t.second);
     };
 };
 
@@ -116,6 +127,17 @@ void Board::drop()
     };
     addCell(*currentBlock);
 };
+
+/*
+void Board::drop()
+{
+    while (isValidMove())
+    {
+        currentBlock->down(); // Move the block down by one unit
+    }
+    addCell(*currentBlock); // Add the block to the grid
+}
+*/
 
 void Board::restart()
 {
