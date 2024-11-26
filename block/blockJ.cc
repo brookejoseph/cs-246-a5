@@ -20,6 +20,8 @@ JBlock::JBlock(Board *cell,
                pair<int, int> b,
                pair<int, int> c,
                pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
+JBlock::JBlock() : Block(nullptr),
+                   a{0, 4}, b{1, 4}, c{1, 3}, d{1, 2} {}
 
 char JBlock::getChar(int x, int y)
 {
