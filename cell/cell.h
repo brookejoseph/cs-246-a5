@@ -16,10 +16,10 @@ private:
     std::vector<std::vector<char>> plainGrid;
 
 public:
-    virtual char charAt(int x, int y);
-    virtual ~Cell() = default;
+    char charAt(int x, int y);
+    ~Cell();
     Cell(int row, int col);
-    virtual void setValue(char newValue, int x, int y);
+    void setValue(char newValue, int x, int y);
     char getValue(int x, int y) override;
 
     void setDimX(int x) override;

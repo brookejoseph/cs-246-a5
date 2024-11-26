@@ -20,6 +20,41 @@ void printCoords(const vector<pair<int, int>> &coords)
 
 int main()
 {
-    Cell *newGrid = new Cell(11, 15);
+    Board board;
+
+    pair<int, int> coordA = {0, 0};
+    pair<int, int> coordB = {0, 1};
+    pair<int, int> coordC = {1, 1};
+    pair<int, int> coordD = {1, 2};
+
+    ZBlock zblock(&board, coordA, coordB, coordC, coordD);
+
+    cout << "Initial coordinates: ";
+    printCoords(zblock.getCoord());
+    cout << "Initial type: " << zblock.getType() << endl;
+
+    zblock.left();
+    cout << "After moving left: ";
+    printCoords(zblock.getCoord());
+
+    zblock.right();
+    cout << "After moving right: ";
+    printCoords(zblock.getCoord());
+
+    zblock.down();
+    cout << "After moving down: ";
+    printCoords(zblock.getCoord());
+
+    zblock.rotatecw();
+    cout << "After rotating clockwise: ";
+    printCoords(zblock.getCoord());
+
+    zblock.rotateccw();
+    cout << "After rotating counterclockwise: ";
+    printCoords(zblock.getCoord());
+
+    cout << "Final coordinates: ";
+    printCoords(zblock.getCoord());
+
     return 0;
 }
