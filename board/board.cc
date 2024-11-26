@@ -16,7 +16,7 @@ void Board::setDimY(int y)
     dimY = y;
 }
 
-Board::Board() noexcept : dimX(11), dimY(18), grid(dimX, std::vector<char>(dimY, ' ')), level(0), score(0), highScore(0), noClearCount(0) {}
+Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(dimX, std::vector<char>(dimY, ' ')), level(0), score(0), highScore(0), noClearCount(0) {}
 
 void Board::setValue(char newValue, int x, int y)
 {

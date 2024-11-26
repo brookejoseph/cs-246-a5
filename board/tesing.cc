@@ -1,6 +1,9 @@
 #include "../board/board.h"
 #include "../block/blockZ.h"
+#include "../block/blockJ.h"
 #include "../cell/cell.h"
+#include "../cell/cell.cc"
+
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -10,26 +13,12 @@ using namespace std;
 
 int main()
 {
-    // Create a basic board
-    Cell cell(18, 11);
-
-    ZBlock zBlock(&cell, {0, 16}, {1, 16}, {1, 15}, {2, 15});
-
-    // Test board functionality
-    zBlock.setValue('Z', 0, 16);
-    zBlock.setValue('Z', 1, 16);
-    zBlock.setValue('Z', 1, 15);
-    zBlock.setValue('Z', 2, 15);
-
-    // Print the board
-    for (int y = 17; y >= 0; --y)
-    {
-        for (int x = 0; x < 11; ++x)
-        {
-            std::cout << zBlock.getChar(x, y) << " ";
-        }
-        std::cout << std::endl;
-    }
-
+    pair<int, int> coordA = {0, 0};
+    pair<int, int> coordB = {0, 1};
+    pair<int, int> coordC = {1, 1};
+    pair<int, int> coordD = {1, 2};
+    Board *newCell = new Cell(18, 18);
+    newCell = new ZBlock(newCell, coordA, coordB, coordC, coordD);
+    newCell = new ZBlock(newCell, coordA, coordB, coordC, coordD);
     return 0;
 }

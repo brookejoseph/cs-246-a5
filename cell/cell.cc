@@ -5,12 +5,8 @@
 #include "../board/board.h"
 #include "../cell/cell.h"
 
-Cell::Cell(int row, int col) : Board()
-{
-    dimX = row;
-    dimY = col;
-    plainGrid = std::vector<std::vector<char>>(row, std::vector<char>(col, ' '));
-};
+using namespace std;
+Cell::Cell(int row, int col) : Board(row, col), plainGrid(row, vector<char>(col, ' ')) {};
 
 Cell::~Cell() = default;
 

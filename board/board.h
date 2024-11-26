@@ -36,7 +36,7 @@ protected:
     int dimY = 18;
 
 public:
-    Board() noexcept;
+    Board(int x, int y) noexcept;
     ~Board() = default;
 
     bool isValidMove();

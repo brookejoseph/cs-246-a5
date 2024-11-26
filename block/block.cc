@@ -7,6 +7,6 @@
 
 using namespace std;
 
-Block::Block(Board *cells) : Board(), cells{cells} {};
+Block::Block(Board *cells) : Board(dimX, dimY), cells{cells} {};
 
 Block::~Block() = default;

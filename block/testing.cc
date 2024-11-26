@@ -20,7 +20,7 @@ void printCoords(const vector<pair<int, int>> &coords)
 
 int main()
 {
-    Board board;
+    Board board(12, 12);
 
     pair<int, int> coordA = {0, 0};
     pair<int, int> coordB = {0, 1};
