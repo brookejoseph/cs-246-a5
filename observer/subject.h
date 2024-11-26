@@ -12,7 +12,7 @@ public:
     void attach(Observer *o);
     void detach(Observer *o);
     void notifyObservers();
-    virtual char getState(int x, int y) const = 0;
+    virtual char getState(int x, int y) const;
     virtual ~Subject() = default;
 };
 

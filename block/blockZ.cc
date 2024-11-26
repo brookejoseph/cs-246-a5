@@ -3,11 +3,9 @@
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "cell/cell.h" // to add
 #include "block.h"
 #include "blockZ.h"
-#include "cell/cell.h"
-#include "board/board.h"
+#include "../board/board.h"
 
 using namespace std;
 
@@ -63,7 +61,6 @@ void ZBlock::down()
     ++d.second;
 };
 
-
 void ZBlock::rotateccw()
 {
     int old_min_x = min({a.first, b.first, c.first, d.first});
@@ -84,7 +81,6 @@ void ZBlock::rotateccw()
     d.first = temp_d_x;
     d.second = temp_d_y;
 
-
     int new_min_x = min({a.first, b.first, c.first, d.first});
     int new_max_y = max({a.second, b.second, c.second, d.second});
 
@@ -102,7 +98,6 @@ void ZBlock::rotateccw()
     d.first -= shift_x;
     d.second += shift_y;
 }
-
 
 void ZBlock::rotatecw()
 {

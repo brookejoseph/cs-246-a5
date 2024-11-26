@@ -6,7 +6,6 @@
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "cell/cell.h" // to add
 #include "block.h"
 
 using namespace std;
@@ -33,8 +32,8 @@ public:
     void left() override;
     void right() override;
     void down() override;
-    void drop() override;
-    vector<pair<int, int>> getCoord();
+    // void drop() override;
+    vector<pair<int, int>> getCoord() override;
 };
 
 #endif
