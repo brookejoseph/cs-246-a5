@@ -1,7 +1,8 @@
 #ifndef TEXTDISPLAY_H
 #define TEXTDISPLAY_H
-#include "observer.h"
-#include "board.h"
+
+#include "../observer/observer.h"
+#include "../board/board.h"
 #include <string>
 #include <memory>
 
@@ -28,6 +29,6 @@ public:
     TextDisplay(std::shared_ptr<Board> player1, std::shared_ptr<Board> player2, int dimX, int dimY);
     ~TextDisplay();
     virtual void notify() override;
-}
+};
 
 #endif
