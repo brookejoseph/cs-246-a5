@@ -9,7 +9,13 @@ int main() {
     std::shared_ptr<Board> player1(new Board(dimX, dimY));
     std::shared_ptr<Board> player2(new Board(dimX, dimY));
 
-    TextDisplay td{player1, player2, dimX, dimY};
+    std::shared_ptr<TextDisplay> td(new TextDisplay{player1, player2, dimX, dimY});
+
+    player1->attach(td);
+    player2->attach(td);
 
     player1->notifyObservers();
+
+    player1->detach(td);
+    player2->detach(td);
 }
