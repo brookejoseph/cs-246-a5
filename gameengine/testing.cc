@@ -63,9 +63,8 @@ int main()
     gameEngine.executeCommand("drop");
     cout << "call 5" << endl;
 
-    cout << "final call " << endl;
-    cout << "after call to first board" << endl;
     Board *current = gameEngine.returnCurrentBoard();
+
     int num = current->checkClearLine();
     printBoard(current, 11, 18);
 

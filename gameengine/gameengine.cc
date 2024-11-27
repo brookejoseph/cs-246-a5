@@ -23,11 +23,24 @@
 
 using namespace std;
 
+int GameEngine::grabCurrentScore()
+{
+    map<int, int> currentS = {
+        {1, player1Score},
+        {2, player2Score},
+    };
+    return currentS[currentPlayer];
+};
+
 void GameEngine::updateHighScore()
 {
-    if (currentScore > highScore)
+    if (player1Score > highScore)
     {
-        highScore = currentScore;
+        highScore = player1Score;
+    }
+    else if (player2Score > highScore)
+    {
+        highScore = player2Score;
     }
 }
 
@@ -35,7 +48,8 @@ void GameEngine::clearLines(int linesCleared)
 {
     int level = returnCurrentBoard()->getLevel();
     int points = std::pow(level + linesCleared, 2);
-    currentScore += points;
+    int current = grabCurrentScore();
+    current += points;
     updateHighScore();
 }
 
@@ -43,18 +57,21 @@ void GameEngine::clearBlock()
 {
     int levelWhenGenerated = returnCurrentBoard()->getLevel();
     int points = std::pow(levelWhenGenerated + 1, 2);
-    currentScore += points;
+    int current = grabCurrentScore();
+    current += points;
     updateHighScore();
 }
 
 void GameEngine::restartGame()
 {
-    currentScore = 0;
+    player1Score = 0;
+    player2Score = 0;
 }
 
-int GameEngine::getCurrentScore() const
+int GameEngine::getCurrentScore()
 {
-    return currentScore;
+    int current = grabCurrentScore();
+    return current;
 }
 
 int GameEngine::getHighScore() const
@@ -86,10 +103,10 @@ void GameEngine::initializeCommandMap()
          { baseBoard->cw(amount); }},
         {"validMove", [this](int)
          { baseBoard->isValidMove(); }},
-        {"levelup", [this](int)
-         { baseBoard->levelUp(); }},
-        {"leveldown", [this](int)
-         { baseBoard->levelDown(); }},
+        {"levelup", [this](int amount)
+         { baseBoard->levelUp(amount); }},
+        {"leveldown", [this](int amount)
+         { baseBoard->levelDown(amount); }},
         {"zBlock", [this](int)
          { ZBlock *newBlock = new ZBlock();
            baseBoard->setCurrentBlock(newBlock); }},
@@ -142,6 +159,7 @@ void GameEngine::executeCommand(const std::string &command, int amount)
     }
 
     auto it = commandMap.find(command);
+
     if (it != commandMap.end())
     {
         it->second(amount);
@@ -151,6 +169,7 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         std::cerr << "Invalid command: " << command << std::endl;
     }
 }
+
 /*
 GameEngine::GameEngine(int x, int y)
 {

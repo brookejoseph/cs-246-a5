@@ -24,7 +24,10 @@ private:
     int currentLevel;
     char currentChar;
 
-    int currentScore = 0;
+    int currentPlayer;
+
+    int player1Score = 0;
+    int player2Score = 0;
     int highScore = 0;
 
     std::map<std::string, std::function<void(int)>> commandMap;
@@ -41,6 +44,8 @@ public:
 
     Board *returnCurrentBoard();
 
+    int grabCurrentScore();
+
     void clearLines(int linesCleared);
     void clearBlock();
     void restartGame();
@@ -48,7 +53,7 @@ public:
     Board *getPlayer1();
     Board *getPlayer2();
 
-    int getCurrentScore() const;
+    int getCurrentScore();
     int getHighScore() const;
 };
 

@@ -124,16 +124,16 @@ void Board::addCell(Block &thisBlock)
     };
 };
 
-void Board::levelUp()
+void Board::levelUp(int amount)
 {
-    currentPtr = parameter[++currentLevel];
-    ++currentLevel;
+    currentPtr = parameter[currentLevel + amount];
+    currentLevel += amount;
 };
 
-void Board::levelDown()
+void Board::levelDown(int amount)
 {
-    currentPtr = parameter[--currentLevel];
-    --currentLevel;
+    currentPtr = parameter[currentLevel - amount];
+    currentLevel -= amount;
 };
 
 void Board::drop()
@@ -219,6 +219,7 @@ void Board::updateClearLines()
 
 int Board::getCurrentLevelVal()
 {
+    cout << "grabbing the current val in board" << currentLevel << endl;
     return currentLevel;
 };
 
