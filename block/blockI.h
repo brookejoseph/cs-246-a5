@@ -28,6 +28,9 @@ public:
     IBlock(Board *cell);
     ~IBlock() override = default;
 
+    int getLevel() override;
+    void setLevel(int val) override;
+
     void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;

@@ -27,9 +27,11 @@ public:
            pair<int, int> d);
 
     ZBlock();
-
     ZBlock(Board *cell);
     ~ZBlock() override = default;
+
+    int getLevel() override;
+    void setLevel(int val) override;
 
     void rotateccw() override;
     void rotatecw() override;

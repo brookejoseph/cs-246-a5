@@ -13,6 +13,16 @@ vector<pair<int, int>> JBlock::getCoord()
 {
     return {a, b, c, d};
 }
+
+int JBlock::getLevel()
+{
+    return levelCreated;
+};
+void JBlock::setLevel(int val)
+{
+    levelCreated = val;
+};
+
 JBlock::JBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,

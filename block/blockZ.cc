@@ -14,6 +14,16 @@ vector<pair<int, int>> ZBlock::getCoord()
 {
     return {a, b, c, d};
 }
+
+int ZBlock::getLevel()
+{
+    return levelCreated;
+};
+void ZBlock::setLevel(int val)
+{
+    levelCreated = val;
+};
+
 ZBlock::ZBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,

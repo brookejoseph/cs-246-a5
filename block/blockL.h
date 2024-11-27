@@ -27,6 +27,9 @@ public:
     LBlock(Board *cell);
     ~LBlock() override = default;
 
+    int getLevel() override;
+    void setLevel(int val) override;
+
     void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;

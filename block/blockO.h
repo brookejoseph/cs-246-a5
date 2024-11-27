@@ -28,6 +28,8 @@ public:
     OBlock();
     OBlock(Board *cell);
     ~OBlock() override = default;
+    int getLevel() override;
+    void setLevel(int val) override;
 
     void rotateccw() override;
     void rotatecw() override;

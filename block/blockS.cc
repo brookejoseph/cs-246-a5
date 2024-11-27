@@ -14,6 +14,15 @@ vector<pair<int, int>> SBlock::getCoord()
     return {a, b, c, d};
 };
 
+int SBlock::getLevel()
+{
+    return levelCreated;
+};
+void SBlock::setLevel(int val)
+{
+    levelCreated = val;
+};
+
 SBlock::SBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,

@@ -7,6 +7,15 @@
 
 using namespace std;
 
+int IBlock::getLevel()
+{
+    return levelCreated;
+};
+void IBlock::setLevel(int val)
+{
+    levelCreated = val;
+};
+
 vector<pair<int, int>> IBlock::getCoord()
 {
     return {a, b, c, d};

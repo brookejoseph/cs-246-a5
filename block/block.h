@@ -14,9 +14,11 @@ class Block : public Board
 {
 protected:
     Board *cells;
-    int numLinesCleared;
+    int levelCreated;
 
 public:
+    virtual int getLevel() = 0;
+    virtual void setLevel(int val) = 0;
     explicit Block(Board *cells);
     explicit Block();
     virtual ~Block();

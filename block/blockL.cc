@@ -13,6 +13,15 @@ vector<pair<int, int>> LBlock::getCoord()
     return {a, b, c, d};
 }
 
+int LBlock::getLevel()
+{
+    return levelCreated;
+};
+void LBlock::setLevel(int val)
+{
+    levelCreated = val;
+};
+
 LBlock::LBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
