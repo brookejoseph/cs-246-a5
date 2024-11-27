@@ -16,6 +16,10 @@ int main() {
 
     player1->notifyObservers();
 
+    player1->setValue('D', 1, 1);
+
+    player2->notifyObservers();
+
     player1->detach(td);
     player2->detach(td);
 }
