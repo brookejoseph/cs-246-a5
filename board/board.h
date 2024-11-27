@@ -17,7 +17,7 @@ private:
     std::vector<std::vector<char>> grid;
 
     Block *currentBlock;
-    std::shared_ptr<Block> nextBlock;
+    Block *nextBlock;
 
     int level;
     std::vector<std::unique_ptr<Level>> levelList;
@@ -63,6 +63,8 @@ public:
     virtual void setDimY(int y);
 
     void setCurrentBlock(Block *block);
+    void setNextBlock(Block *block);
+    void convertNextToCurrent();
 
     void setValue(char newValue, int x, int y);
     virtual char getValue(int x, int y) override;

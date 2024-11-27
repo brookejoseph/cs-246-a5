@@ -11,6 +11,17 @@ void Board::setCurrentBlock(Block *block)
     currentBlock = block;
 };
 
+void Board::setNextBlock(Block *block)
+{
+    nextBlock = block;
+};
+
+void Board::convertNextToCurrent()
+{
+    currentBlock = nextBlock;
+    nextBlock = nullptr;
+};
+
 void Board::setDimX(int x)
 {
     dimX = x;
@@ -25,15 +36,12 @@ Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char
 
 void Board::setValue(char newValue, int x, int y)
 {
-    grid[x][y] = newValue;
-};
-
-/*
     if (x < 0 || x >= dimX || y < 0 || y >= dimY)
     {
         throw std::out_of_range("Coordinates out of bounds");
     }
-*/
+    grid[x][y] = newValue;
+};
 
 char Board::getValue(int x, int y)
 {
@@ -104,8 +112,6 @@ void Board::cw(int amount)
     addCell(*currentBlock);
 };
 
-// LOGIC NEEDS TO BE FIXED HERE
-// um I just need someone to here to help me make sure that we're putting in the proper letters for all the values
 void Board::addCell(Block &thisBlock)
 {
     for (auto &t : thisBlock.getCoord())
@@ -127,17 +133,6 @@ void Board::drop()
     };
     addCell(*currentBlock);
 };
-
-/*
-void Board::drop()
-{
-    while (isValidMove())
-    {
-        currentBlock->down(); // Move the block down by one unit
-    }
-    addCell(*currentBlock); // Add the block to the grid
-}
-*/
 
 void Board::restart()
 {

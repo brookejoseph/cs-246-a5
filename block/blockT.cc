@@ -23,7 +23,7 @@ TBlock::TBlock(Board *cell,
                pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
 
 TBlock::TBlock() : Block(nullptr),
-                   a{0, 4}, b{1, 4}, c{2, 4}, d{1, 3} {}
+                   a{1, 4}, b{0, 4}, c{2, 4}, d{1, 3} {}
 
 char TBlock::getChar(int x, int y)
 {

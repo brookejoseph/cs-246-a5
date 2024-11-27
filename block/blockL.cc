@@ -23,8 +23,9 @@ LBlock::LBlock(Board *cell,
                pair<int, int> b,
                pair<int, int> c,
                pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
+
 LBlock::LBlock() : Block(nullptr),
-                   a{2, 4}, b{1, 4}, c{1, 3}, d{1, 2} {}
+                   a{1, 4}, b{1, 3}, c{1, 2}, d{2, 2} {};
 
 char LBlock::getChar(int x, int y)
 {
