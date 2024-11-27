@@ -143,3 +143,7 @@ int Board::findScore()
 {
     return score;
 };
+
+int Board::getLevel() const {
+    return level;
+}
