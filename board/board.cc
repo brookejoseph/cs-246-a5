@@ -6,6 +6,8 @@
 #include "../cell/cell.h"
 #include "../level/level.h"
 
+#include <map>
+
 void Board::setCurrentBlock(Block *block)
 {
     currentBlock = block;
@@ -32,7 +34,7 @@ void Board::setDimY(int y)
     dimY = y;
 }
 
-Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), score(0), highScore(0), noClearCount(0) {}
+Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), score(0), highScore(0), numLinesCleared(0), currentLevel(0), noClearCount(0) {}
 
 void Board::setValue(char newValue, int x, int y)
 {
@@ -117,28 +119,38 @@ void Board::addCell(Block &thisBlock)
     };
 };
 
-/*
-void Board::drop()
+void Board::levelUp()
 {
+    std::map<int, Level *> levelMap = {
+        {0, new Level0()}, // to fix
+        {1, new Level1()},
+        {2, new Level2()},
+        {3, new Level3()},  // to fix
+        {4, new Level4()}}; // to fix
 
-    for (auto &t : currentBlock->getCoord())
+    if (levelMap.find(currentLevel) != levelMap.end())
     {
-        cout << "current Block's get corrd";
-        cout << t.first << " ";
-        cout << t.second << endl;
-        while (t.second != dimY)
-        {
-            ++t.second;
-        };
-        cout << "within the drop method ";
-        cout << t.second << endl;
+        levelsPtr = levelMap[++currentLevel];
+        ++currentLevel;
     };
-
-    addCell(*currentBlock);
 };
 
+void Board::levelDown()
+{
+    std::map<int, Level *> levelMap = {
+        {0, new Level0()}, // to fix
+        {1, new Level1()},
+        {2, new Level2()},
+        {3, new Level3()},  // to fix
+        {4, new Level4()}}; // to fix
 
-*/
+    if (levelMap.find(currentLevel) != levelMap.end())
+    {
+        levelsPtr = levelMap[--currentLevel];
+        --currentLevel;
+    };
+};
+
 void Board::drop()
 {
     auto coords = currentBlock->getCoord();
@@ -199,9 +211,47 @@ void Board::updateClearLines()
     }
 }
 
+
+
+
 // for use in game engine
 //void setSequence(const std::vector<char> &seq) {
 //    for (auto lvl: levelList) {
 //        lvl->setSequence(seq);
 //    }
 //}
+
+
+int Board::getCurrentLevelVal()
+{
+    return currentLevel;
+};
+
+Level *Board::getCurrentLevelPtr()
+{
+    return levelsPtr;
+};
+
+/*
+void Board::drop()
+{
+
+    for (auto &t : currentBlock->getCoord())
+    {
+        cout << "current Block's get corrd";
+        cout << t.first << " ";
+        cout << t.second << endl;
+        while (t.second != dimY)
+        {
+            ++t.second;
+        };
+        cout << "within the drop method ";
+        cout << t.second << endl;
+    };
+
+    addCell(*currentBlock);
+};
+
+
+*/
+
