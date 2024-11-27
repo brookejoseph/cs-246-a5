@@ -198,3 +198,10 @@ void Board::updateClearLines()
         }
     }
 }
+
+// for use in game engine
+//void setSequence(const std::vector<char> &seq) {
+//    for (auto lvl: levelList) {
+//        lvl->setSequence(seq);
+//    }
+//}
