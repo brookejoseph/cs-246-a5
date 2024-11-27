@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 
+
 class Observer; // forward declaration
 
 class Subject
@@ -15,6 +16,7 @@ public:
     void notifyObservers();                   // done
     virtual char getValue(int x, int y) = 0;  // done
     virtual ~Subject() = default;             // done
+
 };
 
 #endif

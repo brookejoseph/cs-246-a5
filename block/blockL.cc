@@ -24,6 +24,9 @@ LBlock::LBlock(Board *cell,
                pair<int, int> c,
                pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
 
+LBlock::LBlock() : Block(nullptr),
+                   a{1, 4}, b{1, 3}, c{1, 2}, d{2, 2} {};
+
 char LBlock::getChar(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses

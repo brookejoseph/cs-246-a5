@@ -38,7 +38,7 @@ int main()
 
     cout << "Initial coordinates: " << coordA.first << ", " << coordA.second << endl;
 
-    baseBoard->ccw(1);
+    baseBoard->ccw(2);
 
     vector<pair<int, int>> coords = zBlock->getCoord();
     for (auto &coord : coords)

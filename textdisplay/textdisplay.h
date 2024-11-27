@@ -1,9 +1,12 @@
 #ifndef TEXTDISPLAY_H
 #define TEXTDISPLAY_H
+
 #include "../observer/observer.h"
 #include "../board/board.h"
 #include <string>
 #include <memory>
+
+using namespace std;
 
 class TextDisplay : public Observer
 {

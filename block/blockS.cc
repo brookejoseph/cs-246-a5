@@ -22,6 +22,9 @@ SBlock::SBlock(Board *cell,
                pair<int, int> c,
                pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
 
+SBlock::SBlock() : Block(nullptr),
+                   a{1, 3}, b{2, 3}, c{0, 4}, d{1, 4} {};
+
 char SBlock::getChar(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses

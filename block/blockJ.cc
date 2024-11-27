@@ -21,6 +21,9 @@ JBlock::JBlock(Board *cell,
                pair<int, int> c,
                pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
 
+JBlock::JBlock() : Block(nullptr),
+                   a{0, 4}, b{1, 4}, c{1, 3}, d{1, 2} {};
+
 char JBlock::getChar(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
