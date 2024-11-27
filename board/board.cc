@@ -121,7 +121,7 @@ void Board::addCell(Block &thisBlock)
 
 void Board::levelUp()
 {
-    static std::map<int, Level *> levelMap = {
+    std::map<int, Level *> levelMap = {
         {0, new Level0()}, // to fix
         {1, new Level1()},
         {2, new Level2()},
@@ -137,7 +137,7 @@ void Board::levelUp()
 
 void Board::levelDown()
 {
-    static std::map<int, Level *> levelMap = {
+    std::map<int, Level *> levelMap = {
         {0, new Level0()}, // to fix
         {1, new Level1()},
         {2, new Level2()},

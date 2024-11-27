@@ -58,8 +58,6 @@ public:
     bool isValidMove();
     int findScore();
 
-    void levelDown();
-    void levelUp();
     Level getLevelPtr();
     int getLevel() const;
 
