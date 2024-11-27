@@ -15,7 +15,7 @@ void printBoard(Board *board, int dimX, int dimY)
 {
 
     cout << "Current Board State:\n";
-    for (int y = dimY - 1; y >= 0; --y)
+    for (int y = 0; y <= dimY - 1; ++y)
     {
         for (int x = 0; x < dimX; ++x)
         {
