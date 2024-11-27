@@ -28,14 +28,18 @@ int main()
 {
     GameEngine gameEngine(11, 18);
 
-    gameEngine.executeCommand("zBlock");
-    gameEngine.executeCommand("right", 3);
-    gameEngine.executeCommand("drop");
     gameEngine.executeCommand("oBlock");
     gameEngine.executeCommand("right", 2);
+    gameEngine.executeCommand("validMove");
+    gameEngine.executeCommand("drop");
+
+    gameEngine.executeCommand("zBlock");
+    gameEngine.executeCommand("right", 5);
+    gameEngine.executeCommand("left", 2);
+    gameEngine.executeCommand("validMove");
+    gameEngine.executeCommand("drop");
 
     Board *current = gameEngine.returnCurrentBoard();
-
     printBoard(current, 11, 18);
 
     return 0;

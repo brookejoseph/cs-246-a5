@@ -14,10 +14,7 @@
 #include <map>
 
 using namespace std;
-pair<int, int> coordA = {0, 0};
-pair<int, int> coordB = {0, 1};
-pair<int, int> coordC = {1, 1};
-pair<int, int> coordD = {1, 2};
+
 void GameEngine::initializeCommandMap()
 {
     commandMap = {
@@ -33,6 +30,8 @@ void GameEngine::initializeCommandMap()
          { baseBoard->ccw(amount); }},
         {"cw", [this](int amount)
          { baseBoard->cw(amount); }},
+        {"validMove", [this](int)
+         { baseBoard->isValidMove(); }},
         {"zBlock", [this](int)
          { ZBlock *newBlock = new ZBlock();
            baseBoard->setCurrentBlock(newBlock); }},

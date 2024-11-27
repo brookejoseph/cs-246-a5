@@ -74,7 +74,6 @@ void Board::left(int amount)
     {
         currentBlock->left();
     };
-    addCell(*currentBlock);
 };
 
 void Board::right(int amount)
@@ -83,7 +82,6 @@ void Board::right(int amount)
     {
         currentBlock->right();
     };
-    addCell(*currentBlock);
 };
 
 void Board::down(int amount)
@@ -100,7 +98,6 @@ void Board::ccw(int amount)
     {
         currentBlock->rotateccw();
     };
-    addCell(*currentBlock);
 };
 
 void Board::cw(int amount)
@@ -109,7 +106,6 @@ void Board::cw(int amount)
     {
         currentBlock->rotatecw();
     };
-    addCell(*currentBlock);
 };
 
 void Board::addCell(Block &thisBlock)
@@ -121,15 +117,40 @@ void Board::addCell(Block &thisBlock)
     };
 };
 
+/*
 void Board::drop()
 {
+
     for (auto &t : currentBlock->getCoord())
     {
+        cout << "current Block's get corrd";
+        cout << t.first << " ";
+        cout << t.second << endl;
         while (t.second != dimY)
         {
             ++t.second;
         };
+        cout << "within the drop method ";
+        cout << t.second << endl;
     };
+
+    addCell(*currentBlock);
+};
+
+
+*/
+void Board::drop()
+{
+    auto coords = currentBlock->getCoord();
+
+    while ((coords.at(0).second != dimY) && (coords.at(1).second != dimY) && (coords.at(2).second != dimY) && (coords.at(3).second != dimY))
+    {
+        ++coords.at(0).second;
+        ++coords.at(1).second;
+        ++coords.at(2).second;
+        ++coords.at(3).second;
+    }
+
     addCell(*currentBlock);
 };
 
