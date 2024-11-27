@@ -154,6 +154,15 @@ void GameEngine::initializeCommandMap()
     };
 }
 
+Board *GameEngine::getPlayer1()
+{
+    return player1;
+}
+Board *GameEngine::getPlayer2()
+{
+    return player2;
+}
+
 Board *GameEngine::returnCurrentBoard()
 {
     return baseBoard;
@@ -161,8 +170,8 @@ Board *GameEngine::returnCurrentBoard()
 
 GameEngine::GameEngine(int x, int y)
     : baseBoard(new Board(x, y)),
-      player1(std::make_shared<Board>(x, y)),
-      player2(std::make_shared<Board>(x, y)),
+      player1(new Board(x, y)),
+      player2(new Board(x, y)),
       currentLevel(0), currentChar(' ') {}
 
 void GameEngine::executeCommand(const std::string &command, int amount)

@@ -11,8 +11,8 @@ class GameEngine
 {
 private:
     Board *baseBoard;
-    std::shared_ptr<Board> player1;
-    std::shared_ptr<Board> player2;
+    Board *player1;
+    Board *player2;
     string currentCommand;
     int currentLevel;
     char currentChar;
@@ -37,6 +37,9 @@ public:
     void clearLines(int linesCleared);
     void clearBlock();
     void restartGame();
+
+    Board *getPlayer1();
+    Board *getPlayer2();
 
     int getCurrentScore() const;
     int getHighScore() const;
