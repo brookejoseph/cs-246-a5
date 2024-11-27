@@ -27,10 +27,6 @@ void printValue(const std::string &text, int value, int space) {
 
 // CLASS IMPLEMENTATIONS
 
-std::shared_ptr<Board> TextDisplay::getBoard(std::weak_ptr<Board> board) const {
-    return board.lock();
-}
-
 TextDisplay::TextDisplay(std::shared_ptr<Board> player1, std::shared_ptr<Board> player2, int dimX, int dimY): 
     player1{player1}, player2{player2}, dimX{dimX}, dimY{dimY} {
     //getBoard(player1)->attach(this);
@@ -40,6 +36,10 @@ TextDisplay::TextDisplay(std::shared_ptr<Board> player1, std::shared_ptr<Board> 
 TextDisplay::~TextDisplay() {
     //getBoard(player1)->detach(this);
     //getBoard(player2)->detach(this);
+}
+
+std::shared_ptr<Board> TextDisplay::getBoard(std::weak_ptr<Board> board) const {
+    return board.lock();
 }
 
 void TextDisplay::printHeaders(const std::string &text) const {
