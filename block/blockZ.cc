@@ -21,9 +21,9 @@ ZBlock::ZBlock(Board *cell,
                pair<int, int> d)
     : Block(cell), a(a), b(b), c(c), d(d) {}
 
-ZBlock::ZBlock() : Block(nullptr), a{0, 0}, b{0, 1}, c{1, 1}, d{1, 2} {}
+ZBlock::ZBlock() : Block(nullptr), a{0, 3}, b{1, 3}, c{1, 4}, d{2, 4} {}
 
-ZBlock::ZBlock(Board *cell) : Block(cell), a{0, 0}, b{0, 1}, c{1, 1}, d{1, 2} {}
+ZBlock::ZBlock(Board *cell) : Block(cell), a{0, 3}, b{1, 3}, c{1, 4}, d{2, 4} {}
 
 char ZBlock::getChar(int x, int y)
 {

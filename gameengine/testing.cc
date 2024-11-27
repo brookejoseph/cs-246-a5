@@ -40,6 +40,13 @@ int main()
     gameEngine.executeCommand("validMove");
     gameEngine.executeCommand("drop");
 
+    gameEngine.executeCommand("zBlock");
+    gameEngine.executeCommand("ccw", 1);
+    gameEngine.executeCommand("right", 5);
+    gameEngine.executeCommand("left", 3);
+    gameEngine.executeCommand("validMove");
+    gameEngine.executeCommand("drop");
+
     Board *current = gameEngine.returnCurrentBoard();
     printBoard(current, 11, 18);
 

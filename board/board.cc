@@ -143,12 +143,11 @@ void Board::drop()
 {
     auto coords = currentBlock->getCoord();
 
-    while ((coords.at(0).second != dimY) && (coords.at(1).second != dimY) && (coords.at(2).second != dimY) && (coords.at(3).second != dimY))
+    while (((coords.at(0).second != dimY - 1) && (coords.at(1).second != dimY - 1) && (coords.at(2).second != dimY - 1) && (coords.at(3).second != dimY - 1)) &&
+    ((grid[coords.at(0).first][coords.at(0).second + 1] == ' ') && (grid[coords.at(1).first][coords.at(1).second + 1] == ' ') && (grid[coords.at(2).first][coords.at(2).second + 1] == ' ') && (grid[coords.at(3).first][coords.at(3).second + 1] == ' ')))
     {
-        ++coords.at(0).second;
-        ++coords.at(1).second;
-        ++coords.at(2).second;
-        ++coords.at(3).second;
+        currentBlock->down();
+        coords = currentBlock->getCoord();
     }
 
     addCell(*currentBlock);
