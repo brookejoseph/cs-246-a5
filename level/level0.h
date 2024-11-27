@@ -6,7 +6,7 @@ class Level0: public Level {
     unsigned int position; // position in sequence file
 
     public:
-        explicit Level0(std::vector<char> sequence);
+        Level0();
         ~Level0();
 
         virtual int getLevel() const override;

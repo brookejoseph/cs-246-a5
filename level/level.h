@@ -15,8 +15,6 @@ protected:
 
 public:
     Level() = default; // default ctor
-    explicit Level(std::vector<char> sequence);
-    Level(std::vector<char> sequence, bool isRandom);
     virtual ~Level() = 0; // default dtor
 
     void setRandom(bool isRandom);           // set random generation

@@ -7,7 +7,7 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level0::Level0(std::vector<char> sequence) : Level{sequence}, position{0} {}
+Level0::Level0(): position{0} {}
 
 Level0::~Level0() {}
 

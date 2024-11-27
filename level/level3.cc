@@ -7,7 +7,7 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level3::Level3(std::vector<char> sequence, bool isRandom) : Level{sequence, isRandom}, position{0} {}
+Level3::Level3(): position{0} {}
 
 Level3::~Level3() {}
 
