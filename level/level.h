@@ -15,8 +15,8 @@ protected:
     unsigned int position;
 
 public:
-    Level(); // default ctor
-    virtual ~Level() = 0; // default dtor
+    Level() = default;          // default ctor
+    virtual ~Level() = default; // default dtor
 
     void setRandom(bool isRandom);           // set random generation
     void setSequence(std::vector<char> seq); // set block sequence

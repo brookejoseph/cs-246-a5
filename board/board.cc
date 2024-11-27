@@ -5,6 +5,11 @@
 #include "../block/block.h"
 #include "../cell/cell.h"
 #include "../level/level.h"
+#include "../level/level0.h"
+#include "../level/level1.h"
+#include "../level/level2.h"
+#include "../level/level3.h"
+#include "../level/level4.h"
 
 #include <map>
 
@@ -121,34 +126,14 @@ void Board::addCell(Block &thisBlock)
 
 void Board::levelUp()
 {
-    std::map<int, Level *> levelMap = {
-        {0, new Level0()}, // to fix
-        {1, new Level1()},
-        {2, new Level2()},
-        {3, new Level3()},  // to fix
-        {4, new Level4()}}; // to fix
-
-    if (levelMap.find(currentLevel) != levelMap.end())
-    {
-        levelsPtr = levelMap[++currentLevel];
-        ++currentLevel;
-    };
+    currentPtr = parameter[++currentLevel];
+    ++currentLevel;
 };
 
 void Board::levelDown()
 {
-    std::map<int, Level *> levelMap = {
-        {0, new Level0()}, // to fix
-        {1, new Level1()},
-        {2, new Level2()},
-        {3, new Level3()},  // to fix
-        {4, new Level4()}}; // to fix
-
-    if (levelMap.find(currentLevel) != levelMap.end())
-    {
-        levelsPtr = levelMap[--currentLevel];
-        --currentLevel;
-    };
+    currentPtr = parameter[--currentLevel];
+    --currentLevel;
 };
 
 void Board::drop()
@@ -211,16 +196,12 @@ void Board::updateClearLines()
     }
 }
 
-
-
-
 // for use in game engine
-//void setSequence(const std::vector<char> &seq) {
+// void setSequence(const std::vector<char> &seq) {
 //    for (auto lvl: levelList) {
 //        lvl->setSequence(seq);
 //    }
 //}
-
 
 int Board::getCurrentLevelVal()
 {
@@ -229,7 +210,7 @@ int Board::getCurrentLevelVal()
 
 Level *Board::getCurrentLevelPtr()
 {
-    return levelsPtr;
+    return currentPtr;
 };
 
 /*
@@ -254,4 +235,3 @@ void Board::drop()
 
 
 */
-

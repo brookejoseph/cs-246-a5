@@ -4,7 +4,7 @@
 #include <iostream>
 #include <ostream>
 #include "block.h"
-#include "blockS.h"
+#include "../block/blockS.h"
 // #include "../board/board.h"
 
 using namespace std;

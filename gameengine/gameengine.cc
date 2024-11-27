@@ -7,6 +7,12 @@
 #include "../block/blockS.h"
 #include "../block/blockL.h"
 #include "../level/level.h"
+#include "../level/level.h"
+#include "../level/level0.h"
+#include "../level/level1.h"
+#include "../level/level2.h"
+#include "../level/level3.h"
+#include "../level/level4.h"
 
 #include <iostream>
 #include <memory>

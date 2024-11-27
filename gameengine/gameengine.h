@@ -2,6 +2,13 @@
 #define GAMEENGINE_H
 #include "../board/board.h"
 #include "../commandcontroller/commandcontroller.h"
+#include "../level/level.h"
+#include "../level/level0.h"
+#include "../level/level1.h"
+#include "../level/level2.h"
+#include "../level/level3.h"
+#include "../level/level4.h"
+
 #include <memory>
 #include <map>
 #include <functional>

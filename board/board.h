@@ -37,11 +37,15 @@ private:
 protected:
     int dimX = 11;
     int dimY = 18;
-
     int numLinesCleared;
-    int currentLevel;
 
-    Level *levelsPtr;
+    int currentLevel;
+    Level *currentPtr;
+    Level *parameter[5] = {new Level0(),
+                           new Level1(),
+                           new Level2(),
+                           new Level3(),
+                           new Level4()};
 
 public:
     Board(int x, int y) noexcept;

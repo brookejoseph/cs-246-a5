@@ -11,6 +11,11 @@ SRC = testing.cc \
       ../block/blockJ.cc \
       ../block/blockO.cc \
       ../block/blockS.cc \
+      ../level/level0.cc  \
+      ../level/level1.cc \
+      ../level/level2.cc \
+      ../level/level3.cc \
+      ../level/level4.cc \
       ../block/block.cc 
 
 OBJ = $(SRC:.cc=.o)
