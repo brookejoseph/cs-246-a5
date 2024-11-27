@@ -146,9 +146,8 @@ void Board::drop()
         currentBlock->down();
         coords = currentBlock->getCoord();
     }
-    this->updateClearLines();
-
     addCell(*currentBlock);
+    this->updateClearLines();
 };
 
 void Board::restart()
@@ -173,27 +172,42 @@ int Board::checkClearLine()
 
 void Board::updateClearLines()
 {
-    cout << "within the updateClearlines";
+    cout << "within the updateClearlines" << endl;
     int linesCleared = 0;
-
-    for (int row = grid.size() - 1; row >= 0; --row)
-    {
-        if (all_of(grid[row].begin(), grid[row].end(), [](char c)
-                   { return c != ' '; }))
-        {
-            ++linesCleared;
-            ++numLinesCleared;
-
-            for (int r = row; r > 0; --r)
-            {
-                grid[r] = grid[r - 1];
+    //cout << "*" << grid[12][10];
+    bool cleared = true;
+    while (cleared) {
+        cleared = false;
+        ++linesCleared;
+        ++numLinesCleared;
+        for (int row = 17; row > 0; --row) {
+            vector<char> selectedRow;
+            for (int col = 0; col < 11; ++col) {
+                selectedRow.push_back(grid[col][row]);
             }
 
-            grid[0] = vector<char>(grid[0].size(), ' ');
+            if (all_of(selectedRow)) {
+                cleared = true;
+                for (int col = 0; col < 11; ++col) {
+                    grid[col][row] = ' ';  
+                }
 
-            ++row;
+                for (int row2 = row; row2 > 0; --row2) {
+                    for (int col = 0; col < 11; ++col) {
+                        grid[col][row2] = grid[col][row2 - 1];
+                    }
+                }
+
+                for (int col = 0; col < 11; ++col) {
+                    grid[col][0] = ' ';
+                }
+
+            }
+
         }
+
     }
+
 }
 
 // for use in game engine
