@@ -6,7 +6,14 @@
 #include <iostream>
 #include <ostream>
 #include <memory>
+
 #include "../level/level.h"
+#include "../level/level0.h"
+#include "../level/level1.h"
+#include "../level/level2.h"
+#include "../level/level3.h"
+#include "../level/level4.h"
+
 #include "../observer/subject.h"
 
 class Block; // forward declaration
@@ -32,10 +39,17 @@ protected:
     int dimY = 18;
 
     int numLinesCleared;
+    int currentLevel;
+
+    Level *levelsPtr;
 
 public:
     Board(int x, int y) noexcept;
     ~Board() = default;
+
+    virtual void updateLevel();
+    virtual int getCurrentLevelVal();
+    virtual Level *getCurrentLevelPtr();
 
     virtual int checkClearLine();
     virtual void updateClearLines();

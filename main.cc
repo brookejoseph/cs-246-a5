@@ -1,6 +1,6 @@
-#include "board/board.h"
-#include "textdisplay/textdisplay.h"
-#include "graphicdisplay/graphicdisplay.h"
+#include "../board/board.h"
+#include "../textdisplay/textdisplay.h"
+#include "../graphicdisplay/graphicdisplay.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -31,101 +31,130 @@ const std::vector<char> blockTypes = {'I', 'J', 'L', 'O', 'S', 'Z', 'T'};
 // and then catch...
 // setSequence would do setSequence for each of the levels in levelList
 
-std::vector<char> parseSequence(std::string sequenceFile, const std::vector<char> &blockTypes) {
-    std::ifstream file {sequenceFile};
+std::vector<char> parseSequence(std::string sequenceFile, const std::vector<char> &blockTypes)
+{
+    std::ifstream file{sequenceFile};
     std::vector<char> sequence;
 
-    if (file.is_open()) {
+    if (file.is_open())
+    {
         char c;
-        while (file >> c) {
+        while (file >> c)
+        {
             auto it = std::find(blockTypes.begin(); blockTypes.end(), c);
-            if (it != blockTypes.end()) sequence.push_back(c);
+            if (it != blockTypes.end())
+                sequence.push_back(c);
         }
-
-    } else { // file is unable to open
+    }
+    else
+    { // file is unable to open
         throw std::logic_error{"Error opening sequence file: " + sequenceFile};
     }
 
     // unable to parse given file
-    if (sequence.size() == 0) {
+    if (sequence.size() == 0)
+    {
         throw std::logic_error{"Invalid sequence file provided: " + sequenceFile};
     }
 
     return sequence;
 }
 
-
-int main(int argc, const char *argv[]) {
+int main(int argc, const char *argv[])
+{
 
     // instantiate game and players
     GameEngine game{dimX, dimY};
 
     // try reading command-line arguments
-    try {
-        for (int i = 1; i < argc; ++i) {
+    try
+    {
+        for (int i = 1; i < argc; ++i)
+        {
             // - text
-            if (argv[i] == "-text") {
+            if (argv[i] == "-text")
+            {
                 textOnly = true;
 
-            // -seed
-            } else if (argv[i] == "-seed") {
-                if (i + 1 >= argc) {
+                // -seed
+            }
+            else if (argv[i] == "-seed")
+            {
+                if (i + 1 >= argc)
+                {
                     throw std::logic_error{"Missing value for -seed"};
                 }
 
-                try {
+                try
+                {
                     seed = std::stoi(argv[++i]);
                     game->setSeed(seed);
                 }
 
-                catch (...) {
+                catch (...)
+                {
                     throw std::logic_error{"Missing value for -seed: must be an integer value"};
                 }
 
-            // -scriptfile1
-            } else if (argv[i] == "-scriptfile1") {
-                if (i + 1 >= argc) {
+                // -scriptfile1
+            }
+            else if (argv[i] == "-scriptfile1")
+            {
+                if (i + 1 >= argc)
+                {
                     throw std::logic_error{"Missing value for -scriptfile1"};
                 }
 
                 sequenceFile1 = argv[++i];
                 game->getPlayer1()->setSequence(game->parseSequence(sequenceFile1));
-            
-            // -scriptfile2
-            } else if (argv[i] == "-scriptfile2") {
-                if (i + 1 >= argc) {
+
+                // -scriptfile2
+            }
+            else if (argv[i] == "-scriptfile2")
+            {
+                if (i + 1 >= argc)
+                {
                     throw std::logic_error{"Missing value for -scriptfile2"};
                 }
 
                 sequenceFile2 = argv[++i];
                 game->getPlayer1()->setSequence(game->parseSequence(sequenceFile2));
 
-            // -startlevel
-            } else if (argv[i] == "-startlevel") {
-                if (i + 1 >= argc) {
+                // -startlevel
+            }
+            else if (argv[i] == "-startlevel")
+            {
+                if (i + 1 >= argc)
+                {
                     throw std::logic_error{"Missing value for -startlevel"};
                 }
 
-                try {
+                try
+                {
                     startLevel = std::stoi(argv[++i]);
-                    if (startLevel < 0 || startLevel > 4) throw std::logic_error();
+                    if (startLevel < 0 || startLevel > 4)
+                        throw std::logic_error();
                     game->getPlayer1()->setLevel(startLevel);
                     game->getPlayer2()->setLevel(startLevel);
                 }
 
-                catch (...) {
+                catch (...)
+                {
                     throw std::logic_error{"Missing value for -startlevel: must be an integer value 0-4"};
                 }
-            
-            // invalid input
-            } else {
+
+                // invalid input
+            }
+            else
+            {
                 throw std::logic_error{"Unknown command-line argument: " + argv[i]};
             }
-        }   
+        }
     }
 
     // quit game if invalid command-line input
-    catch (std::logic_error &e) {
+    catch (std::logic_error &e)
+    {
         std::cout << e.what() << "\n";
         std::cout << "Usage: ./biquadris [-text] [-seed xxx] [-scriptfile1 xxx] [-scriptfile2 xxx] [-startlevel n]" << std::endl;
         return 1;
@@ -137,7 +166,8 @@ int main(int argc, const char *argv[]) {
     player2->attach(textView);
 
     // make graphical observers if not textOnly
-    if (!textOnly) {
+    if (!textOnly)
+    {
         std::shared_ptr<GraphicDisplay> graphicView = std::make_shared<GraphicDisplay>(game->getPlayer1(), game->getPlayer2());
         game->getPlayer1->attach(graphicView);
         game->getPlayer2->attach(graphicView);
@@ -150,7 +180,8 @@ int main(int argc, const char *argv[]) {
     game->getPlayer1->detach(textView);
     game->getPlayer2->detach(textView);
 
-    if (!textOnly) {
+    if (!textOnly)
+    {
         game->getPlayer1->detach(graphicView);
         game->getPlayer2->detach(graphicView);
     }
