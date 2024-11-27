@@ -7,10 +7,6 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level0::Level0(): position{0} {}
-
-Level0::~Level0() {}
-
 int Level0::getLevel() const { return 0; }
 
 std::shared_ptr<Block> Level0::createBlock()
@@ -56,5 +52,3 @@ std::shared_ptr<Block> Level0::createBlock()
     nextBlock->setLevel(0);
     return nextBlock;
 }
-
-void Level0::setPosition(int n) { position = n; }

@@ -12,13 +12,15 @@ class Level
 protected:
     bool random = false;
     std::vector<char> sequence;
+    unsigned int position;
 
 public:
-    Level() = default; // default ctor
+    Level(); // default ctor
     virtual ~Level() = 0; // default dtor
 
     void setRandom(bool isRandom);           // set random generation
     void setSequence(std::vector<char> seq); // set block sequence
+    void setPosition(int n);
 
     virtual int getLevel() const = 0;                 // get the level number
     virtual std::shared_ptr<Block> createBlock() = 0; // generate a Block

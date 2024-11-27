@@ -7,10 +7,6 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level3::Level3(): position{0} {}
-
-Level3::~Level3() {}
-
 int Level3::getLevel() const { return 3; }
 
 std::shared_ptr<Block> Level3::createBlock()

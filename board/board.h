@@ -80,6 +80,7 @@ public:
     virtual void setDimX(int x);
     virtual void setDimY(int y);
 
+    void setSequence(const std::vector<char> &seq); // added this <<<<
     void setCurrentBlock(Block *block);
     void setNextBlock(Block *block);
     void convertNextToCurrent();
