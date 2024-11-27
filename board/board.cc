@@ -176,6 +176,7 @@ int Board::checkClearLine()
 
 void Board::updateClearLines()
 {
+    cout << "within the updateClearlines";
     int linesCleared = 0;
 
     for (int row = grid.size() - 1; row >= 0; --row)

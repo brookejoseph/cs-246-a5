@@ -30,20 +30,38 @@ int main()
     GameEngine gameEngine(11, 18);
 
     gameEngine.executeCommand("oBlock");
+    gameEngine.executeCommand("validMove");
+    gameEngine.executeCommand("drop");
+
+    gameEngine.executeCommand("oBlock");
     gameEngine.executeCommand("right", 2);
     gameEngine.executeCommand("validMove");
     gameEngine.executeCommand("drop");
 
-    gameEngine.executeCommand("zBlock");
-    gameEngine.executeCommand("right", 5);
-    gameEngine.executeCommand("left", 2);
+    gameEngine.executeCommand("oBlock");
+    gameEngine.executeCommand("right", 4);
     gameEngine.executeCommand("validMove");
     gameEngine.executeCommand("drop");
 
-    gameEngine.executeCommand("zBlock");
-    gameEngine.executeCommand("ccw", 1);
-    gameEngine.executeCommand("right", 5);
-    gameEngine.executeCommand("left", 3);
+    gameEngine.executeCommand("oBlock");
+    gameEngine.executeCommand("right", 6);
+    gameEngine.executeCommand("validMove");
+    gameEngine.executeCommand("drop");
+
+    gameEngine.executeCommand("oBlock");
+    gameEngine.executeCommand("right", 8);
+    gameEngine.executeCommand("validMove");
+    gameEngine.executeCommand("drop");
+
+    gameEngine.executeCommand("iBlock");
+    gameEngine.executeCommand("clockwise", 1);
+    gameEngine.executeCommand("right", 10);
+    gameEngine.executeCommand("validMove");
+    gameEngine.executeCommand("drop");
+
+    gameEngine.executeCommand("iBlock");
+    gameEngine.executeCommand("clockwise", 1);
+    gameEngine.executeCommand("right", 11);
     gameEngine.executeCommand("validMove");
     gameEngine.executeCommand("drop");
 
