@@ -7,7 +7,7 @@
 #include <functional>
 
 using namespace std;
-class GameEngine
+class GameEngine : public Subject
 {
 private:
     Board *baseBoard;

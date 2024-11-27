@@ -11,7 +11,7 @@
 
 class Block; // forward declaration
 
-class Board : public Subject
+class Board
 {
 private:
     std::vector<std::vector<char>> grid;
@@ -72,7 +72,7 @@ public:
     void convertNextToCurrent();
 
     void setValue(char newValue, int x, int y);
-    virtual char getValue(int x, int y) override;
+    virtual char getValue(int x, int y);
 };
 
 #endif

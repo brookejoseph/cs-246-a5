@@ -63,52 +63,6 @@ GameEngine::~GameEngine()
 
 /// above is the newly add stuff
 
-/*
-void GameEngine::initializeCommandMap()
-{
-    commandMap = {
-        {"left", [this](int amount)
-         { baseBoard->left(amount); }},
-        {"right", [this](int amount)
-         { baseBoard->right(amount); }},
-        {"down", [this](int amount)
-         { baseBoard->down(amount); }},
-        {"drop", [this](int)
-         { baseBoard->drop(); }},
-        {"counterclockwise", [this](int amount)
-         { baseBoard->ccw(amount); }},
-        {"clockwise", [this](int amount)
-         { baseBoard->cw(amount); }},
-        {"validMove", [this](int)
-         { baseBoard->isValidMove(); }},
-        {"levelup", [this](int)
-         { ++currentLevel; }},
-        {"leveldown", [this](int)
-         { --currentLevel; }},
-        {"zBlock", [this](int)
-         { ZBlock *newBlock = new ZBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"tBlock", [this](int)
-         { TBlock *newBlock = new TBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"jBlock", [this](int)
-         { JBlock *newBlock = new JBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"iBlock", [this](int)
-         { IBlock *newBlock = new IBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"sBlock", [this](int)
-         { SBlock *newBlock = new SBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"oBlock", [this](int)
-         { OBlock *newBlock = new OBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"lBlock", [this](int)
-         { LBlock *newBlock = new LBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-    };
-}*/
-
 void GameEngine::initializeCommandMap()
 {
     commandMap = {
@@ -218,3 +172,49 @@ void GameEngine::executeCommand(const std::string &command, int amount)
     }
 };
 */
+
+/*
+void GameEngine::initializeCommandMap()
+{
+    commandMap = {
+        {"left", [this](int amount)
+         { baseBoard->left(amount); }},
+        {"right", [this](int amount)
+         { baseBoard->right(amount); }},
+        {"down", [this](int amount)
+         { baseBoard->down(amount); }},
+        {"drop", [this](int)
+         { baseBoard->drop(); }},
+        {"counterclockwise", [this](int amount)
+         { baseBoard->ccw(amount); }},
+        {"clockwise", [this](int amount)
+         { baseBoard->cw(amount); }},
+        {"validMove", [this](int)
+         { baseBoard->isValidMove(); }},
+        {"levelup", [this](int)
+         { ++currentLevel; }},
+        {"leveldown", [this](int)
+         { --currentLevel; }},
+        {"zBlock", [this](int)
+         { ZBlock *newBlock = new ZBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"tBlock", [this](int)
+         { TBlock *newBlock = new TBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"jBlock", [this](int)
+         { JBlock *newBlock = new JBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"iBlock", [this](int)
+         { IBlock *newBlock = new IBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"sBlock", [this](int)
+         { SBlock *newBlock = new SBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"oBlock", [this](int)
+         { OBlock *newBlock = new OBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"lBlock", [this](int)
+         { LBlock *newBlock = new LBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+    };
+}*/
