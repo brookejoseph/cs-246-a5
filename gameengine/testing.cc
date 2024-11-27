@@ -13,6 +13,7 @@ using namespace std;
 
 void printBoard(Board *board, int dimX, int dimY)
 {
+
     cout << "Current Board State:\n";
     for (int y = dimY - 1; y >= 0; --y)
     {
