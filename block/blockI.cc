@@ -3,7 +3,6 @@
 #include <iostream>
 #include <ostream>
 #include "block.h"
-#include "../cell/cell.h"
 #include "blockI.h"
 
 using namespace std;
@@ -21,6 +20,8 @@ IBlock::IBlock(Board *cell,
 
 IBlock::IBlock() : Block(nullptr),
                    a{0, 3}, b{1, 3}, c{2, 3}, d{3, 3} {};
+IBlock::IBlock(Board *cell) : Block(cell),
+                              a{0, 3}, b{1, 3}, c{2, 3}, d{3, 3} {};
 
 char IBlock::getChar(int x, int y)
 {

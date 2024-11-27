@@ -1,15 +1,10 @@
-
-#include "blockl.h"
-
 #include <vector>
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "cell/cell.h" // to add
 #include "block.h"
 #include "blockL.h"
-#include "cell/cell.h"
-#include "board/board.h"
+// #include "board/board.h"
 
 using namespace std;
 
@@ -26,6 +21,9 @@ LBlock::LBlock(Board *cell,
 
 LBlock::LBlock() : Block(nullptr),
                    a{1, 4}, b{1, 3}, c{1, 2}, d{2, 2} {};
+
+LBlock::LBlock(Board *cell) : Block(cell),
+                              a{1, 4}, b{1, 3}, c{1, 2}, d{2, 2} {};
 
 char LBlock::getChar(int x, int y)
 {

@@ -5,7 +5,8 @@
 #include <ostream>
 #include "block.h"
 #include "blockZ.h"
-#include "../board/board.h"
+
+// #include "../board/board.h"
 
 using namespace std;
 
@@ -13,15 +14,16 @@ vector<pair<int, int>> ZBlock::getCoord()
 {
     return {a, b, c, d};
 }
-
 ZBlock::ZBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
-               pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
+               pair<int, int> d)
+    : Block(cell), a(a), b(b), c(c), d(d) {}
 
-ZBlock::ZBlock() : Block(nullptr),
-                   a{0, 1}, b{1, 1}, c{1, 2}, d{2, 2} {};
+ZBlock::ZBlock() : Block(nullptr), a{0, 0}, b{0, 0}, c{0, 0}, d{0, 0} {}
+
+ZBlock::ZBlock(Board *cell) : Block(cell), a{0, 0}, b{0, 0}, c{0, 0}, d{0, 0} {}
 
 char ZBlock::getChar(int x, int y)
 {

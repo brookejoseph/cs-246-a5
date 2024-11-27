@@ -3,11 +3,9 @@
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "cell/cell.h" // to add
 #include "block.h"
 #include "blockJ.h"
-#include "cell/cell.h"
-#include "board/board.h"
+// #include "board/board.h"
 
 using namespace std;
 
@@ -23,6 +21,9 @@ JBlock::JBlock(Board *cell,
 
 JBlock::JBlock() : Block(nullptr),
                    a{0, 4}, b{1, 4}, c{1, 3}, d{1, 2} {};
+
+JBlock::JBlock(Board *cell) : Block(cell),
+                              a{0, 4}, b{1, 4}, c{1, 3}, d{1, 2} {};
 
 char JBlock::getChar(int x, int y)
 {

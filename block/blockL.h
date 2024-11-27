@@ -24,6 +24,9 @@ public:
            pair<int, int> c,
            pair<int, int> d); // to change
     LBlock();
+    LBlock(Board *cell);
+    ~LBlock() override = default;
+
     void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;

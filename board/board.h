@@ -1,6 +1,6 @@
 
-#ifndef BOARD_H // Add this line
-#define BOARD_H // Add this line
+#ifndef BOARD_H
+#define BOARD_H
 #include <vector>
 #include <tuple>
 #include <iostream>

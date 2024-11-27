@@ -3,11 +3,8 @@
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "cell/cell.h" // to add
 #include "block.h"
 #include "blockT.h"
-#include "cell/cell.h"
-#include "board/board.h"
 
 using namespace std;
 
@@ -24,6 +21,9 @@ TBlock::TBlock(Board *cell,
 
 TBlock::TBlock() : Block(nullptr),
                    a{1, 4}, b{0, 4}, c{2, 4}, d{1, 3} {}
+
+TBlock::TBlock(Board *cell) : Block(cell),
+                              a{1, 4}, b{0, 4}, c{2, 4}, d{1, 3} {}
 
 char TBlock::getChar(int x, int y)
 {

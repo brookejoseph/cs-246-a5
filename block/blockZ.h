@@ -24,8 +24,13 @@ public:
            pair<int, int> a,
            pair<int, int> b,
            pair<int, int> c,
-           pair<int, int> d); // to change
+           pair<int, int> d);
+
     ZBlock();
+
+    ZBlock(Board *cell);
+    ~ZBlock() override = default;
+
     void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;

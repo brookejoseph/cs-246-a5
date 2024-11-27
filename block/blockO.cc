@@ -3,7 +3,6 @@
 #include <tuple>
 #include <iostream>
 #include <ostream>
-#include "cell/cell.h" // to add
 #include "block.h"
 #include "blockO.h"
 
@@ -22,6 +21,9 @@ OBlock::OBlock(Board *cell,
 
 OBlock::OBlock() : Block(nullptr),
                    a{0, 3}, b{1, 3}, c{0, 4}, d{1, 4} {};
+
+OBlock::OBlock(Board *cell) : Block(cell),
+                              a{0, 3}, b{1, 3}, c{0, 4}, d{1, 4} {};
 
 char OBlock::getChar(int x, int y)
 {

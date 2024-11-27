@@ -7,6 +7,9 @@
 
 using namespace std;
 
-Block::Block(Board *cells) : Board(dimX, dimY), cells{cells} {};
+// Block::Block(Board *cells) : Board(dimX, dimY), cells{cells} {};
+Block::Block(Board *cells) : Board(11, 18), cells(cells) {};
+
+// Block::~Block() { delete cells; };
 
 Block::~Block() = default;

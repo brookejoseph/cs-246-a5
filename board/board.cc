@@ -125,8 +125,7 @@ void Board::drop()
 {
     for (auto &t : currentBlock->getCoord())
     {
-        // negation of the condition is required
-        while (getValue(t.first, t.second) != ' ')
+        while (t.second != dimY)
         {
             ++t.second;
         };
@@ -144,6 +143,7 @@ int Board::findScore()
     return score;
 };
 
-int Board::getLevel() const {
+int Board::getLevel() const
+{
     return level;
 }

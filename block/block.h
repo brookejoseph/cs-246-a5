@@ -17,7 +17,8 @@ protected:
 
 public:
     explicit Block(Board *cells);
-    ~Block();
+    explicit Block();
+    virtual ~Block();
 
     // virtual bool getHeavy();
     // virtual void setHeavy();

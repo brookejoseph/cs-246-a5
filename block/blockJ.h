@@ -27,6 +27,9 @@ public:
            pair<int, int> d); // to change
 
     JBlock();
+    JBlock(Board *cell);
+    ~JBlock() override = default;
+
     void rotateccw() override;
     void rotatecw() override;
     char getChar(int x, int y) override;

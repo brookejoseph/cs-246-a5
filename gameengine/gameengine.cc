@@ -1,6 +1,4 @@
 #include "gameengine.h"
-#include "../board/board.h"
-#include "../board/board.cc"
 #include "../block/blockZ.h"
 #include "../block/blockJ.h"
 #include "../block/blockO.h"
@@ -8,8 +6,6 @@
 #include "../block/blockT.h"
 #include "../block/blockS.h"
 #include "../block/blockL.h"
-#include "../cell/cell.h"
-#include "../cell/cell.cc"
 
 #include <iostream>
 #include <memory>
@@ -18,54 +14,57 @@
 #include <map>
 
 using namespace std;
-
+pair<int, int> coordA = {0, 0};
+pair<int, int> coordB = {0, 1};
+pair<int, int> coordC = {1, 1};
+pair<int, int> coordD = {1, 2};
 void GameEngine::initializeCommandMap()
 {
-    commandMap = std::map<string, void (Board::*)()>{// Ensure the type is correct
-                                                     {"left", &Board::left},
-                                                     {"right", &Board::right},
-                                                     {"down", &Board::down},
-                                                     {"drop", &Board::drop},
-                                                     {"ccw", &Board::ccw},
-                                                     {"cw", &Board::cw}};
+    commandMap = {
+        {"left", [this](int amount)
+         { baseBoard->left(amount); }},
+        {"right", [this](int amount)
+         { baseBoard->right(amount); }},
+        {"down", [this](int amount)
+         { baseBoard->down(amount); }},
+        {"drop", [this](int)
+         { baseBoard->drop(); }},
+        {"ccw", [this](int amount)
+         { baseBoard->ccw(amount); }},
+        {"cw", [this](int amount)
+         { baseBoard->cw(amount); }},
+        {"zBlock", [this](int)
+         { ZBlock *newBlock = new ZBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"tBlock", [this](int)
+         { TBlock *newBlock = new TBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"jBlock", [this](int)
+         { JBlock *newBlock = new JBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"iBlock", [this](int)
+         { IBlock *newBlock = new IBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"sBlock", [this](int)
+         { SBlock *newBlock = new SBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"oBlock", [this](int)
+         { OBlock *newBlock = new OBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+        {"lBlock", [this](int)
+         { LBlock *newBlock = new LBlock();
+           baseBoard->setCurrentBlock(newBlock); }},
+    };
 }
-GameEngine::GameEngine()
+
+Board *GameEngine::returnCurrentBoard()
 {
-    if (currentChar == 'I')
-    {
-        IBlock *iBlock = new IBlock();
-        baseBoard->setCurrentBlock(iBlock);
-    }
-    else if (currentChar == 'J')
-    {
-        JBlock *jBlock = new JBlock();
-        baseBoard->setCurrentBlock(jBlock);
-    }
-    else if (currentChar == 'L')
-    {
-        LBlock *lBlock = new LBlock();
-        baseBoard->setCurrentBlock(lBlock);
-    }
-    else if (currentChar == 'O')
-    {
-        OBlock *oBlock = new OBlock();
-        baseBoard->setCurrentBlock(oBlock);
-    }
-    else if (currentChar == 'S')
-    {
-        SBlock *sBlock = new SBlock();
-        baseBoard->setCurrentBlock(sBlock);
-    }
-    else if (currentChar == 'Z')
-    {
-        ZBlock *zBlock = new ZBlock();
-        baseBoard->setCurrentBlock(zBlock);
-    }
-    else if (currentChar == 'T')
-    {
-        TBlock *tBlock = new TBlock();
-        baseBoard->setCurrentBlock(tBlock);
-    }
+    return baseBoard;
+};
+GameEngine::GameEngine(int x, int y)
+{
+    baseBoard = new Board(11, 18);
+    initializeCommandMap();
 };
 
 GameEngine::~GameEngine()
@@ -73,7 +72,15 @@ GameEngine::~GameEngine()
     delete baseBoard;
 };
 
-void GameEngine::start()
+void GameEngine::executeCommand(const std::string &command, int amount)
 {
-    baseBoard = new Board(11, 18);
+    auto it = commandMap.find(command);
+    if (it != commandMap.end())
+    {
+        it->second(amount);
+    }
+    else
+    {
+        std::cerr << "Invalid command: " << command << std::endl;
+    }
 };
