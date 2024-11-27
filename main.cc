@@ -59,8 +59,6 @@ int main(int argc, const char *argv[]) {
 
     // instantiate game and players
     GameEngine game{dimX, dimY};
-    game->setPlayer1(std::make_shared<Board>());
-    game->setPlayer2(std::make_shared<Board>());
 
     // try reading command-line arguments
     try {

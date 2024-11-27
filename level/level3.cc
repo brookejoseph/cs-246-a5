@@ -7,10 +7,7 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level3::Level3(std::vector<char> sequence, bool isRandom, int seed) : Level{sequence, isRandom}, position{0}, seed{seed}
-{
-    srand(seed);
-}
+Level3::Level3(std::vector<char> sequence, bool isRandom) : Level{sequence, isRandom}, position{0} {}
 
 Level3::~Level3() {}
 
@@ -93,5 +90,6 @@ std::shared_ptr<Block> Level3::createBlock()
         }
     }
 
+    nextBlock->setLevel(3);
     return nextBlock;
 }

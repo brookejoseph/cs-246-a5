@@ -7,8 +7,6 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level1::Level1(int seed) : seed{seed} { srand(seed); }
-
 Level1::~Level1() {}
 
 int Level1::getLevel() const { return 1; }
@@ -47,5 +45,6 @@ std::shared_ptr<Block> Level1::createBlock()
         nextBlock = std::make_shared<TBlock>();
     }
 
+    nextBlock->setLevel(1);
     return nextBlock;
 }

@@ -53,6 +53,7 @@ std::shared_ptr<Block> Level0::createBlock()
         position = 0;
     }
 
+    nextBlock->setLevel(0);
     return nextBlock;
 }
 

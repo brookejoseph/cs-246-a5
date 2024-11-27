@@ -10,7 +10,7 @@ class Block;
 class Level
 {
 protected:
-    bool random;
+    bool random = false;
     std::vector<char> sequence;
 
 public:

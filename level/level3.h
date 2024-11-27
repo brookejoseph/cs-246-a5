@@ -4,10 +4,9 @@
 
 class Level3: public Level {
     unsigned int position; // position in sequence file
-    int seed; // seed for random generation
 
     public:
-        explicit Level3(std::vector<char> sequence, bool isRandom, int seed);
+        explicit Level3(std::vector<char> sequence, bool isRandom);
         ~Level3();
 
         virtual int getLevel() const override;

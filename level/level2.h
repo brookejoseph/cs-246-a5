@@ -6,7 +6,7 @@ class Level2: public Level {
     int seed; // seed for random generation
 
     public:
-        explicit Level2(int seed);
+        Level2() = default;
         ~Level2();
 
         virtual int getLevel() const override;
