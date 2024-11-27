@@ -31,9 +31,14 @@ protected:
     int dimX = 11;
     int dimY = 18;
 
+    int numLinesCleared;
+
 public:
     Board(int x, int y) noexcept;
     ~Board() = default;
+
+    virtual int checkClearLine();
+    virtual void updateClearLines();
 
     bool isValidMove();
     int findScore();
@@ -50,12 +55,12 @@ public:
     void ccw(int amount);   // done
     void drop();            // done
 
-    void saveGame(); //??
-    void restart();  // done
+    void saveGame();
+    void restart(); // done
     void loadGame();
     // virtual char getState(int x, int y) const override;
 
-    void eraseBlock();          // whats the difference between this and restart idk
+    void eraseBlock();
     void addCell(Block &block); // done
     void addToTurnCount();
     int getTurnCount();

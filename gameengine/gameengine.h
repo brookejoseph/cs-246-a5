@@ -7,26 +7,39 @@
 #include <functional>
 
 using namespace std;
-
 class GameEngine
 {
 private:
     Board *baseBoard;
     std::shared_ptr<Board> player1;
     std::shared_ptr<Board> player2;
-    string currentCommand; // done
-    int amount;            // done
-    char currentChar;      // done
+    string currentCommand;
+    int currentLevel;
+    char currentChar;
+
+    int currentScore = 0;
+    int highScore = 0;
+
     std::map<std::string, std::function<void(int)>> commandMap;
 
     void initializeCommandMap();
 
+    void updateHighScore();
+
 public:
     GameEngine(int x, int y);
     ~GameEngine();
+
     void executeCommand(const std::string &command, int amount = 1);
 
     Board *returnCurrentBoard();
+
+    void clearLines(int linesCleared);
+    void clearBlock();
+    void restartGame();
+
+    int getCurrentScore() const;
+    int getHighScore() const;
 };
 
 #endif

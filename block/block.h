@@ -14,6 +14,7 @@ class Block : public Board
 {
 protected:
     Board *cells;
+    int numLinesCleared;
 
 public:
     explicit Block(Board *cells);

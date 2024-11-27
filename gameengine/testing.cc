@@ -47,7 +47,14 @@ int main()
     gameEngine.executeCommand("validMove");
     gameEngine.executeCommand("drop");
 
+    std::cout << "Current Score: " << gameEngine.getCurrentScore() << "\n";
+
+    gameEngine.executeCommand("clear_block");
+    std::cout << "High Score: " << gameEngine.getHighScore() << "\n";
+
     Board *current = gameEngine.returnCurrentBoard();
+    int num = current->checkClearLine();
+    cout << "number of cleared lines" << num << endl;
     printBoard(current, 11, 18);
 
     return 0;

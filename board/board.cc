@@ -144,11 +144,12 @@ void Board::drop()
     auto coords = currentBlock->getCoord();
 
     while (((coords.at(0).second != dimY - 1) && (coords.at(1).second != dimY - 1) && (coords.at(2).second != dimY - 1) && (coords.at(3).second != dimY - 1)) &&
-    ((grid[coords.at(0).first][coords.at(0).second + 1] == ' ') && (grid[coords.at(1).first][coords.at(1).second + 1] == ' ') && (grid[coords.at(2).first][coords.at(2).second + 1] == ' ') && (grid[coords.at(3).first][coords.at(3).second + 1] == ' ')))
+           ((grid[coords.at(0).first][coords.at(0).second + 1] == ' ') && (grid[coords.at(1).first][coords.at(1).second + 1] == ' ') && (grid[coords.at(2).first][coords.at(2).second + 1] == ' ') && (grid[coords.at(3).first][coords.at(3).second + 1] == ' ')))
     {
         currentBlock->down();
         coords = currentBlock->getCoord();
     }
+    this->updateClearLines();
 
     addCell(*currentBlock);
 };
@@ -166,4 +167,33 @@ int Board::findScore()
 int Board::getLevel() const
 {
     return level;
+}
+
+int Board::checkClearLine()
+{
+    return numLinesCleared;
+}
+
+void Board::updateClearLines()
+{
+    int linesCleared = 0;
+
+    for (int row = grid.size() - 1; row >= 0; --row)
+    {
+        if (all_of(grid[row].begin(), grid[row].end(), [](char c)
+                   { return c != ' '; }))
+        {
+            ++linesCleared;
+            ++numLinesCleared;
+
+            for (int r = row; r > 0; --r)
+            {
+                grid[r] = grid[r - 1];
+            }
+
+            grid[0] = vector<char>(grid[0].size(), ' ');
+
+            ++row;
+        }
+    }
 }
