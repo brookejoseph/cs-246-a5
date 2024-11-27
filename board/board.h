@@ -47,7 +47,8 @@ public:
     Board(int x, int y) noexcept;
     ~Board() = default;
 
-    virtual void updateLevel();
+    virtual void levelUp();
+    virtual void levelDown();
     virtual int getCurrentLevelVal();
     virtual Level *getCurrentLevelPtr();
 

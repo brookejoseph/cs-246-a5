@@ -81,9 +81,9 @@ void GameEngine::initializeCommandMap()
         {"validMove", [this](int)
          { baseBoard->isValidMove(); }},
         {"levelup", [this](int)
-         { ++currentLevel; }},
+         { baseBoard->levelUp(); }},
         {"leveldown", [this](int)
-         { --currentLevel; }},
+         { baseBoard->levelDown(); }},
         {"zBlock", [this](int)
          { ZBlock *newBlock = new ZBlock();
            baseBoard->setCurrentBlock(newBlock); }},

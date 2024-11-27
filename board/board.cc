@@ -119,7 +119,7 @@ void Board::addCell(Block &thisBlock)
     };
 };
 
-void Board::updateLevel()
+void Board::levelUp()
 {
     static std::map<int, Level *> levelMap = {
         {0, new Level0()}, // to fix
@@ -130,8 +130,24 @@ void Board::updateLevel()
 
     if (levelMap.find(currentLevel) != levelMap.end())
     {
-        levelsPtr = levelMap[currentLevel];
+        levelsPtr = levelMap[++currentLevel];
         ++currentLevel;
+    };
+};
+
+void Board::levelDown()
+{
+    static std::map<int, Level *> levelMap = {
+        {0, new Level0()}, // to fix
+        {1, new Level1()},
+        {2, new Level2()},
+        {3, new Level3()},  // to fix
+        {4, new Level4()}}; // to fix
+
+    if (levelMap.find(currentLevel) != levelMap.end())
+    {
+        levelsPtr = levelMap[--currentLevel];
+        --currentLevel;
     };
 };
 
