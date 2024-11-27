@@ -3,10 +3,8 @@
 #include "level.h"
 
 class Level4: public Level {
-    unsigned int position; // position in sequence file
-
     public:
-        Level4() = default;
+        Level4();
         ~Level4() = default;
 
         virtual int getLevel() const override;

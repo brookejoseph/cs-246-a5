@@ -7,6 +7,8 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
+Level0::Level0(): Level() {}
+
 int Level0::getLevel() const { return 0; }
 
 std::shared_ptr<Block> Level0::createBlock()

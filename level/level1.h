@@ -5,7 +5,7 @@
 class Level1 : public Level
 {
 public:
-    Level1() = default;
+    Level1();
     ~Level1() = default;
 
     virtual int getLevel() const override;
