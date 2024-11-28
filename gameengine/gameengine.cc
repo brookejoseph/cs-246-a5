@@ -46,7 +46,7 @@ void GameEngine::updateHighScore()
 
 void GameEngine::clearLines(int linesCleared)
 {
-    int level = returnCurrentBoard()->getLevel();
+    int level = returnCurrentBoard()->getCurrentLevelVal();
     int points = std::pow(level + linesCleared, 2);
     int current = grabCurrentScore();
     current += points;
@@ -55,7 +55,7 @@ void GameEngine::clearLines(int linesCleared)
 
 void GameEngine::clearBlock()
 {
-    int levelWhenGenerated = returnCurrentBoard()->getLevel();
+    int levelWhenGenerated = returnCurrentBoard()->getCurrentLevelVal();
     int points = std::pow(levelWhenGenerated + 1, 2);
     int current = grabCurrentScore();
     current += points;
