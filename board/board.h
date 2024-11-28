@@ -27,10 +27,12 @@ private:
     Block *nextBlock;
 
     int noClearCount;
+    
 
 protected:
     int dimX = 11;
     int dimY = 18;
+    int noBlocksCleared = 0;
     int numLinesCleared;
 
     std::vector<Block *> addedBlocks;
@@ -46,8 +48,8 @@ public:
     Board(int x, int y) noexcept;
     ~Board() = default;
 
-    void levelUp(int amount);
-    void levelDown(int amount);
+    void levelUp();
+    void levelDown();
     int getLevel() const;
 
     int checkClearLine();
@@ -57,7 +59,7 @@ public:
 
     void addBlockToVec(Block *blockVal);
     void removeIncr(int row);
-    bool blockRemoved();
+    void blockRemoved();
 
     void left(int amount);  // done
     void right(int amount); // done
@@ -69,6 +71,9 @@ public:
     void restart(); // done
 
     void addCell(Block &block); // done
+    void addToTurnCount();
+    int getTurnCount();
+    int checkClearBlock();
     virtual void setDimX(int x);
     virtual void setDimY(int y);
 

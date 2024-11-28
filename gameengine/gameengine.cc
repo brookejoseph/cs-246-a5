@@ -23,18 +23,14 @@
 
 using namespace std;
 
-bool GameEngine::blockRemoved()
-{
-    return baseBoard->blockRemoved();
-};
-
 int GameEngine::grabCurrentScore()
 {
-    map<int, int> currentS = {
-        {1, player1Score},
-        {2, player2Score},
-    };
-    return currentS[currentPlayer];
+    return (currentPlayer == 1) ? player1Score : player2Score;
+}
+
+int GameEngine::grabPlayer()
+{
+    return currentPlayer;
 };
 
 void GameEngine::updateHighScore()
@@ -51,24 +47,50 @@ void GameEngine::updateHighScore()
 
 void GameEngine::calScore()
 {
-    int level = returnCurrentBoard()->getLevel();
-    int numLines = returnCurrentBoard()->checkClearLine();
-    int points = std::pow(level + numLines, 2);
-    int newPoints = 0;
+    int level = currentBoard()->getLevel();
+    int numLines = currentBoard()->checkClearLine();
+    int numBlocks = currentBoard()->checkClearBlock();
 
-    if (blockRemoved())
+    int linePoints = std::pow(level + numLines, 2);
+    int blockPoints = numBlocks * std::pow(level + 1, 2);
+
+    int totalPoints = linePoints + blockPoints;
+
+    if (currentPlayer == 1)
     {
-        newPoints = pow(level + 1, 2);
-    };
-    int current = grabCurrentScore();
-    current = current + points + newPoints;
+        player1Score += totalPoints;
+    }
+    else
+    {
+        player2Score += totalPoints;
+    }
+
     updateHighScore();
+}
+
+Board *GameEngine::currentBoard()
+{
+    return (currentPlayer == 1) ? player1 : player2;
+}
+
+void GameEngine::setPlayer()
+{
+    if (currentPlayer == 1)
+    {
+        currentPlayer = 2;
+    }
+    else
+    {
+        currentPlayer = 1;
+    }
 }
 
 void GameEngine::restartGame()
 {
     player1Score = 0;
     player2Score = 0;
+    player1->restart();
+    player2->restart();
 }
 
 int GameEngine::getCurrentScore()
@@ -84,53 +106,66 @@ int GameEngine::getHighScore() const
 
 GameEngine::~GameEngine()
 {
-    delete baseBoard;
+    delete player2;
+    delete player1;
 }
-
-/// above is the newly add stuff
 
 void GameEngine::initializeCommandMap()
 {
     commandMap = {
         {"left", [this](int amount)
-         { baseBoard->left(amount); }},
+         { currentBoard()->left(amount); }},
         {"right", [this](int amount)
-         { baseBoard->right(amount); }},
+         { currentBoard()->right(amount); }},
         {"down", [this](int amount)
-         { baseBoard->down(amount); }},
+         { currentBoard()->down(amount); }},
         {"drop", [this](int)
-         { baseBoard->drop(); }},
+         { currentBoard()->drop(); }},
         {"counterclockwise", [this](int amount)
-         { baseBoard->ccw(amount); }},
+         { currentBoard()->ccw(amount); }},
         {"clockwise", [this](int amount)
-         { baseBoard->cw(amount); }},
+         { currentBoard()->cw(amount); }},
         {"validMove", [this](int)
-         { baseBoard->isValidMove(); }},
+         { currentBoard()->isValidMove(); }},
         {"levelup", [this](int amount)
-         { baseBoard->levelUp(amount); }},
+         { currentBoard()->levelUp(); }},
         {"leveldown", [this](int amount)
-         { baseBoard->levelDown(amount); }},
+         { currentBoard()->levelDown(); }},
         {"zBlock", [this](int)
-         { Block *newBlock = new ZBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
+         {
+             Block *newBlock = new ZBlock();
+             currentBoard()->setCurrentBlock(newBlock);
+         }},
         {"tBlock", [this](int)
-         { Block *newBlock = new TBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
+         {
+             Block *newBlock = new TBlock();
+             currentBoard()->setCurrentBlock(newBlock);
+         }},
         {"jBlock", [this](int)
-         { Block *newBlock = new JBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
+         {
+             Block *newBlock = new JBlock();
+             currentBoard()->setCurrentBlock(newBlock);
+         }},
         {"iBlock", [this](int)
-         { Block *newBlock = new IBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
+         {
+             Block *newBlock = new IBlock();
+             currentBoard()->setCurrentBlock(newBlock);
+         }},
         {"sBlock", [this](int)
-         { Block *newBlock = new SBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
+         {
+             Block *newBlock = new SBlock();
+             currentBoard()->setCurrentBlock(newBlock);
+         }},
         {"oBlock", [this](int)
-         { Block *newBlock = new OBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
+         {
+             Block *newBlock = new OBlock();
+             currentBoard()->setCurrentBlock(newBlock);
+         }},
         {"lBlock", [this](int)
-         { Block *newBlock = new LBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
+         {
+             Block *newBlock = new LBlock();
+             currentBoard()->setCurrentBlock(newBlock);
+         }},
     };
 }
 
@@ -143,16 +178,12 @@ Board *GameEngine::getPlayer2()
     return player2;
 }
 
-Board *GameEngine::returnCurrentBoard()
-{
-    return baseBoard;
-};
-
-GameEngine::GameEngine(int x, int y)
-    : baseBoard(new Board(x, y)),
-      player1(new Board(x, y)),
-      player2(new Board(x, y)),
-      currentLevel(0), currentChar(' ') {}
+GameEngine::GameEngine(int x, int y) : player1(new Board(x, y)),
+                                       player2(new Board(x, y)),
+                                       currentPlayer(1),
+                                       currentLevel(0),
+                                       highScore(0),
+                                       currentChar(' ') {}
 
 void GameEngine::executeCommand(const std::string &command, int amount)
 {
@@ -166,6 +197,10 @@ void GameEngine::executeCommand(const std::string &command, int amount)
     if (it != commandMap.end())
     {
         it->second(amount);
+        if (command == "drop")
+        {
+            calScore();
+        }
     }
     else
     {
