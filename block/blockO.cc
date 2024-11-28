@@ -6,22 +6,6 @@
 #include "block.h"
 #include "blockO.h"
 
-using namespace std;
-
-vector<pair<int, int>> OBlock::getCoord()
-{
-    return {a, b, c, d};
-};
-
-int OBlock::getLevel()
-{
-    return levelCreated;
-};
-void OBlock::setLevel(int val)
-{
-    levelCreated = val;
-};
-
 OBlock::OBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,

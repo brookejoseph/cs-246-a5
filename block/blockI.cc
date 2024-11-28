@@ -5,34 +5,18 @@
 #include "block.h"
 #include "blockI.h"
 
-using namespace std;
-
-int IBlock::getLevel()
-{
-    return levelCreated;
-};
-void IBlock::setLevel(int val)
-{
-    levelCreated = val;
-};
-
-vector<pair<int, int>> IBlock::getCoord()
-{
-    return {a, b, c, d};
-};
-
-IBlock::IBlock(Board *cell,
-               pair<int, int> a,
-               pair<int, int> b,
-               pair<int, int> c,
-               pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
+IBlock::IBlock(std::shared_ptr<Board> cells,
+               std::pair<int, int> a,
+               std::pair<int, int> b,
+               std::pair<int, int> c,
+               std::pair<int, int> d) : Block(cells, a, b, c, d) {};
 
 IBlock::IBlock() : Block(nullptr),
                    a{0, 3}, b{1, 3}, c{2, 3}, d{3, 3} {};
-IBlock::IBlock(Board *cell) : Block(cell),
+IBlock::IBlock(std::shared_ptr<Board> cells) : Block(cells),
                               a{0, 3}, b{1, 3}, c{2, 3}, d{3, 3} {};
 
-char IBlock::getChar(int x, int y)
+char IBlock::getValue(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
     {
@@ -40,7 +24,7 @@ char IBlock::getChar(int x, int y)
     }
     else
     {
-        return cell->getValue(x, y);
+        return cells->getValue(x, y);
     };
 };
 

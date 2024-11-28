@@ -8,39 +8,25 @@
 #include <ostream>
 #include "block.h"
 
-using namespace std;
+class SBlock : public Block {
+    public:
+        SBlock(Board *cell,
+            pair<int, int> a,
+            pair<int, int> b,
+            pair<int, int> c,
+            pair<int, int> d); // to change
+        SBlock();
+        SBlock(Board *cell);
+        ~SBlock() override = default;
 
-class SBlock : public Block
-{
-private:
-    Board *cell;
-    pair<int, int> a;
-    pair<int, int> b;
-    pair<int, int> c;
-    pair<int, int> d;
-
-public:
-    SBlock(Board *cell,
-           pair<int, int> a,
-           pair<int, int> b,
-           pair<int, int> c,
-           pair<int, int> d); // to change
-    SBlock();
-    SBlock(Board *cell);
-    ~SBlock() override = default;
-
-    int getLevel() override;
-    void setLevel(int val) override;
-
-    void rotateccw() override;
-    void rotatecw() override;
-    char getChar(int x, int y) override;
-    char getType() override;
-    void left() override;
-    void right() override;
-    void down() override;
-    // void drop() override;
-    vector<pair<int, int>> getCoord() override;
+        virtual void rotateccw() override;
+        virtual void rotatecw() override;
+        virtual char getValue(int x, int y) override;
+        virtual char getType() override;
+        virtual void left() override;
+        virtual void right() override;
+        virtual void down() override;
+        // void drop() override;
 };
 
 #endif

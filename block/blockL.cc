@@ -6,22 +6,6 @@
 #include "blockL.h"
 // #include "board/board.h"
 
-using namespace std;
-
-vector<pair<int, int>> LBlock::getCoord()
-{
-    return {a, b, c, d};
-}
-
-int LBlock::getLevel()
-{
-    return levelCreated;
-};
-void LBlock::setLevel(int val)
-{
-    levelCreated = val;
-};
-
 LBlock::LBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -34,7 +18,7 @@ LBlock::LBlock() : Block(nullptr),
 LBlock::LBlock(Board *cell) : Block(cell),
                               a{1, 4}, b{1, 3}, c{1, 2}, d{2, 2} {};
 
-char LBlock::getChar(int x, int y)
+char LBlock::getValue(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
     {

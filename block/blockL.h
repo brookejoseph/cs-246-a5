@@ -6,17 +6,7 @@
 #include <ostream>
 #include "block.h"
 
-using namespace std;
-
-class LBlock : public Block
-{
-private:
-    Board *cell;
-    pair<int, int> a;
-    pair<int, int> b;
-    pair<int, int> c;
-    pair<int, int> d;
-
+class LBlock : public Block {
 public:
     LBlock(Board *cell,
            pair<int, int> a,
@@ -27,18 +17,14 @@ public:
     LBlock(Board *cell);
     ~LBlock() override = default;
 
-    int getLevel() override;
-    void setLevel(int val) override;
-
-    void rotateccw() override;
-    void rotatecw() override;
-    char getChar(int x, int y) override;
-    char getType() override;
-    void left() override;
-    void right() override;
-    void down() override;
+    virtual void rotateccw() override;
+    virtual void rotatecw() override;
+    virtual char getValue(int x, int y) override;
+    virtual char getType() override;
+    virtual void left() override;
+    virtual void right() override;
+    virtual void down() override;
     // void drop() override;
-    vector<pair<int, int>> getCoord() override;
 };
 
 #endif

@@ -7,6 +7,7 @@
 #include <ostream>
 #include <memory>
 
+#include "../cell/cell.h"
 #include "../level/level.h"
 #include "../level/level0.h"
 #include "../level/level1.h"
@@ -16,18 +17,17 @@
 
 #include "../observer/subject.h"
 
-class Block; // forward declaration
-
-class Board
+class Board: public Cell
 {
 private:
     std::vector<std::vector<char>> grid;
 
-    Block *currentBlock;
-    Block *nextBlock;
+    std::shared_ptr<Block> currentBlock;
+    std::shared_ptr<Block> nextBlock;
 
     int level;
-    std::vector<std::unique_ptr<Level>> levelList;
+    std::shared_ptr<Level> currentLevelPtr;
+    std::vector<std::shared_ptr<Level>> levelList;
 
     int score;
     int highScore;
@@ -39,31 +39,24 @@ protected:
     int dimY = 18;
     int numLinesCleared;
 
-    int currentLevel;
-    Level *currentPtr;
-    Level *parameter[5] = {new Level0(),
-                           new Level1(),
-                           new Level2(),
-                           new Level3(),
-                           new Level4()};
-
 public:
-    Board(int x, int y) noexcept;
+    Board(std::shared_ptr<Cell> grid) noexcept;
     ~Board() = default;
 
-    virtual void levelUp(int amount);
-    virtual void levelDown(int amount);
-    virtual int getCurrentLevelVal();
-    virtual Level *getCurrentLevelPtr();
+    void levelUp(int amount);
+    void levelDown(int amount);
+    int getCurrentLevelVal();
+    std::shared_ptr<Level> getCurrentLevelPtr();
 
-    virtual int checkClearLine();
-    virtual void updateClearLines();
+    int checkClearLine();
+    void updateClearLines();
 
     bool isValidMove();
     int findScore();
 
-    Level getLevelPtr();
+    std::shared_ptr<Level> getLevelPtr() const;
     int getLevel() const;
+    void setSequence(const std::vector<char> &seq); // added this <<<<
 
     void left(int amount);  // done
     void right(int amount); // done
@@ -72,25 +65,21 @@ public:
     void ccw(int amount);   // done
     void drop();            // done
 
-    void saveGame();
     void restart(); // done
-    void loadGame();
-    // virtual char getState(int x, int y) const override;
-
     void eraseBlock();
     void addCell(Block &block); // done
     void addToTurnCount();
     int getTurnCount();
-    virtual void setDimX(int x);
-    virtual void setDimY(int y);
+    int getDimX();
+    int getDimY();
 
-    void setSequence(const std::vector<char> &seq); // added this <<<<
-    void setCurrentBlock(Block *block);
-    void setNextBlock(Block *block);
+    void setCurrentBlock(std::shared_ptr<Block> block);
+    void setNextBlock(std::shared_ptr<Block> block);
+    std::shared_ptr<Block> getNextBlock() const;
     void convertNextToCurrent();
 
     void setValue(char newValue, int x, int y);
-    virtual char getValue(int x, int y);
+    virtual char getValue(int x, int y) override;
 };
 
 #endif

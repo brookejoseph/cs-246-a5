@@ -8,22 +8,6 @@
 
 // #include "../board/board.h"
 
-using namespace std;
-
-vector<pair<int, int>> ZBlock::getCoord()
-{
-    return {a, b, c, d};
-}
-
-int ZBlock::getLevel()
-{
-    return levelCreated;
-};
-void ZBlock::setLevel(int val)
-{
-    levelCreated = val;
-};
-
 ZBlock::ZBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -35,7 +19,7 @@ ZBlock::ZBlock() : Block(nullptr), a{0, 3}, b{1, 3}, c{1, 4}, d{2, 4} {}
 
 ZBlock::ZBlock(Board *cell) : Block(cell), a{0, 3}, b{1, 3}, c{1, 4}, d{2, 4} {}
 
-char ZBlock::getChar(int x, int y)
+char ZBlock::getValue(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
     {

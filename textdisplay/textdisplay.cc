@@ -72,20 +72,15 @@ void TextDisplay::printBoards() const {
 }
 
 void TextDisplay::printNextBlocks() const {
-    std::shared_ptr<Block> player1NextBlock = getGame()->getPlayer1()->getNextBlock();
-    std::shared_ptr<Block> player2NextBlock = getGame()->getPlayer1()->getNextBlock();
-
     for (int j = 0; j < 2; ++j) {
         for (int i = 0; i < 4; ++i) {
-            std::cout << player1NextBlock->getChar(i, j);
+            std::cout << getGame()->getPlayer1()->getNextBlock()->getChar(i, j);
         }
 
         printChar(' ', dimX + sep - 4);
-
         for (int i = 0; i < 1; ++i) {
-            std::cout << player2NextBlock->getChar(i, j);
+            std::cout << getGame()->getPlayer2()->getNextBlock()->getChar(i, j);
         }
-
         std::cout << '\n';
     }
 }

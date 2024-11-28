@@ -13,12 +13,12 @@
 
 #include <map>
 
-void Board::setCurrentBlock(Block *block)
+void Board::setCurrentBlock(std::shared_ptr<Block> block)
 {
     currentBlock = block;
 };
 
-void Board::setNextBlock(Block *block)
+void Board::setNextBlock(std::shared_ptr<Block> block)
 {
     nextBlock = block;
 };
@@ -26,34 +26,23 @@ void Board::setNextBlock(Block *block)
 void Board::convertNextToCurrent()
 {
     currentBlock = nextBlock;
-    nextBlock = nullptr;
 };
 
-void Board::setDimX(int x)
+int Board::getDimX()
 {
-    dimX = x;
+    return dimX;
 }
 
-void Board::setDimY(int y)
+int Board::getDimY()
 {
-    dimY = y;
+    return dimY;
 }
 
-Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), score(0), highScore(0), numLinesCleared(0), currentLevel(0), noClearCount(0) {}
+Board::Board(int x, int y) noexcept: grid(x, std::vector<char>(y, ' ')), level(0), score(0), highScore(0), numLinesCleared(0), noClearCount(0) {
 
-void Board::setValue(char newValue, int x, int y)
-{
-    if (x < 0 || x >= dimX || y < 0 || y >= dimY)
-    {
-        throw std::out_of_range("Coordinates out of bounds");
-    }
-    grid[x][y] = newValue;
-};
+}
 
-char Board::getValue(int x, int y)
-{
-    return grid[x][y];
-};
+char Board::getValue(int x, int y) { return grid->getValue(x, y); }
 
 bool Board::isValidMove()
 {
@@ -67,7 +56,7 @@ bool Board::isValidMove()
         {
             return false;
         }
-        if (grid[t.first][t.second] != ' ')
+        if (grid->getValue(t.first, t.second) != ' ')
         {
             return false;
         }
@@ -126,14 +115,14 @@ void Board::addCell(Block &thisBlock)
 
 void Board::levelUp(int amount)
 {
-    currentPtr = parameter[currentLevel + amount];
-    currentLevel += amount;
+    currentLevelPtr = levelList[level + amount];
+    level += amount;
 };
 
 void Board::levelDown(int amount)
 {
-    currentPtr = parameter[currentLevel - amount];
-    currentLevel -= amount;
+    currentLevelPtr = levelList[level - amount];
+    level -= amount;
 };
 
 void Board::drop()
@@ -189,7 +178,7 @@ void Board::updateClearLines()
             if (all_of(selectedRow)) {
                 cleared = true;
                 for (int col = 0; col < 11; ++col) {
-                    grid[col][row] = ' ';  
+                    grid->getValue(col, row) = ' ';  
                 }
 
                 for (int row2 = row; row2 > 0; --row2) {
@@ -210,23 +199,17 @@ void Board::updateClearLines()
 
 }
 
-// for use in game engine
-// void setSequence(const std::vector<char> &seq) {
-//    for (auto lvl: levelList) {
-//        lvl->setSequence(seq);
-//    }
-//}
+void Board::setSequence(const std::vector<char> &seq) {
+    for (auto lvl: levelList) {
+        lvl->setSequence(seq);
+    }
+}
 
-int Board::getCurrentLevelVal()
-{
-    cout << "grabbing the current val in board" << currentLevel << endl;
-    return currentLevel;
-};
 
-Level *Board::getCurrentLevelPtr()
+std::shared_ptr<Level> Board::getLevelPtr() const
 {
-    return currentPtr;
-};
+    return currentLevelPtr;
+}
 
 /*
 void Board::drop()
@@ -250,3 +233,7 @@ void Board::drop()
 
 
 */
+
+std::shared_ptr<Block> Board::getNextBlock() const {
+    return nextBlock;
+}

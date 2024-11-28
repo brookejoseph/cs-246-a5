@@ -7,35 +7,19 @@
 #include "blockJ.h"
 // #include "board/board.h"
 
-using namespace std;
-
-vector<pair<int, int>> JBlock::getCoord()
-{
-    return {a, b, c, d};
-}
-
-int JBlock::getLevel()
-{
-    return levelCreated;
-};
-void JBlock::setLevel(int val)
-{
-    levelCreated = val;
-};
-
-JBlock::JBlock(Board *cell,
+JBlock::JBlock(std::shared_ptr<Board> cells,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
-               pair<int, int> d) : Block(cell), a{a}, b{b}, c{c}, d{d} {};
+               pair<int, int> d) : Block(cells), a{a}, b{b}, c{c}, d{d} {};
 
 JBlock::JBlock() : Block(nullptr),
                    a{0, 4}, b{1, 4}, c{1, 3}, d{1, 2} {};
 
-JBlock::JBlock(Board *cell) : Block(cell),
+JBlock::JBlock(std::shared_ptr<Board> cells) : Block(cells),
                               a{0, 4}, b{1, 4}, c{1, 3}, d{1, 2} {};
 
-char JBlock::getChar(int x, int y)
+char JBlock::getValue(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
     {
@@ -43,7 +27,7 @@ char JBlock::getChar(int x, int y)
     }
     else
     {
-        return cell->getValue(x, y);
+        return cells->getValue(x, y);
     };
 };
 

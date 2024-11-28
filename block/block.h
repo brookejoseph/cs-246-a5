@@ -8,34 +8,43 @@
 #include "../board/board.h"
 // #include "cell/cell.h" // to add
 
-using namespace std;
-
-class Block : public Board
+class Block : public Cell
 {
 protected:
-    Board *cells;
+    std::shared_ptr<Board> cells;
+
+    std::pair<int, int> a;
+    std::pair<int, int> b;
+    std::pair<int, int> c;
+    std::pair<int, int> d;
+
     int levelCreated;
 
 public:
-    virtual int getLevel() = 0;
-    virtual void setLevel(int val) = 0;
-    explicit Block(Board *cells);
-    explicit Block();
-    virtual ~Block();
+    Block(std::shared_ptr<Board> cells,
+          std::pair<int, int> a,
+          std::pair<int, int> b,
+          std::pair<int, int> c,
+          std::pair<int, int> d);
+    Block() = default;
+    virtual ~Block() = 0;
+
+    int getLevel() const;
+    void setLevel(int val);
 
     // virtual bool getHeavy();
     // virtual void setHeavy();
-    virtual char getChar(int x, int y) = 0;
+    virtual std::vector<std::pair<int, int>> getCoord();
+    virtual char getValue(int x, int y) override = 0;
     virtual char getType() = 0;
 
     // void heavy();
-    void virtual rotateccw() = 0;
-    void virtual rotatecw() = 0;
+    virtual void rotateccw() = 0;
+    virtual void rotatecw() = 0;
     virtual void left() = 0;
     virtual void right() = 0;
     virtual void down() = 0;
     // virtual void drop();
-    virtual vector<pair<int, int>> getCoord() = 0;
 };
 
 #endif

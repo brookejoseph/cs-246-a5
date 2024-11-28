@@ -6,22 +6,6 @@
 #include "block.h"
 #include "blockT.h"
 
-using namespace std;
-
-vector<pair<int, int>> TBlock::getCoord()
-{
-    return {a, b, c, d};
-};
-
-int TBlock::getLevel()
-{
-    return levelCreated;
-};
-void TBlock::setLevel(int val)
-{
-    levelCreated = val;
-};
-
 TBlock::TBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -34,7 +18,7 @@ TBlock::TBlock() : Block(nullptr),
 TBlock::TBlock(Board *cell) : Block(cell),
                               a{1, 4}, b{0, 4}, c{2, 4}, d{1, 3} {}
 
-char TBlock::getChar(int x, int y)
+char TBlock::getValue(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
     {

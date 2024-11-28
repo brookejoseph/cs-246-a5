@@ -7,22 +7,6 @@
 #include "../block/blockS.h"
 // #include "../board/board.h"
 
-using namespace std;
-
-vector<pair<int, int>> SBlock::getCoord()
-{
-    return {a, b, c, d};
-};
-
-int SBlock::getLevel()
-{
-    return levelCreated;
-};
-void SBlock::setLevel(int val)
-{
-    levelCreated = val;
-};
-
 SBlock::SBlock(Board *cell,
                pair<int, int> a,
                pair<int, int> b,
@@ -34,7 +18,7 @@ SBlock::SBlock() : Block(nullptr),
 SBlock::SBlock(Board *cell) : Block(cell),
                               a{1, 3}, b{2, 3}, c{0, 4}, d{1, 4} {};
 
-char SBlock::getChar(int x, int y)
+char SBlock::getValue(int x, int y)
 {
     if (((x == a.first) && (y == a.second)) || ((x == b.first) && (y == b.second)) || ((x == c.first) && (y == c.second)) || ((x == d.first) && (y == d.second))) // Fixed parentheses
     {
