@@ -299,7 +299,7 @@ void Board::drop()
 
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
-// char Board::getNextBlockType() const { return currentBlock->getType(); }
+char Board::getCurrentBlockType() const { return currentBlock->getType(); }
 
 // void Board::updateClearLines()
 // {
