@@ -3,41 +3,37 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
-#include "../gameengine/gameengine.h"
+#include "gameengine/gameengine.h"
 
 using namespace std;
 
-// List of valid commands
 vector<string> validCommands = {
     "left", "right", "down", "drop", "clockwise", "counterclockwise",
     "levelup", "leveldown", "norandom", "random", "sequence", "restart",
     "zBlock", "tBlock", "jBlock", "iBlock", "sBlock", "oBlock", "lBlock"};
 
-// Helper function to find the closest matching command
 string findMatchingCommand(const string &input)
 {
     string matchedCommand;
     for (const string &cmd : validCommands)
     {
-        if (cmd.find(input) == 0) // Check if the command starts with the input
+        if (cmd.find(input) == 0)
         {
             if (!matchedCommand.empty())
             {
-                return "invalid"; // Ambiguous input (matches multiple commands)
+                return "invalid";
             }
             matchedCommand = cmd;
         }
     }
-    return matchedCommand.empty() ? "invalid" : matchedCommand; // Return match or invalid
+    return matchedCommand.empty() ? "invalid" : matchedCommand;
 }
 
-// Helper function to parse command and multiplier
 pair<string, int> parseCommand(const string &input)
 {
     int multiplier = 1;
     size_t pos = 0;
 
-    // Extract numeric prefix
     while (pos < input.size() && isdigit(input[pos]))
     {
         pos++;
@@ -47,7 +43,6 @@ pair<string, int> parseCommand(const string &input)
         multiplier = stoi(input.substr(0, pos));
     }
 
-    // Extract the command portion and match it
     string command = findMatchingCommand(input.substr(pos));
     return {command, multiplier};
 }
@@ -55,14 +50,15 @@ pair<string, int> parseCommand(const string &input)
 int main()
 {
     GameEngine *newGame = new GameEngine(20, 23);
+    cout << "game created " << endl;
     string currentVal;
 
     while (cin >> currentVal)
     {
-        // Parse the command and multiplier
         auto [command, multiplier] = parseCommand(currentVal);
+        cout << "command within main" << command << endl;
+        cout << "multipler within main" << multiplier << endl;
 
-        // Handle invalid commands gracefully
         if (command == "invalid")
         {
             cerr << "Invalid command: " << currentVal << endl;
@@ -72,6 +68,7 @@ int main()
         // Special cases for restart, norandom, random, and sequence
         if (command == "sequence")
         {
+            cout << " within sequence main" << endl;
             string filename;
             cin >> filename;
             ifstream file(filename);
@@ -106,7 +103,7 @@ int main()
         {
             string filename;
             cin >> filename;
-            newGame->executeCommand("norandom", 1); // Additional logic handled in GameEngine
+            newGame->executeCommand("norandom", 1);
             continue;
         }
         else if (command == "random" || command == "restart")
@@ -114,13 +111,10 @@ int main()
             newGame->executeCommand(command, 1);
             continue;
         }
-
-        // Execute valid commands with multiplier
-        for (int i = 0; i < multiplier; ++i)
-        {
-            newGame->executeCommand(command, 1);
-        }
+        cout << "made it this far its you not me" << endl;
+        newGame->executeCommand(command, multiplier);
     }
+    cout << "made it this far its you not me 2 point 0 " << endl;
 
     delete newGame;
     return 0;
