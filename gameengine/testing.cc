@@ -23,7 +23,7 @@ void printBoard(Board *board, int dimX, int dimY)
     {
         for (int x = 0; x < dimX; ++x)
         {
-            cout << board->getValue(x, y) << " ";
+            cout << board->getChar(x, y) << " ";
         }
         cout << endl;
     }

@@ -78,7 +78,7 @@ void TextDisplay::printBoards() const {
         }
         printChar(' ', sep);
         for (int i = 0; i < dimX; ++i) {
-            std::cout << getPlayer2()->getValue(i, j);
+            std::cout << getPlayer2()->getChar(i, j);
         }
         std::cout << '\n';
     }

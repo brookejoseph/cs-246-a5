@@ -33,18 +33,18 @@ public:
 
     // virtual bool getHeavy();
     // virtual void setHeavy();
-    virtual char getChar(int x, int y) const = 0;
+    virtual char getChar(int x, int y) const override = 0;
     virtual char getType() const = 0;
     virtual int getLevel() const;
     virtual void setLevel(int lvl);
     virtual vector<pair<int, int>> getCoord() const;
 
     // void heavy();
-    virtual void rotateccw();
-    virtual void rotatecw();
-    virtual void left();
-    virtual void right();
-    virtual void down();
+    void rotateccw();
+    void rotatecw();
+    void left();
+    void right();
+    void down();
     // virtual void drop();
 };
 

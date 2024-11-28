@@ -47,7 +47,7 @@ void GameEngine::updateHighScore()
 
 void GameEngine::calScore()
 {
-    int level = currentBoard()->getCurrentLevelVal();
+    int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
     int numBlocks = currentBoard()->checkClearBlock();
 

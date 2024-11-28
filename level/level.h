@@ -15,11 +15,11 @@ protected:
     unsigned int position;
 
 public:
-    Level() = default;          // default ctor
+    Level() noexcept;          // default ctor
     virtual ~Level() = default; // default dtor
 
     void setRandom(bool isRandom);           // set random generation
-    void setSequence(std::vector<char> seq); // set block sequence
+    void setSequence(const std::vector<char> &seq); // set block sequence
     void setPosition(int n);
 
     virtual int getLevel() const = 0;                 // get the level number
