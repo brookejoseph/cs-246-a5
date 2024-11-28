@@ -2,13 +2,14 @@
 #define LEVEL3_H
 #include "level.h"
 
-class Level3: public Level {
-    public:
-        Level3();
-        ~Level3() = default;
+class Level3 : public Level
+{
+public:
+    Level3();
+    ~Level3() = default;
 
-        virtual int getLevel() const override;
-        virtual Block* createBlock() override;
+    virtual int getLevel() const override;
+    virtual std::shared_ptr<Block> createBlock() override;
 };
 
 #endif

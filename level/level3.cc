@@ -7,13 +7,13 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level3::Level3(): Level() {}
+Level3::Level3() : Level() {}
 
 int Level3::getLevel() const { return 3; }
 
-Block* Level3::createBlock()
+std::shared_ptr<Block> Level3::createBlock()
 {
-    Block *nextBlock;
+    std::shared_ptr<Block> nextBlock;
 
     if (random)
     { // if block generation is random
@@ -21,31 +21,35 @@ Block* Level3::createBlock()
 
         if (x == 0 || x == 1)
         {
-            nextBlock = new SBlock();
+            nextBlock = std::make_shared<SBlock>();
         }
         else if (x == 2 || x == 3)
         {
-            nextBlock = new ZBlock();
+            nextBlock = std::make_shared<ZBlock>();
         }
         else if (x == 4)
         {
-            nextBlock = new IBlock();
+            nextBlock = std::make_shared<IBlock>();
         }
         else if (x == 5)
         {
-            nextBlock = new JBlock();
+            nextBlock = std::make_shared<JBlock>();
         }
         else if (x == 6)
         {
-            nextBlock = new LBlock();
+            nextBlock = std::make_shared<LBlock>();
         }
         else if (x == 7)
         {
-            nextBlock = new OBlock();
+            nextBlock = std::make_shared<OBlock>();
         }
         else if (x == 8)
         {
-            nextBlock = new TBlock();
+            nextBlock = std::make_shared<TBlock>();
+        }
+        else
+        {
+            throw std::runtime_error("Invalid random value generated for block creation");
         }
     }
     else
@@ -55,29 +59,31 @@ Block* Level3::createBlock()
         switch (blockType)
         {
         case 'I':
-            nextBlock = new IBlock();
+            nextBlock = std::make_shared<IBlock>();
             break;
         case 'J':
-            nextBlock = new JBlock();
+            nextBlock = std::make_shared<JBlock>();
             break;
         case 'L':
-            nextBlock = new LBlock();
+            nextBlock = std::make_shared<LBlock>();
             break;
         case 'O':
-            nextBlock = new OBlock();
+            nextBlock = std::make_shared<OBlock>();
             break;
         case 'S':
-            nextBlock = new SBlock();
+            nextBlock = std::make_shared<SBlock>();
             break;
         case 'Z':
-            nextBlock = new ZBlock();
+            nextBlock = std::make_shared<ZBlock>();
             break;
         case 'T':
-            nextBlock = new TBlock();
+            nextBlock = std::make_shared<TBlock>();
             break;
+        default:
+            throw std::invalid_argument("Invalid block type in sequence");
         }
 
-        // increment position in sequence file
+        // Increment position in sequence file
         if (position < sequence.size() - 1)
         {
             ++position;

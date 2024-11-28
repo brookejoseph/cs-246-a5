@@ -24,6 +24,13 @@
 
 using namespace std;
 
+GameEngine::GameEngine(int x, int y)
+    : player1(std::make_shared<Board>(x, y)),
+      player2(std::make_shared<Board>(x, y)),
+      currentPlayer(1),
+      highScore(0),
+      currentChar(' ') {}
+
 int GameEngine::grabCurrentScore()
 {
     return (currentPlayer == 1) ? player1Score : player2Score;
@@ -32,18 +39,11 @@ int GameEngine::grabCurrentScore()
 int GameEngine::grabPlayer()
 {
     return currentPlayer;
-};
+}
 
 void GameEngine::updateHighScore()
 {
-    if (player1Score > highScore)
-    {
-        highScore = player1Score;
-    }
-    else if (player2Score > highScore)
-    {
-        highScore = player2Score;
-    }
+    highScore = std::max({highScore, player1Score, player2Score});
 }
 
 void GameEngine::calScore()
@@ -51,12 +51,9 @@ void GameEngine::calScore()
     int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
     int numBlocks = currentBoard()->checkClearBlock();
-    cout << "Number of Lines Cleared: " << numLines << endl;
-    cout << "Number of Blocks Cleared: " << numBlocks << endl;
 
     int linePoints = std::pow(level + numLines, 2);
     int blockPoints = numBlocks * std::pow(level + 1, 2);
-
     int totalPoints = linePoints + blockPoints;
 
     if (currentPlayer == 1)
@@ -71,21 +68,14 @@ void GameEngine::calScore()
     updateHighScore();
 }
 
-Board *GameEngine::currentBoard()
+std::shared_ptr<Board> GameEngine::currentBoard()
 {
     return (currentPlayer == 1) ? player1 : player2;
 }
 
 void GameEngine::setPlayer()
 {
-    if (currentPlayer == 1)
-    {
-        currentPlayer = 2;
-    }
-    else
-    {
-        currentPlayer = 1;
-    }
+    currentPlayer = (currentPlayer == 1) ? 2 : 1;
 }
 
 void GameEngine::restartGame()
@@ -98,8 +88,7 @@ void GameEngine::restartGame()
 
 int GameEngine::getCurrentScore()
 {
-    int current = grabCurrentScore();
-    return current;
+    return grabCurrentScore();
 }
 
 int GameEngine::getHighScore() const
@@ -117,10 +106,14 @@ int GameEngine::getPlayer2Score() const
     return player2Score;
 }
 
-GameEngine::~GameEngine()
+std::shared_ptr<Board> GameEngine::getPlayer1() const
 {
-    delete player2;
-    delete player1;
+    return player1;
+}
+
+std::shared_ptr<Board> GameEngine::getPlayer2() const
+{
+    return player2;
 }
 
 void GameEngine::initializeCommandMap()
@@ -143,57 +136,21 @@ void GameEngine::initializeCommandMap()
         {"leveldown", [this](int amount)
          { currentBoard()->levelDown(); }},
         {"Z", [this](int)
-         {
-             Block *newBlock = new ZBlock();
-             currentBoard()->setCurrentBlock(newBlock);
-         }},
+         { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
         {"T", [this](int)
-         {
-             Block *newBlock = new TBlock();
-             currentBoard()->setCurrentBlock(newBlock);
-         }},
+         { currentBoard()->setCurrentBlock(std::make_shared<TBlock>()); }},
         {"J", [this](int)
-         {
-             Block *newBlock = new JBlock();
-             currentBoard()->setCurrentBlock(newBlock);
-         }},
+         { currentBoard()->setCurrentBlock(std::make_shared<JBlock>()); }},
         {"I", [this](int)
-         {
-             Block *newBlock = new IBlock();
-             currentBoard()->setCurrentBlock(newBlock);
-         }},
+         { currentBoard()->setCurrentBlock(std::make_shared<IBlock>()); }},
         {"S", [this](int)
-         {
-             Block *newBlock = new SBlock();
-             currentBoard()->setCurrentBlock(newBlock);
-         }},
+         { currentBoard()->setCurrentBlock(std::make_shared<SBlock>()); }},
         {"O", [this](int)
-         {
-             Block *newBlock = new OBlock();
-             currentBoard()->setCurrentBlock(newBlock);
-         }},
+         { currentBoard()->setCurrentBlock(std::make_shared<OBlock>()); }},
         {"L", [this](int)
-         {
-             Block *newBlock = new LBlock();
-             currentBoard()->setCurrentBlock(newBlock);
-         }},
+         { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); }},
     };
 }
-
-Board *GameEngine::getPlayer1() const
-{
-    return player1;
-}
-Board *GameEngine::getPlayer2() const
-{
-    return player2;
-}
-
-GameEngine::GameEngine(int x, int y) : player1(new Board(x, y)),
-                                       player2(new Board(x, y)),
-                                       currentPlayer(1),
-                                       highScore(0),
-                                       currentChar(' ') {}
 
 void GameEngine::executeCommand(const std::string &command, int amount)
 {
@@ -217,8 +174,6 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         {
             calScore();
         }
-
-        // notifyObservers();
     }
     else
     {

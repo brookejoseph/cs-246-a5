@@ -23,11 +23,10 @@ class Board
 private:
     std::vector<std::vector<char>> grid;
 
-    Block *currentBlock;
-    Block *nextBlock;
+    std::shared_ptr<Block> currentBlock;
+    std::shared_ptr<Block> nextBlock;
 
     int noClearCount;
-    
 
 protected:
     int dimX = 11;
@@ -35,14 +34,15 @@ protected:
     int noBlocksCleared = 0;
     int numLinesCleared;
 
-    std::vector<Block *> addedBlocks;
+    std::vector<std::shared_ptr<Block>> addedBlocks;
 
     int level;
-    Level *parameter[5] = {new Level0(),
-                           new Level1(),
-                           new Level2(),
-                           new Level3(),
-                           new Level4()};
+    std::array<std::shared_ptr<Level>, 5> parameter = {
+        std::make_shared<Level0>(),
+        std::make_shared<Level1>(),
+        std::make_shared<Level2>(),
+        std::make_shared<Level3>(),
+        std::make_shared<Level4>()};
 
 public:
     Board(int x, int y) noexcept;
@@ -59,7 +59,7 @@ public:
     bool isValidMove();
     std::vector<std::vector<char>> getGrid();
 
-    void addBlockToVec(Block *blockVal);
+    void addBlockToVec(const std::shared_ptr<Block> &blockVal);
     void removeIncr(int row);
     void blockRemoved();
 
@@ -78,7 +78,7 @@ public:
     void setDimY(int y);
 
     void setLvlSequence(const std::vector<char> &seq); // added this <<<<
-    void setCurrentBlock(Block *block);
+    void setCurrentBlock(const std::shared_ptr<Block> &block);
     void getNextBlock();
     char getNextBlockType() const;
     std::vector<std::pair<int, int>> getCurrentBlockCoord() const;
