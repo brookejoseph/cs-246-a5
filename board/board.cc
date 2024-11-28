@@ -309,3 +309,5 @@ void Board::drop()
 
 
 */
+
+char Board::getNextBlockType() const { return nextBlock->getType(); }

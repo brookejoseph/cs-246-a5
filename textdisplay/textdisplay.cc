@@ -2,6 +2,15 @@
 #include <iostream>
 #include <string>
 #include <tuple>
+#include <map>
+
+std::map<char, std::pair<std::string, std::string>> blockConfig = {{'I', {"    ", "IIII"}},
+                                                                   {'J', {"J   ", "JJJ "}},
+                                                                   {'L', {"   L", " LLL"}},
+                                                                   {'O', {"OO  ", "OO  "}},
+                                                                   {'S', {"  SS", "SS  "}},
+                                                                   {'Z', {"ZZ  ", "  ZZ"}},
+                                                                   {'T', {"TTT ", " T  "}}};
 
 // HELPER FUNCTIONS
 
@@ -72,22 +81,16 @@ void TextDisplay::printBoards() const {
 }
 
 void TextDisplay::printNextBlocks() const {
-    std::shared_ptr<Block> player1NextBlock = getGame()->getPlayer1()->getNextBlock();
-    std::shared_ptr<Block> player2NextBlock = getGame()->getPlayer1()->getNextBlock();
-
-    for (int j = 0; j < 2; ++j) {
-        for (int i = 0; i < 4; ++i) {
-            std::cout << player1NextBlock->getChar(i, j);
-        }
-
-        printChar(' ', dimX + sep - 4);
-
-        for (int i = 0; i < 1; ++i) {
-            std::cout << player2NextBlock->getChar(i, j);
-        }
-
-        std::cout << '\n';
-    }
+    char nextBlock1 = getGame()->getPlayer1()->getNextBlockType();
+    char nextBlock2 = getGame()->getPlayer2()->getNextBlockType();
+    std::cout << blockConfig[nextBlock1].first;
+    printChar(' ', dimX + sep - 4);
+    std::cout << blockConfig[nextBlock2].first;
+    std::cout << '\n';
+    std::cout << blockConfig[nextBlock1].second;
+    printChar(' ', dimX + sep - 4);
+    std::cout << blockConfig[nextBlock2].second;
+    std::cout << '\n';
 }
 
 void TextDisplay::notify() {
