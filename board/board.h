@@ -33,10 +33,12 @@ private:
     int highScore;
 
     int noClearCount;
+    
 
 protected:
     int dimX = 11;
     int dimY = 18;
+    int noBlocksCleared = 0;
     int numLinesCleared;
 
     std::vector<Block *> addedBlocks;
@@ -53,8 +55,10 @@ public:
     Board(int x, int y) noexcept;
     ~Board() = default;
 
-    virtual void levelUp(int amount);
-    virtual void levelDown(int amount);
+    // virtual void levelUp(int amount);
+    // virtual void levelDown(int amount);
+    virtual void levelUp();
+    virtual void levelDown();
     virtual int getCurrentLevelVal();
     virtual Level *getCurrentLevelPtr();
 
@@ -69,7 +73,7 @@ public:
 
     void addBlockToVec(Block *blockVal);
     void removeIncr(int row);
-    bool blockRemoved();
+    void blockRemoved();
 
     void left(int amount);  // done
     void right(int amount); // done
@@ -87,6 +91,7 @@ public:
     void addCell(Block &block); // done
     void addToTurnCount();
     int getTurnCount();
+    int checkClearBlock();
     virtual void setDimX(int x);
     virtual void setDimY(int y);
 
