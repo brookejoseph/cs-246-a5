@@ -13,14 +13,14 @@ using namespace std;
 class JBlock : public Block
 {
 public:
-    JBlock(Board *cell,
+    JBlock(std::shared_ptr<Board> cells,
            pair<int, int> a,
            pair<int, int> b,
            pair<int, int> c,
            pair<int, int> d); // to change
 
     JBlock();
-    JBlock(Board *cell);
+    JBlock(std::shared_ptr<Board> cells);
     ~JBlock() override = default;
 
     virtual char getChar(int x, int y) const override;

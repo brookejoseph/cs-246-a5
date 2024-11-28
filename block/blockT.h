@@ -12,13 +12,13 @@ using namespace std;
 class TBlock : public Block
 {
 public:
-    TBlock(Board *cell,
+    TBlock(std::shared_ptr<Board> cells,
            pair<int, int> a,
            pair<int, int> b,
            pair<int, int> c,
            pair<int, int> d); // to change
     TBlock();
-    TBlock(Board *cell);
+    TBlock(std::shared_ptr<Board> cells);
     ~TBlock() override = default;
 
     virtual char getChar(int x, int y) const override;

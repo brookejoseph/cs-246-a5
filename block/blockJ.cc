@@ -9,15 +9,15 @@
 
 using namespace std;
 
-JBlock::JBlock(Board *cell,
+JBlock::JBlock(std::shared_ptr<Board> cells,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
-               pair<int, int> d) : Block(cell, a, b, c, d) {}
+               pair<int, int> d) : Block(cells, a, b, c, d) {}
 
 JBlock::JBlock() : Block(nullptr, {0, 4}, {1, 4}, {1, 3}, {1, 2}) {}
 
-JBlock::JBlock(Board *cell) : Block(cell, {0, 4}, {1, 4}, {1, 3}, {1, 2}) {}
+JBlock::JBlock(std::shared_ptr<Board> cells) : Block(cells, {0, 4}, {1, 4}, {1, 3}, {1, 2}) {}
 
 char JBlock::getChar(int x, int y) const
 {

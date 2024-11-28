@@ -54,7 +54,6 @@ void GameEngine::calScore()
     cout << "Number of Lines Cleared: " << numLines << endl;
     cout << "Number of Blocks Cleared: " << numBlocks << endl;
 
-
     int linePoints = std::pow(level + numLines, 2);
     int blockPoints = numBlocks * std::pow(level + 1, 2);
 
@@ -108,11 +107,13 @@ int GameEngine::getHighScore() const
     return highScore;
 }
 
-int GameEngine::getPlayer1Score() const {
+int GameEngine::getPlayer1Score() const
+{
     return player1Score;
 }
 
-int GameEngine::getPlayer2Score() const {
+int GameEngine::getPlayer2Score() const
+{
     return player2Score;
 }
 
@@ -137,8 +138,6 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->ccw(amount); }},
         {"clockwise", [this](int amount)
          { currentBoard()->cw(amount); }},
-        {"validMove", [this](int)
-         { currentBoard()->isValidMove(); }},
         {"levelup", [this](int amount)
          { currentBoard()->levelUp(); }},
         {"leveldown", [this](int amount)
@@ -198,7 +197,8 @@ GameEngine::GameEngine(int x, int y) : player1(new Board(x, y)),
 
 void GameEngine::executeCommand(const std::string &command, int amount)
 {
-    if (amount < 0) {
+    if (amount < 0)
+    {
         std::cerr << "Invalid multiplier: " << amount << std::endl;
         return;
     }
@@ -218,7 +218,7 @@ void GameEngine::executeCommand(const std::string &command, int amount)
             calScore();
         }
 
-        notifyObservers();
+        // notifyObservers();
     }
     else
     {

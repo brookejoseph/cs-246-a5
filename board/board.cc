@@ -3,7 +3,7 @@
 #include <iostream>
 #include <ostream>
 #include "../block/block.h"
-//#include "../cell/cell.h"
+// #include "../cell/cell.h"
 #include "../level/level.h"
 #include "../level/level0.h"
 #include "../level/level1.h"
@@ -13,11 +13,10 @@
 
 #include <map>
 
-
-
 void Board::setCurrentBlock(Block *block)
 {
-    if (currentBlock) delete currentBlock;
+    if (currentBlock)
+        delete currentBlock;
     currentBlock = block;
 }
 
@@ -27,7 +26,8 @@ void Board::getNextBlock()
     nextBlock = newBlock;
 }
 
-void Board::initBlocks() {
+void Board::initBlocks()
+{
     getNextBlock();
     setCurrentBlock(nextBlock);
     getNextBlock();
@@ -79,7 +79,8 @@ char Board::getChar(int x, int y) const
 //     return true;
 // }
 
-std::vector<std::vector<char>> Board::getGrid() {
+std::vector<std::vector<char>> Board::getGrid()
+{
     return grid;
 }
 
@@ -164,13 +165,13 @@ void Board::restart()
     grid.clear();
 };
 
-
 int Board::getLevel() const
 {
     return level;
 }
 
-void Board::setRandom(bool isRandom) {
+void Board::setRandom(bool isRandom)
+{
     parameter[level]->setRandom(isRandom);
 }
 
@@ -242,34 +243,35 @@ void Board::updateClearLines()
     }
 }
 
-//bool Board::blockRemoved()
+// bool Board::blockRemoved()
 //{
-//    int acc = 0;
-//    for (auto k : addedBlocks)
-//    {
-//        for (auto i : k->getCoord())
-//        {
-//            if ((i.second == -1) && (i.first == -1))
-//            {
-//                ++acc;
-//            };
-//        }
-//        if (acc == 4)
-//        {
-//            return true;
-//       };
-//   };
-//    return false;
-//};
-
+//     int acc = 0;
+//     for (auto k : addedBlocks)
+//     {
+//         for (auto i : k->getCoord())
+//         {
+//             if ((i.second == -1) && (i.first == -1))
+//             {
+//                 ++acc;
+//             };
+//         }
+//         if (acc == 4)
+//         {
+//             return true;
+//        };
+//    };
+//     return false;
+// };
 
 void Board::addBlockToVec(Block *block)
 {
     addedBlocks.emplace_back(block);
 };
 
-void Board::setLvlSequence(const std::vector<char> &seq) {
-    for (int i = 0; i <= 4; ++i) {
+void Board::setLvlSequence(const std::vector<char> &seq)
+{
+    for (int i = 0; i <= 4; ++i)
+    {
         parameter[i]->setSequence(seq);
     }
 }
@@ -297,10 +299,9 @@ void Board::drop()
 
 */
 
-
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
-char Board::getNextBlockType() const { return currentBlock->getType(); }
+// char Board::getNextBlockType() const { return currentBlock->getType(); }
 
 // void Board::updateClearLines()
 // {
@@ -395,6 +396,7 @@ void Board::blockRemoved()
     noBlocksCleared += clearedCount;
 }
 
-std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const {
+std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
+{
     return currentBlock->getCoord();
 }

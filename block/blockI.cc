@@ -7,14 +7,14 @@
 
 using namespace std;
 
-IBlock::IBlock(Board *cell,
+IBlock::IBlock(std::shared_ptr<Board> cell,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
                pair<int, int> d) : Block(cell, a, b, c, d) {};
 
 IBlock::IBlock() : Block(nullptr, {0, 3}, {1, 3}, {2, 3}, {3, 3}) {}
-IBlock::IBlock(Board *cell) : Block(cell, {0, 3}, {1, 3}, {2, 3}, {3, 3}) {}
+IBlock::IBlock(std::shared_ptr<Board> cell) : Block(cell, {0, 3}, {1, 3}, {2, 3}, {3, 3}) {}
 
 char IBlock::getChar(int x, int y) const
 {
