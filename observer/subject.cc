@@ -1,12 +1,12 @@
 #include "subject.h"
 #include "observer.h"
 
-void Subject::attach(Observer *o)
+void Subject::attach(std::shared_ptr<Observer> o)
 {
     observers.push_back(o);
 }
 
-void Subject::detach(Observer *o)
+void Subject::detach(std::shared_ptr<Observer> oo)
 {
     for (auto it = observers.begin(); it != observers.end(); )
     {
