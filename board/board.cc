@@ -170,44 +170,58 @@ int Board::checkClearLine()
     return numLinesCleared;
 }
 
+bool all_of(vector<char> row)
+{
+    for (auto it = row.begin(); it != row.end(); it++)
+    {
+        if (*it == ' ')
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void Board::updateClearLines()
 {
-    cout << "within the updateClearlines" << endl;
     int linesCleared = 0;
-    //cout << "*" << grid[12][10];
     bool cleared = true;
-    while (cleared) {
+    while (cleared)
+    {
         cleared = false;
         ++linesCleared;
         ++numLinesCleared;
-        for (int row = 17; row > 0; --row) {
+        for (int row = 17; row > 0; --row)
+        {
             vector<char> selectedRow;
-            for (int col = 0; col < 11; ++col) {
+            for (int col = 0; col < 11; ++col)
+            {
                 selectedRow.push_back(grid[col][row]);
             }
 
-            if (all_of(selectedRow)) {
+            if (all_of(selectedRow))
+            {
                 cleared = true;
-                for (int col = 0; col < 11; ++col) {
-                    grid[col][row] = ' ';  
+                for (int col = 0; col < 11; ++col)
+                {
+                    grid[col][row] = ' ';
                 }
 
-                for (int row2 = row; row2 > 0; --row2) {
-                    for (int col = 0; col < 11; ++col) {
+                for (int row2 = row; row2 > 0; --row2)
+                {
+                    for (int col = 0; col < 11; ++col)
+                    {
                         grid[col][row2] = grid[col][row2 - 1];
                     }
                 }
 
-                for (int col = 0; col < 11; ++col) {
+                for (int col = 0; col < 11; ++col)
+                {
                     grid[col][0] = ' ';
                 }
-
             }
-
         }
-
     }
-
 }
 
 // for use in game engine
