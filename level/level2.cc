@@ -7,38 +7,40 @@
 #include "../block/blockT.h"
 #include "../block/blockZ.h"
 
-Level2::Level2(): Level() {}
+Level2::Level2() : Level() {}
 
 int Level2::getLevel() const { return 2; }
 
-Block* Level2::createBlock()
+std::shared_ptr<Block> Level2::createBlock()
 {
-    Block *nextBlock;
+    std::shared_ptr<Block> nextBlock;
     int x = rand() % 7;
 
     switch (x)
     {
     case 0:
-        nextBlock = new IBlock();
+        nextBlock = std::make_shared<IBlock>();
         break;
     case 1:
-        nextBlock = new JBlock();
+        nextBlock = std::make_shared<JBlock>();
         break;
     case 2:
-        nextBlock = new LBlock();
+        nextBlock = std::make_shared<LBlock>();
         break;
     case 3:
-        nextBlock = new OBlock();
+        nextBlock = std::make_shared<OBlock>();
         break;
     case 4:
-        nextBlock = new SBlock();
+        nextBlock = std::make_shared<SBlock>();
         break;
     case 5:
-        nextBlock = new ZBlock();
+        nextBlock = std::make_shared<ZBlock>();
         break;
     case 6:
-        nextBlock = new TBlock();
+        nextBlock = std::make_shared<TBlock>();
         break;
+    default:
+        throw std::runtime_error("Invalid random value generated for block creation");
     }
 
     nextBlock->setLevel(2);

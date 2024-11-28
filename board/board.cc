@@ -13,18 +13,18 @@
 
 #include <map>
 
-void Board::setCurrentBlock(Block *block)
+Board::Board(int x, int y) noexcept
+    : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), numLinesCleared(0), noClearCount(0) {}
+
+void Board::setCurrentBlock(const std::shared_ptr<Block> &block)
 {
-    if (currentBlock)
-        delete currentBlock;
     currentBlock = block;
 }
 
 void Board::getNextBlock()
 {
-    Block *newBlock = parameter[level]->createBlock();
-    nextBlock = newBlock;
-}
+    nextBlock = std::shared_ptr<Block>(parameter[level]->createBlock());
+};
 
 void Board::initBlocks()
 {
@@ -43,8 +43,6 @@ void Board::setDimY(int y)
     dimY = y;
 }
 
-Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), numLinesCleared(0), noClearCount(0) {}
-
 void Board::setValue(char newValue, int x, int y)
 {
     if (x < 0 || x >= dimX || y < 0 || y >= dimY)
@@ -58,26 +56,6 @@ char Board::getChar(int x, int y) const
 {
     return grid[x][y];
 };
-
-// bool Board::isValidMove()
-// {
-//     for (auto &t : currentBlock->getCoord())
-//     {
-//         if ((t.first > dimX) || (t.first < 0))
-//         {
-//             return false;
-//         }
-//         if (t.second > dimY)
-//         {
-//             return false;
-//         }
-//         if (grid[t.first][t.second] != ' ')
-//         {
-//             return false;
-//         }
-//     }
-//     return true;
-// }
 
 std::vector<std::vector<char>> Board::getGrid()
 {
@@ -243,6 +221,26 @@ void Board::updateClearLines()
     }
 }
 
+// bool Board::isValidMove()
+// {
+//     for (auto &t : currentBlock->getCoord())
+//     {
+//         if ((t.first > dimX) || (t.first < 0))
+//         {
+//             return false;
+//         }
+//         if (t.second > dimY)
+//         {
+//             return false;
+//         }
+//         if (grid[t.first][t.second] != ' ')
+//         {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
+
 // bool Board::blockRemoved()
 //{
 //     int acc = 0;
@@ -263,10 +261,10 @@ void Board::updateClearLines()
 //     return false;
 // };
 
-void Board::addBlockToVec(Block *block)
+void Board::addBlockToVec(const std::shared_ptr<Block> &block)
 {
     addedBlocks.emplace_back(block);
-};
+}
 
 void Board::setLvlSequence(const std::vector<char> &seq)
 {
@@ -345,7 +343,7 @@ void Board::removeIncr(int row)
 {
     for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
     {
-        Block *block = *it;
+        Block *block = it->get();
 
         auto coords = block->getCoord();
         std::vector<std::pair<int, int>> newCoords;

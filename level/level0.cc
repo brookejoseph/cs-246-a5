@@ -11,37 +11,39 @@ Level0::Level0() : Level() {}
 
 int Level0::getLevel() const { return 0; }
 
-Block* Level0::createBlock()
+std::shared_ptr<Block> Level0::createBlock()
 {
-    Block *nextBlock;
+    std::shared_ptr<Block> nextBlock;
     char blockType = sequence.at(position);
 
     switch (blockType)
     {
     case 'I':
-        nextBlock = new IBlock();
+        nextBlock = std::make_shared<IBlock>();
         break;
     case 'J':
-        nextBlock = new JBlock();
+        nextBlock = std::make_shared<JBlock>();
         break;
     case 'L':
-        nextBlock = new LBlock();
+        nextBlock = std::make_shared<LBlock>();
         break;
     case 'O':
-        nextBlock = new OBlock();
+        nextBlock = std::make_shared<OBlock>();
         break;
     case 'S':
-        nextBlock = new SBlock();
+        nextBlock = std::make_shared<SBlock>();
         break;
     case 'Z':
-        nextBlock = new ZBlock();
+        nextBlock = std::make_shared<ZBlock>();
         break;
     case 'T':
-        nextBlock = new TBlock();
+        nextBlock = std::make_shared<TBlock>();
         break;
+    default:
+        throw std::invalid_argument("Unknown block type");
     }
 
-    // increment position in sequence file
+    // Increment position in sequence file
     if (position < sequence.size() - 1)
     {
         ++position;

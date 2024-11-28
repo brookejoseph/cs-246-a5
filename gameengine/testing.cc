@@ -29,99 +29,48 @@ void printBoard(Board *board, int dimX, int dimY)
     }
 }
 
-void test1() {
-    
-    //basic to check score
-    
-    GameEngine gameEngine(11, 18);
-    // Player 1's turn
-    cout << "Current player before drop: " << gameEngine.grabPlayer() << endl;
-    gameEngine.executeCommand("oBlock");
-    gameEngine.executeCommand("drop");
-    Board *player1 = gameEngine.getPlayer1();
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-
-    // Player 1's turn again
-    gameEngine.executeCommand("oBlock");
-    gameEngine.executeCommand("right", 2);
-    gameEngine.executeCommand("drop");
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-
-    // Player 1's turn again
-    gameEngine.executeCommand("oBlock");
-    gameEngine.executeCommand("right", 4);
-    gameEngine.executeCommand("drop");
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-
-    // Player 1's turn again
-    gameEngine.executeCommand("oBlock");
-    gameEngine.executeCommand("right", 6);
-    gameEngine.executeCommand("drop");
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-
-    // Player 1's turn again
-    gameEngine.executeCommand("oBlock");
-    gameEngine.executeCommand("right", 8);
-    gameEngine.executeCommand("drop");
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-
-    // Player 1's turn again
-    gameEngine.executeCommand("iBlock");
-    gameEngine.executeCommand("right", 10);
-    gameEngine.executeCommand("drop");
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-
-}
 int main()
 {
-    
-    test1();
-    /*
-    // Player 1's turn
-    cout << "Current player before drop: " << gameEngine.grabPlayer() << endl;
-    gameEngine.executeCommand("oBlock");
-    gameEngine.executeCommand("drop");
-    Board *player1 = gameEngine.getPlayer1();
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
+    GameEngine gameEngine(11, 18);
+    gameEngine.executeCommand("O");
+    gameEngine.executeCommand("right", 3);
 
-    // Switch to Player 2
-    gameEngine.setPlayer();
-    cout << "Current player after drop: " << gameEngine.grabPlayer() << endl;
-    gameEngine.executeCommand("lBlock");
-    gameEngine.executeCommand("clockwise", 1);
-    gameEngine.executeCommand("right", 1);
-    gameEngine.executeCommand("drop");
-    Board *player2 = gameEngine.getPlayer2();
-    printBoard(player2, 11, 18);
-    cout << "Player 2 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-
-    // Player 1's turn again
-    gameEngine.setPlayer();
-    gameEngine.executeCommand("oBlock");
-    gameEngine.executeCommand("right", 2);
-    gameEngine.executeCommand("drop");
-    printBoard(player1, 11, 18);
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-    */
+    // gameEngine.executeCommand("drop");
 
     return 0;
 }
+
+/*
+// Player 1's turn
+cout << "Current player before drop: " << gameEngine.grabPlayer() << endl;
+gameEngine.executeCommand("oBlock");
+gameEngine.executeCommand("drop");
+Board *player1 = gameEngine.getPlayer1();
+printBoard(player1, 11, 18);
+cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
+cout << "High score: " << gameEngine.getHighScore() << endl;
+
+// Switch to Player 2
+gameEngine.setPlayer();
+cout << "Current player after drop: " << gameEngine.grabPlayer() << endl;
+gameEngine.executeCommand("lBlock");
+gameEngine.executeCommand("clockwise", 1);
+gameEngine.executeCommand("right", 1);
+gameEngine.executeCommand("drop");
+Board *player2 = gameEngine.getPlayer2();
+printBoard(player2, 11, 18);
+cout << "Player 2 score: " << gameEngine.grabCurrentScore() << endl;
+cout << "High score: " << gameEngine.getHighScore() << endl;
+
+// Player 1's turn again
+gameEngine.setPlayer();
+gameEngine.executeCommand("oBlock");
+gameEngine.executeCommand("right", 2);
+gameEngine.executeCommand("drop");
+printBoard(player1, 11, 18);
+cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
+cout << "High score: " << gameEngine.getHighScore() << endl;
+*/
 
 // gameEngine.executeCommand("oBlock");
 // gameEngine.executeCommand("validMove");
