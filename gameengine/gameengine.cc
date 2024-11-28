@@ -23,10 +23,10 @@
 
 using namespace std;
 
-bool GameEngine::blockRemoved()
-{
-    return baseBoard->blockRemoved();
-};
+// bool GameEngine::blockRemoved()
+// {
+//     return baseBoard->blockRemoved();
+// };
 
 int GameEngine::grabCurrentScore()
 {
@@ -53,13 +53,15 @@ void GameEngine::calScore()
 {
     int level = returnCurrentBoard()->getCurrentLevelVal();
     int numLines = returnCurrentBoard()->checkClearLine();
+    int numBlocks = returnCurrentBoard()->checkClearBlock();
+    cout << "blocks cleared: " << numBlocks;
     int points = std::pow(level + numLines, 2);
     int newPoints = 0;
 
-    if (blockRemoved())
-    {
-        newPoints = pow(level + 1, 2);
-    };
+    // if (numBlocks)
+    // {
+    //     newPoints = pow(level + 1, 2);
+    // };
     int current = grabCurrentScore();
     current = current + points + newPoints;
     updateHighScore();
@@ -106,10 +108,16 @@ void GameEngine::initializeCommandMap()
          { baseBoard->cw(amount); }},
         {"validMove", [this](int)
          { baseBoard->isValidMove(); }},
+        // {"levelup", [this](int amount)
+        //  { baseBoard->levelUp(amount); }},
+        // {"leveldown", [this](int amount)
+        //  { baseBoard->levelDown(amount); }},
+        
+        //Change this back to above
         {"levelup", [this](int amount)
-         { baseBoard->levelUp(amount); }},
+         { baseBoard->levelUp(); }},
         {"leveldown", [this](int amount)
-         { baseBoard->levelDown(amount); }},
+         { baseBoard->levelDown(); }},
         {"zBlock", [this](int)
          { Block *newBlock = new ZBlock();
            baseBoard->setCurrentBlock(newBlock); }},

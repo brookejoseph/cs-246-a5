@@ -44,7 +44,7 @@ public:
 
     Board *returnCurrentBoard();
 
-    bool blockRemoved();
+    //bool blockRemoved();
 
     int grabCurrentScore();
 

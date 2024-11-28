@@ -32,6 +32,9 @@ void Block::left()
     --b.first;
     --c.first;
     --d.first;
+    if (getLevel() >= 3) {
+        down();
+    }
 }
 
 void Block::right()
@@ -40,6 +43,10 @@ void Block::right()
     ++b.first;
     ++c.first;
     ++d.first;
+    //cout << "get level: " << getLevel() << endl;
+    if (getLevel() >= 3) {
+        down();
+    }
 }
 
 void Block::down()
@@ -48,6 +55,7 @@ void Block::down()
     ++b.second;
     ++c.second;
     ++d.second;
+    //cout << "down triggered" << endl;
 }
 
 void Block::rotateccw()
@@ -86,6 +94,9 @@ void Block::rotateccw()
     c.second += shift_y;
     d.first -= shift_x;
     d.second += shift_y;
+    if (getLevel() >= 3) {
+        down();
+    }
 }
 
 void Block::rotatecw()
@@ -93,4 +104,7 @@ void Block::rotatecw()
     this->rotateccw();
     this->rotateccw();
     this->rotateccw();
+    if (getLevel() >= 3) {
+        down();
+    }
 }
