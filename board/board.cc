@@ -246,24 +246,6 @@ void Board::updateClearLines()
 //    return false;
 //};
 
-void Board::removeIncr(int row)
-{
-    for (auto i : addedBlocks)
-    {
-        for (auto k : i->getCoord())
-        {
-            if (k.second == row)
-            {
-                k.first = -1;
-                k.second = -1;
-            };
-            if (k.second == row - 1)
-            {
-                ++k.second;
-            };
-        };
-    };
-}
 
 void Board::addBlockToVec(Block *block)
 {
