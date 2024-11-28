@@ -3,7 +3,7 @@
 #include <iostream>
 #include <ostream>
 #include "../block/block.h"
-#include "../cell/cell.h"
+//#include "../cell/cell.h"
 #include "../level/level.h"
 #include "../level/level0.h"
 #include "../level/level1.h"
@@ -39,7 +39,7 @@ void Board::setDimY(int y)
     dimY = y;
 }
 
-Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), score(0), highScore(0), numLinesCleared(0), currentLevel(0), noClearCount(0) {}
+Board::Board(int x, int y) noexcept : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), numLinesCleared(0), noClearCount(0) {}
 
 void Board::setValue(char newValue, int x, int y)
 {
@@ -50,7 +50,7 @@ void Board::setValue(char newValue, int x, int y)
     grid[x][y] = newValue;
 };
 
-char Board::getValue(int x, int y)
+char Board::getChar(int x, int y) const
 {
     return grid[x][y];
 };
@@ -126,14 +126,12 @@ void Board::addCell(Block &thisBlock)
 
 void Board::levelUp(int amount)
 {
-    currentPtr = parameter[currentLevel + amount];
-    currentLevel += amount;
+    level += amount;
 };
 
 void Board::levelDown(int amount)
 {
-    currentPtr = parameter[currentLevel - amount];
-    currentLevel -= amount;
+    level -= amount;
 };
 
 void Board::drop()
@@ -155,10 +153,6 @@ void Board::restart()
     grid.clear();
 };
 
-int Board::findScore()
-{
-    return score;
-};
 
 int Board::getLevel() const
 {
@@ -269,23 +263,11 @@ void Board::addBlockToVec(Block *block)
     addedBlocks.emplace_back(block);
 };
 
-// for use in game engine
-// void setSequence(const std::vector<char> &seq) {
-//    for (auto lvl: levelList) {
-//        lvl->setSequence(seq);
-//    }
-//}
-
-int Board::getCurrentLevelVal()
-{
-    cout << "grabbing the current val in board" << currentLevel << endl;
-    return currentLevel;
-};
-
-Level *Board::getCurrentLevelPtr()
-{
-    return currentPtr;
-};
+void Board::setLvlSequence(const std::vector<char> &seq) {
+    for (int i = 0; i <= 4; ++i) {
+        parameter[i]->setSequence(seq);
+    }
+}
 
 /*
 void Board::drop()

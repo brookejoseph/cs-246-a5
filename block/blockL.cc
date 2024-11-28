@@ -26,7 +26,7 @@ char LBlock::getChar(int x, int y) const
     }
     else
     {
-        return cells->getValue(x, y);
+        return cells->getChar(x, y);
     };
 };
 

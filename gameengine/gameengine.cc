@@ -51,7 +51,7 @@ void GameEngine::updateHighScore()
 
 void GameEngine::calScore()
 {
-    int level = returnCurrentBoard()->getCurrentLevelVal();
+    int level = returnCurrentBoard()->getLevel();
     int numLines = returnCurrentBoard()->checkClearLine();
     int points = std::pow(level + numLines, 2);
     int newPoints = 0;

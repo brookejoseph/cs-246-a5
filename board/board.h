@@ -26,12 +26,6 @@ private:
     Block *currentBlock;
     Block *nextBlock;
 
-    int level;
-    std::vector<std::unique_ptr<Level>> levelList;
-
-    int score;
-    int highScore;
-
     int noClearCount;
 
 protected:
@@ -41,8 +35,7 @@ protected:
 
     std::vector<Block *> addedBlocks;
 
-    int currentLevel;
-    Level *currentPtr;
+    int level;
     Level *parameter[5] = {new Level0(),
                            new Level1(),
                            new Level2(),
@@ -53,19 +46,14 @@ public:
     Board(int x, int y) noexcept;
     ~Board() = default;
 
-    virtual void levelUp(int amount);
-    virtual void levelDown(int amount);
-    virtual int getCurrentLevelVal();
-    virtual Level *getCurrentLevelPtr();
+    void levelUp(int amount);
+    void levelDown(int amount);
+    int getLevel() const;
 
-    virtual int checkClearLine();
-    virtual void updateClearLines();
+    int checkClearLine();
+    void updateClearLines();
 
     bool isValidMove();
-    int findScore();
-
-    Level getLevelPtr();
-    int getLevel() const;
 
     void addBlockToVec(Block *blockVal);
     void removeIncr(int row);
@@ -78,26 +66,20 @@ public:
     void ccw(int amount);   // done
     void drop();            // done
 
-    void saveGame();
     void restart(); // done
-    void loadGame();
-    // virtual char getState(int x, int y) const override;
 
-    void eraseBlock(Block *b);
     void addCell(Block &block); // done
-    void addToTurnCount();
-    int getTurnCount();
     virtual void setDimX(int x);
     virtual void setDimY(int y);
 
-    void setSequence(const std::vector<char> &seq); // added this <<<<
+    void setLvlSequence(const std::vector<char> &seq); // added this <<<<
     void setCurrentBlock(Block *block);
     void setNextBlock(Block *block);
     char getNextBlockType() const;
     void convertNextToCurrent();
 
     void setValue(char newValue, int x, int y);
-    virtual char getValue(int x, int y);
+    virtual char getChar(int x, int y) const;
 };
 
 #endif
