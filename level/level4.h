@@ -8,7 +8,7 @@ class Level4: public Level {
         ~Level4() = default;
 
         virtual int getLevel() const override;
-        virtual std::shared_ptr<Block> createBlock() override;
+        virtual Block* createBlock() override;
 };
 
 #endif

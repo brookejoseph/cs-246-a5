@@ -20,7 +20,6 @@ private:
     Board *player1;
     Board *player2;
     string currentCommand;
-    int currentLevel;
     char currentChar;
 
     int currentPlayer;
@@ -48,8 +47,11 @@ public:
     void calScore();
     void restartGame();
 
-    Board *getPlayer1();
-    Board *getPlayer2();
+    Board *getPlayer1() const;
+    Board *getPlayer2() const;
+    
+    int getPlayer1Score() const;
+    int getPlayer2Score() const;
 
     int getCurrentScore();
     int getHighScore() const;

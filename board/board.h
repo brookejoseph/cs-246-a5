@@ -51,6 +51,7 @@ public:
     void levelUp();
     void levelDown();
     int getLevel() const;
+    void setRandom(bool isRandom);
 
     int checkClearLine();
     void updateClearLines();
@@ -72,17 +73,17 @@ public:
     void restart(); // done
 
     void addCell(Block &block); // done
-    void addToTurnCount();
-    int getTurnCount();
     int checkClearBlock();
-    virtual void setDimX(int x);
-    virtual void setDimY(int y);
+    void setDimX(int x);
+    void setDimY(int y);
 
     void setLvlSequence(const std::vector<char> &seq); // added this <<<<
     void setCurrentBlock(Block *block);
-    void setNextBlock(Block *block);
+    void getNextBlock();
     char getNextBlockType() const;
-    void convertNextToCurrent();
+    std::vector<std::pair<int, int>> getCurrentBlockCoord() const;
+    char getCurrentBlockType() const;
+    void initBlocks();
 
     void setValue(char newValue, int x, int y);
     virtual char getChar(int x, int y) const;
