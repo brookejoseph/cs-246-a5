@@ -37,13 +37,17 @@ void printValue(const std::string &text, int value, int space) {
 
 // CLASS IMPLEMENTATIONS
 
-TextDisplay::TextDisplay(std::shared_ptr<GameEngine> game, int dimX, int dimY): 
-    game{game}, dimX{dimX}, dimY{dimY} {}
+TextDisplay::TextDisplay(std::shared_ptr<GameEngine> player1, std::shared_ptr<GameEngine> player2, int dimX, int dimY): 
+    player1{player1}, player2{player2}, dimX{dimX}, dimY{dimY} {}
 
 TextDisplay::~TextDisplay() {}
 
-std::shared_ptr<GameEngine> TextDisplay::getGame() const {
-    return game.lock();
+std::shared_ptr<GameEngine> TextDisplay::getPlayer1() const {
+    return player1.lock();
+}
+
+std::shared_ptr<GameEngine> TextDisplay::getPlayer2() const {
+    return player2.lock();
 }
 
 void TextDisplay::printHeaders(const std::string &text) const {
@@ -70,19 +74,19 @@ void TextDisplay::printDashes() const {
 void TextDisplay::printBoards() const {
     for (int j = 0; j < dimY; ++j) {
         for (int i = 0; i < dimX; ++i) {
-            std::cout << getGame()->getPlayer1()->getValue(i, j);
+            std::cout << getPlayer1()->getValue(i, j);
         }
         printChar(' ', sep);
         for (int i = 0; i < dimX; ++i) {
-            std::cout << getGame()->getPlayer2()->getValue(i, j);
+            std::cout << getPlayer2()->getValue(i, j);
         }
         std::cout << '\n';
     }
 }
 
 void TextDisplay::printNextBlocks() const {
-    char nextBlock1 = getGame()->getPlayer1()->getNextBlockType();
-    char nextBlock2 = getGame()->getPlayer2()->getNextBlockType();
+    char nextBlock1 = getPlayer1()->getNextBlockType();
+    char nextBlock2 = getPlayer2()->getNextBlockType();
     std::cout << blockConfig[nextBlock1].first;
     printChar(' ', dimX + sep - 4);
     std::cout << blockConfig[nextBlock2].first;
@@ -95,8 +99,8 @@ void TextDisplay::printNextBlocks() const {
 
 void TextDisplay::notify() {
     //printValue("High Score", getGame()->getHighScore());
-    printValues("Level", getGame()->getPlayer1()->getLevel(), getGame()->getPlayer2()->getLevel());
-    printValues("Score", getGame()->getPlayer1()->findScore(), getGame()->getPlayer2()->findScore());
+    printValues("Level", getPlayer1()->getLevel(), getPlayer2()->getLevel());
+    printValues("Score", getPlayer1()->findScore(), getPlayer2()->findScore());
     printDashes();
     printBoards();
     printDashes();
