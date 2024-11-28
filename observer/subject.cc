@@ -6,7 +6,7 @@ void Subject::attach(std::shared_ptr<Observer> o)
     observers.push_back(o);
 }
 
-void Subject::detach(std::shared_ptr<Observer> oo)
+void Subject::detach(std::shared_ptr<Observer> o)
 {
     for (auto it = observers.begin(); it != observers.end(); )
     {
