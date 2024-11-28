@@ -7,7 +7,11 @@
 #include "../block/blockS.h"
 #include "../block/blockL.h"
 
+#include <string>
 #include <iostream>
+#include <sstream>
+#include <vector>
+#include <fstream>
 
 using namespace std;
 

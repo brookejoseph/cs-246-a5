@@ -1,6 +1,8 @@
 #include "level.h"
 
+
 Level::Level() noexcept: position{0} {}
+
 
 void Level::setRandom(bool isRandom) { random = isRandom; }
 
