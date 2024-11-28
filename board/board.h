@@ -56,6 +56,7 @@ public:
     void updateClearLines();
 
     bool isValidMove();
+    std::vector<std::vector<char>> getGrid();
 
     void addBlockToVec(Block *blockVal);
     void removeIncr(int row);

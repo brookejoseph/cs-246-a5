@@ -13,6 +13,8 @@
 
 #include <map>
 
+
+
 void Board::setCurrentBlock(Block *block)
 {
     currentBlock = block;
@@ -55,24 +57,28 @@ char Board::getChar(int x, int y) const
     return grid[x][y];
 };
 
-bool Board::isValidMove()
-{
-    for (auto &t : currentBlock->getCoord())
-    {
-        if ((t.first > dimX) || (t.first < 0))
-        {
-            return false;
-        }
-        if (t.second > dimY)
-        {
-            return false;
-        }
-        if (grid[t.first][t.second] != ' ')
-        {
-            return false;
-        }
-    }
-    return true;
+// bool Board::isValidMove()
+// {
+//     for (auto &t : currentBlock->getCoord())
+//     {
+//         if ((t.first > dimX) || (t.first < 0))
+//         {
+//             return false;
+//         }
+//         if (t.second > dimY)
+//         {
+//             return false;
+//         }
+//         if (grid[t.first][t.second] != ' ')
+//         {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
+
+std::vector<std::vector<char>> Board::getGrid() {
+    return grid;
 }
 
 void Board::left(int amount)
@@ -190,8 +196,7 @@ void Board::updateClearLines()
     while (cleared)
     {
         cleared = false;
-        ++linesCleared;
-        ++numLinesCleared;
+
         for (int row = 17; row > 0; --row)
         {
             vector<char> selectedRow;
@@ -204,6 +209,8 @@ void Board::updateClearLines()
                             { return c != ' '; }))
             {
                 cleared = true;
+                ++linesCleared;
+                ++numLinesCleared;
                 for (int col = 0; col < 11; ++col)
                 {
                     grid[col][row] = ' ';
