@@ -1,4 +1,5 @@
 #include "gameengine.h"
+#include "../block/block.h"
 #include "../block/blockZ.h"
 #include "../block/blockJ.h"
 #include "../block/blockO.h"
@@ -104,6 +105,14 @@ int GameEngine::getHighScore() const
     return highScore;
 }
 
+int GameEngine::getPlayer1Score() const {
+    return player1Score;
+}
+
+int GameEngine::getPlayer2Score() const {
+    return player2Score;
+}
+
 GameEngine::~GameEngine()
 {
     delete player2;
@@ -131,37 +140,37 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->levelUp(); }},
         {"leveldown", [this](int amount)
          { currentBoard()->levelDown(); }},
-        {"zBlock", [this](int)
+        {"Z", [this](int)
          {
              Block *newBlock = new ZBlock();
              currentBoard()->setCurrentBlock(newBlock);
          }},
-        {"tBlock", [this](int)
+        {"T", [this](int)
          {
              Block *newBlock = new TBlock();
              currentBoard()->setCurrentBlock(newBlock);
          }},
-        {"jBlock", [this](int)
+        {"J", [this](int)
          {
              Block *newBlock = new JBlock();
              currentBoard()->setCurrentBlock(newBlock);
          }},
-        {"iBlock", [this](int)
+        {"I", [this](int)
          {
              Block *newBlock = new IBlock();
              currentBoard()->setCurrentBlock(newBlock);
          }},
-        {"sBlock", [this](int)
+        {"S", [this](int)
          {
              Block *newBlock = new SBlock();
              currentBoard()->setCurrentBlock(newBlock);
          }},
-        {"oBlock", [this](int)
+        {"O", [this](int)
          {
              Block *newBlock = new OBlock();
              currentBoard()->setCurrentBlock(newBlock);
          }},
-        {"lBlock", [this](int)
+        {"L", [this](int)
          {
              Block *newBlock = new LBlock();
              currentBoard()->setCurrentBlock(newBlock);
@@ -169,11 +178,11 @@ void GameEngine::initializeCommandMap()
     };
 }
 
-Board *GameEngine::getPlayer1()
+Board *GameEngine::getPlayer1() const
 {
     return player1;
 }
-Board *GameEngine::getPlayer2()
+Board *GameEngine::getPlayer2() const
 {
     return player2;
 }
@@ -181,12 +190,16 @@ Board *GameEngine::getPlayer2()
 GameEngine::GameEngine(int x, int y) : player1(new Board(x, y)),
                                        player2(new Board(x, y)),
                                        currentPlayer(1),
-                                       currentLevel(0),
                                        highScore(0),
                                        currentChar(' ') {}
 
 void GameEngine::executeCommand(const std::string &command, int amount)
 {
+    if (amount < 0) {
+        std::cerr << "Invalid multiplier: " << amount << std::endl;
+        return;
+    }
+
     if (commandMap.empty())
     {
         initializeCommandMap();
@@ -201,6 +214,8 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         {
             calScore();
         }
+
+        notifyObservers();
     }
     else
     {

@@ -11,33 +11,33 @@ Level2::Level2(): Level() {}
 
 int Level2::getLevel() const { return 2; }
 
-std::shared_ptr<Block> Level2::createBlock()
+Block* Level2::createBlock()
 {
-    std::shared_ptr<Block> nextBlock;
+    Block *nextBlock;
     int x = rand() % 7;
 
     switch (x)
     {
     case 0:
-        nextBlock = std::make_shared<IBlock>();
+        nextBlock = new IBlock();
         break;
     case 1:
-        nextBlock = std::make_shared<JBlock>();
+        nextBlock = new JBlock();
         break;
     case 2:
-        nextBlock = std::make_shared<LBlock>();
+        nextBlock = new LBlock();
         break;
     case 3:
-        nextBlock = std::make_shared<OBlock>();
+        nextBlock = new OBlock();
         break;
     case 4:
-        nextBlock = std::make_shared<SBlock>();
+        nextBlock = new SBlock();
         break;
     case 5:
-        nextBlock = std::make_shared<ZBlock>();
+        nextBlock = new ZBlock();
         break;
     case 6:
-        nextBlock = std::make_shared<TBlock>();
+        nextBlock = new TBlock();
         break;
     }
 

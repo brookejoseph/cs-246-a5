@@ -37,17 +37,13 @@ void printValue(const std::string &text, int value, int space) {
 
 // CLASS IMPLEMENTATIONS
 
-TextDisplay::TextDisplay(std::shared_ptr<GameEngine> player1, std::shared_ptr<GameEngine> player2, int dimX, int dimY): 
-    player1{player1}, player2{player2}, dimX{dimX}, dimY{dimY} {}
-
-TextDisplay::~TextDisplay() {}
-
-std::shared_ptr<GameEngine> TextDisplay::getPlayer1() const {
-    return player1.lock();
+TextDisplay::TextDisplay(GameEngine *game, int dimX, int dimY): 
+    game{game}, dimX{dimX}, dimY{dimY} {
+    game->attach(this);
 }
 
-std::shared_ptr<GameEngine> TextDisplay::getPlayer2() const {
-    return player2.lock();
+TextDisplay::~TextDisplay() {
+    game->detach(this);
 }
 
 void TextDisplay::printHeaders(const std::string &text) const {
@@ -72,21 +68,34 @@ void TextDisplay::printDashes() const {
 }
 
 void TextDisplay::printBoards() const {
+    // dynamically print current block position
+    std::vector<std::pair<int, int>> currentCoord = game->currentBoard()->getCurrentBlockCoord();
+    char currentBlockType = game->currentBoard()->getNextBlockType();
+    int currentPlayer = game->grabPlayer();
+
     for (int j = 0; j < dimY; ++j) {
         for (int i = 0; i < dimX; ++i) {
-            std::cout << getPlayer1()->getValue(i, j);
+            if (currentPlayer == 1 && std::find(currentCoord.begin(), currentCoord.end(), std::make_pair(i, j)) != currentCoord.end()) {
+                std::cout << currentBlockType;
+            } else {
+                std::cout << game->getPlayer1()->getChar(i, j);
+            }
         }
         printChar(' ', sep);
         for (int i = 0; i < dimX; ++i) {
-            std::cout << getPlayer2()->getChar(i, j);
+            if (currentPlayer == 2 && std::find(currentCoord.begin(), currentCoord.end(), std::make_pair(i, j)) != currentCoord.end()) {
+                std::cout << currentBlockType;
+            } else {
+                std::cout << game->getPlayer1()->getChar(i, j);
+            }
         }
         std::cout << '\n';
     }
 }
 
 void TextDisplay::printNextBlocks() const {
-    char nextBlock1 = getPlayer1()->getNextBlockType();
-    char nextBlock2 = getPlayer2()->getNextBlockType();
+    char nextBlock1 = game->getPlayer1()->getNextBlockType();
+    char nextBlock2 = game->getPlayer2()->getNextBlockType();
     std::cout << blockConfig[nextBlock1].first;
     printChar(' ', dimX + sep - 4);
     std::cout << blockConfig[nextBlock2].first;
@@ -99,8 +108,8 @@ void TextDisplay::printNextBlocks() const {
 
 void TextDisplay::notify() {
     //printValue("High Score", getGame()->getHighScore());
-    printValues("Level", getPlayer1()->getLevel(), getPlayer2()->getLevel());
-    printValues("Score", getPlayer1()->findScore(), getPlayer2()->findScore());
+    printValues("Level", game->getPlayer1()->getLevel(), game->getPlayer2()->getLevel());
+    printValues("Score", game->getPlayer1Score(), game->getPlayer2Score());
     printDashes();
     printBoards();
     printDashes();

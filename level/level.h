@@ -23,7 +23,7 @@ public:
     void setPosition(int n);
 
     virtual int getLevel() const = 0;                 // get the level number
-    virtual std::shared_ptr<Block> createBlock() = 0; // generate a Block
+    virtual Block* createBlock() = 0; // generate a Block
 };
 
 #endif

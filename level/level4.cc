@@ -11,9 +11,9 @@ Level4::Level4(): Level() {}
 
 int Level4::getLevel() const { return 4; }
 
-std::shared_ptr<Block> Level4::createBlock()
+Block* Level4::createBlock()
 {
-    std::shared_ptr<Block> nextBlock;
+    Block *nextBlock;
 
     if (random)
     { // if block generation is random
@@ -21,31 +21,31 @@ std::shared_ptr<Block> Level4::createBlock()
 
         if (x == 0 || x == 1)
         {
-            nextBlock = std::make_shared<SBlock>();
+            nextBlock = new SBlock();
         }
         else if (x == 2 || x == 3)
         {
-            nextBlock = std::make_shared<ZBlock>();
+            nextBlock = new ZBlock();
         }
         else if (x == 4)
         {
-            nextBlock = std::make_shared<IBlock>();
+            nextBlock = new IBlock();
         }
         else if (x == 5)
         {
-            nextBlock = std::make_shared<JBlock>();
+            nextBlock = new JBlock();
         }
         else if (x == 6)
         {
-            nextBlock = std::make_shared<LBlock>();
+            nextBlock = new LBlock();
         }
         else if (x == 7)
         {
-            nextBlock = std::make_shared<OBlock>();
+            nextBlock = new OBlock();
         }
         else if (x == 8)
         {
-            nextBlock = std::make_shared<TBlock>();
+            nextBlock = new TBlock();
         }
     }
     else
@@ -55,25 +55,25 @@ std::shared_ptr<Block> Level4::createBlock()
         switch (blockType)
         {
         case 'I':
-            nextBlock = std::make_shared<IBlock>();
+            nextBlock = new IBlock();
             break;
         case 'J':
-            nextBlock = std::make_shared<JBlock>();
+            nextBlock = new JBlock();
             break;
         case 'L':
-            nextBlock = std::make_shared<LBlock>();
+            nextBlock = new LBlock();
             break;
         case 'O':
-            nextBlock = std::make_shared<OBlock>();
+            nextBlock = new OBlock();
             break;
         case 'S':
-            nextBlock = std::make_shared<SBlock>();
+            nextBlock = new SBlock();
             break;
         case 'Z':
-            nextBlock = std::make_shared<ZBlock>();
+            nextBlock = new ZBlock();
             break;
         case 'T':
-            nextBlock = std::make_shared<TBlock>();
+            nextBlock = new TBlock();
             break;
         }
 

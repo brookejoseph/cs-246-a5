@@ -15,19 +15,21 @@
 
 void Board::setCurrentBlock(Block *block)
 {
+    if (currentBlock) delete currentBlock;
     currentBlock = block;
-};
+}
 
-void Board::setNextBlock(Block *block)
+void Board::getNextBlock()
 {
-    nextBlock = block;
-};
+    Block *newBlock = parameter[level]->createBlock();
+    nextBlock = newBlock;
+}
 
-void Board::convertNextToCurrent()
-{
-    currentBlock = nextBlock;
-    nextBlock = nullptr;
-};
+void Board::initBlocks() {
+    getNextBlock();
+    setCurrentBlock(nextBlock);
+    getNextBlock();
+}
 
 void Board::setDimX(int x)
 {
@@ -146,7 +148,10 @@ void Board::drop()
     }
     addCell(*currentBlock);
     this->updateClearLines();
-};
+
+    setCurrentBlock(nextBlock);
+    getNextBlock();
+}
 
 void Board::restart()
 {
@@ -157,6 +162,10 @@ void Board::restart()
 int Board::getLevel() const
 {
     return level;
+}
+
+void Board::setRandom(bool isRandom) {
+    parameter[level]->setRandom(isRandom);
 }
 
 int Board::checkClearLine()
@@ -284,6 +293,8 @@ void Board::drop()
 
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
+char Board::getNextBlockType() const { return currentBlock->getType(); }
+
 // void Board::updateClearLines()
 // {
 //     cout << "within the updateClearlines" << endl;
@@ -377,3 +388,6 @@ void Board::blockRemoved()
     noBlocksCleared += clearedCount;
 }
 
+std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const {
+    return currentBlock->getCoord();
+}
