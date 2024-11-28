@@ -39,6 +39,8 @@ protected:
     int dimY = 18;
     int numLinesCleared;
 
+    vector<Block *> addedBlocks;
+
     int currentLevel;
     Level *currentPtr;
     Level *parameter[5] = {new Level0(),
@@ -65,6 +67,10 @@ public:
     Level getLevelPtr();
     int getLevel() const;
 
+    void addBlockToVec(Board *blockVal);
+    void removeIncr(int row);
+    bool blockRemoved();
+
     void left(int amount);  // done
     void right(int amount); // done
     void down(int amount);  // done
@@ -77,7 +83,7 @@ public:
     void loadGame();
     // virtual char getState(int x, int y) const override;
 
-    void eraseBlock();
+    void eraseBlock(Block *b);
     void addCell(Block &block); // done
     void addToTurnCount();
     int getTurnCount();

@@ -44,10 +44,11 @@ public:
 
     Board *returnCurrentBoard();
 
+    bool blockRemoved();
+
     int grabCurrentScore();
 
-    void clearLines(int linesCleared);
-    void clearBlock();
+    void calScore();
     void restartGame();
 
     Board *getPlayer1();

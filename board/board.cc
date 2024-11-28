@@ -202,6 +202,7 @@ void Board::updateClearLines()
             if (all_of(selectedRow))
             {
                 cleared = true;
+                removeIncr(row);
                 for (int col = 0; col < 11; ++col)
                 {
                     grid[col][row] = ' ';
@@ -223,6 +224,50 @@ void Board::updateClearLines()
         }
     }
 }
+
+bool Board::blockRemoved()
+{
+    int acc = 0;
+    for (auto k : addedBlocks)
+    {
+        for (auto i : k->getCoord())
+        {
+            if ((i.second == -1) && (i.first == -1))
+            {
+                ++acc;
+            };
+        }
+        if ((acc == 4))
+        {
+            return true;
+        };
+        return false;
+    };
+};
+
+void Board::removeIncr(int row)
+{
+    for (auto i : addedBlocks)
+    {
+        for (auto k : i->getCoord())
+        {
+            if (k.second == row)
+            {
+                k.first = -1;
+                k.second = -1;
+            };
+            if (k.second == row - 1)
+            {
+                ++k.second;
+            };
+        };
+    };
+}
+
+void Board::addBlockToVec(Board *block)
+{
+    addedBlocks.emplace_back(block);
+};
 
 // for use in game engine
 // void setSequence(const std::vector<char> &seq) {

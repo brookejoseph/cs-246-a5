@@ -23,6 +23,11 @@
 
 using namespace std;
 
+bool GameEngine::blockRemoved()
+{
+    return baseBoard->blockRemoved();
+};
+
 int GameEngine::grabCurrentScore()
 {
     map<int, int> currentS = {
@@ -44,21 +49,19 @@ void GameEngine::updateHighScore()
     }
 }
 
-void GameEngine::clearLines(int linesCleared)
+void GameEngine::calScore()
 {
     int level = returnCurrentBoard()->getCurrentLevelVal();
-    int points = std::pow(level + linesCleared, 2);
-    int current = grabCurrentScore();
-    current += points;
-    updateHighScore();
-}
+    int numLines = returnCurrentBoard()->checkClearLine();
+    int points = std::pow(level + numLines, 2);
+    int newPoints = 0;
 
-void GameEngine::clearBlock()
-{
-    int levelWhenGenerated = returnCurrentBoard()->getCurrentLevelVal();
-    int points = std::pow(levelWhenGenerated + 1, 2);
+    if (blockRemoved)
+    {
+        newPoints = pow(level + 1, 2);
+    };
     int current = grabCurrentScore();
-    current += points;
+    current = current + points + newPoints;
     updateHighScore();
 }
 
