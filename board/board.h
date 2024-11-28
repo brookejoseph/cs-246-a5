@@ -39,7 +39,7 @@ protected:
     int dimY = 18;
     int numLinesCleared;
 
-    vector<Block *> addedBlocks;
+    std::vector<Block *> addedBlocks;
 
     int currentLevel;
     Level *currentPtr;
@@ -67,7 +67,7 @@ public:
     Level getLevelPtr();
     int getLevel() const;
 
-    void addBlockToVec(Board *blockVal);
+    void addBlockToVec(Block *blockVal);
     void removeIncr(int row);
     bool blockRemoved();
 

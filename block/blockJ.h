@@ -12,13 +12,6 @@ using namespace std;
 
 class JBlock : public Block
 {
-private:
-    Board *cell;
-    pair<int, int> a;
-    pair<int, int> b;
-    pair<int, int> c;
-    pair<int, int> d;
-
 public:
     JBlock(Board *cell,
            pair<int, int> a,
@@ -30,17 +23,8 @@ public:
     JBlock(Board *cell);
     ~JBlock() override = default;
 
-    int getLevel() override;
-    void setLevel(int val) override;
-
-    void rotateccw() override;
-    void rotatecw() override;
-    char getChar(int x, int y) override;
-    char getType() override;
-    void left() override;
-    void right() override;
-    void down() override;
+    virtual char getChar(int x, int y) const override;
+    virtual char getType() const override;
     // void drop() override;
-    vector<pair<int, int>> getCoord() override;
 };
 #endif

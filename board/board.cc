@@ -237,12 +237,12 @@ bool Board::blockRemoved()
                 ++acc;
             };
         }
-        if ((acc == 4))
+        if (acc == 4)
         {
             return true;
         };
-        return false;
     };
+    return false;
 };
 
 void Board::removeIncr(int row)
@@ -264,7 +264,7 @@ void Board::removeIncr(int row)
     };
 }
 
-void Board::addBlockToVec(Board *block)
+void Board::addBlockToVec(Block *block)
 {
     addedBlocks.emplace_back(block);
 };

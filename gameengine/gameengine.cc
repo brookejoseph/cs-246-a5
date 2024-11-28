@@ -56,7 +56,7 @@ void GameEngine::calScore()
     int points = std::pow(level + numLines, 2);
     int newPoints = 0;
 
-    if (blockRemoved)
+    if (blockRemoved())
     {
         newPoints = pow(level + 1, 2);
     };
@@ -111,25 +111,25 @@ void GameEngine::initializeCommandMap()
         {"leveldown", [this](int amount)
          { baseBoard->levelDown(amount); }},
         {"zBlock", [this](int)
-         { ZBlock *newBlock = new ZBlock();
+         { Block *newBlock = new ZBlock();
            baseBoard->setCurrentBlock(newBlock); }},
         {"tBlock", [this](int)
-         { TBlock *newBlock = new TBlock();
+         { Block *newBlock = new TBlock();
            baseBoard->setCurrentBlock(newBlock); }},
         {"jBlock", [this](int)
-         { JBlock *newBlock = new JBlock();
+         { Block *newBlock = new JBlock();
            baseBoard->setCurrentBlock(newBlock); }},
         {"iBlock", [this](int)
-         { IBlock *newBlock = new IBlock();
+         { Block *newBlock = new IBlock();
            baseBoard->setCurrentBlock(newBlock); }},
         {"sBlock", [this](int)
-         { SBlock *newBlock = new SBlock();
+         { Block *newBlock = new SBlock();
            baseBoard->setCurrentBlock(newBlock); }},
         {"oBlock", [this](int)
-         { OBlock *newBlock = new OBlock();
+         { Block *newBlock = new OBlock();
            baseBoard->setCurrentBlock(newBlock); }},
         {"lBlock", [this](int)
-         { LBlock *newBlock = new LBlock();
+         { Block *newBlock = new LBlock();
            baseBoard->setCurrentBlock(newBlock); }},
     };
 }
