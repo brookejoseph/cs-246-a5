@@ -98,6 +98,7 @@ public:
     void setSequence(const std::vector<char> &seq); // added this <<<<
     void setCurrentBlock(Block *block);
     void setNextBlock(Block *block);
+    char getNextBlockType() const;
     void convertNextToCurrent();
 
     void setValue(char newValue, int x, int y);

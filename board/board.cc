@@ -272,6 +272,9 @@ void Board::drop()
 
 */
 
+
+char Board::getNextBlockType() const { return nextBlock->getType(); }
+
 // void Board::updateClearLines()
 // {
 //     cout << "within the updateClearlines" << endl;
@@ -364,3 +367,4 @@ void Board::blockRemoved()
     }
     noBlocksCleared += clearedCount;
 }
+
