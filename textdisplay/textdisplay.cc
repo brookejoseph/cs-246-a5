@@ -1,6 +1,7 @@
 #include "textdisplay.h"
 #include <iostream>
 #include <string>
+#include <tuple>
 
 // HELPER FUNCTIONS
 
@@ -27,19 +28,13 @@ void printValue(const std::string &text, int value, int space) {
 
 // CLASS IMPLEMENTATIONS
 
-TextDisplay::TextDisplay(std::shared_ptr<Board> player1, std::shared_ptr<Board> player2, int dimX, int dimY): 
-    player1{player1}, player2{player2}, dimX{dimX}, dimY{dimY} {
-    //getBoard(player1)->attach(this);
-    //getBoard(player2)->attach(this);
-}
+TextDisplay::TextDisplay(std::shared_ptr<GameEngine> game, int dimX, int dimY): 
+    game{game}, dimX{dimX}, dimY{dimY} {}
 
-TextDisplay::~TextDisplay() {
-    //getBoard(player1)->detach(this);
-    //getBoard(player2)->detach(this);
-}
+TextDisplay::~TextDisplay() {}
 
-std::shared_ptr<Board> TextDisplay::getBoard(std::weak_ptr<Board> board) const {
-    return board.lock();
+std::shared_ptr<GameEngine> TextDisplay::getGame() const {
+    return game.lock();
 }
 
 void TextDisplay::printHeaders(const std::string &text) const {
@@ -66,27 +61,39 @@ void TextDisplay::printDashes() const {
 void TextDisplay::printBoards() const {
     for (int j = 0; j < dimY; ++j) {
         for (int i = 0; i < dimX; ++i) {
-            std::cout << getBoard(player1)->getValue(i, j);
+            std::cout << getGame()->getPlayer1()->getValue(i, j);
         }
         printChar(' ', sep);
         for (int i = 0; i < dimX; ++i) {
-            std::cout << getBoard(player2)->getValue(i, j);
+            std::cout << getGame()->getPlayer2()->getValue(i, j);
         }
         std::cout << '\n';
     }
 }
 
 void TextDisplay::printNextBlocks() const {
-    // need to figure out logic to print out next blocks
-    // likely need some sort of getNextBlock method for Board
+    std::shared_ptr<Block> player1NextBlock = getGame()->getPlayer1()->getNextBlock();
+    std::shared_ptr<Block> player2NextBlock = getGame()->getPlayer1()->getNextBlock();
 
-    //std::shared_ptr<Block> nextBlock1 = player1->getNextBlock();
-    //std::shared_ptr<Block> nextBlock2 = player2->getNextBlock();
+    for (int j = 0; j < 2; ++j) {
+        for (int i = 0; i < 4; ++i) {
+            std::cout << player1NextBlock->getChar(i, j);
+        }
+
+        printChar(' ', dimX + sep - 4);
+
+        for (int i = 0; i < 1; ++i) {
+            std::cout << player2NextBlock->getChar(i, j);
+        }
+
+        std::cout << '\n';
+    }
 }
 
 void TextDisplay::notify() {
-    printValues("Level", getBoard(player1)->getLevel(), getBoard(player2)->getLevel());
-    printValues("Score", getBoard(player1)->findScore(), getBoard(player2)->findScore());
+    //printValue("High Score", getGame()->getHighScore());
+    printValues("Level", getGame()->getPlayer1()->getLevel(), getGame()->getPlayer2()->getLevel());
+    printValues("Score", getGame()->getPlayer1()->findScore(), getGame()->getPlayer2()->findScore());
     printDashes();
     printBoards();
     printDashes();

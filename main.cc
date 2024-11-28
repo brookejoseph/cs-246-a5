@@ -161,30 +161,22 @@ int main(int argc, const char *argv[])
     }
 
     // make text observers
-    std::shared_ptr<TextDisplay> textView = std::make_shared<TextDisplay>(game->getPlayer1(), game->getPlayer2(), dimX, dimY);
-    player1->attach(textView);
-    player2->attach(textView);
+    std::shared_ptr<TextDisplay> textView = std::make_shared<TextDisplay>(game, dimX, dimY);
+    game->attach(textView);
 
     // make graphical observers if not textOnly
     if (!textOnly)
     {
-        std::shared_ptr<GraphicDisplay> graphicView = std::make_shared<GraphicDisplay>(game->getPlayer1(), game->getPlayer2());
-        game->getPlayer1->attach(graphicView);
-        game->getPlayer2->attach(graphicView);
+        std::shared_ptr<GraphicDisplay> graphicView = std::make_shared<GraphicDisplay>(game, dimX, dimY);
+        game->attach(graphicView);
     }
 
     // play game
     game->start();
 
     // when game is over, detach observers
-    game->getPlayer1->detach(textView);
-    game->getPlayer2->detach(textView);
-
-    if (!textOnly)
-    {
-        game->getPlayer1->detach(graphicView);
-        game->getPlayer2->detach(graphicView);
-    }
+    game->detach(textView);
+    if (!textOnly) { game->detach(graphicView); }
 
     return 0;
 
