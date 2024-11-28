@@ -17,7 +17,6 @@ using namespace std;
 class GameEngine : public Subject
 {
 private:
-    Board *baseBoard;
     Board *player1;
     Board *player2;
     string currentCommand;
@@ -42,9 +41,7 @@ public:
 
     void executeCommand(const std::string &command, int amount = 1);
 
-    Board *returnCurrentBoard();
-
-    //bool blockRemoved();
+    // bool blockRemoved();
 
     int grabCurrentScore();
 
@@ -56,6 +53,9 @@ public:
 
     int getCurrentScore();
     int getHighScore() const;
+    void setPlayer();
+    Board *currentBoard();
+    int grabPlayer();
 };
 
 #endif
