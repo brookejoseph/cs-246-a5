@@ -88,22 +88,16 @@ void Block::rotateccw()
     int temp_c_x = c.second, temp_c_y = -c.first;
     int temp_d_x = d.second, temp_d_y = -d.first;
 
-    // a.first = temp_a_x;
-    // a.second = temp_a_y;
-    // b.first = temp_b_x;
-    // b.second = temp_b_y;
-    // c.first = temp_c_x;
-    // c.second = temp_c_y;
-    // d.first = temp_d_x;
-    // d.second = temp_d_y;
-
-    int new_min_x = min({a.first, b.first, c.first, d.first});
-    int new_max_y = max({a.second, b.second, c.second, d.second});
+    // int new_min_x = min({a.first, b.first, c.first, d.first});
+    // int new_max_y = max({a.second, b.second, c.second, d.second});
+    int new_min_x = min({temp_a_x, temp_b_x, temp_c_x, temp_d_x});
+    int new_max_y = max({temp_a_y, temp_b_y, temp_c_y, temp_d_y});
 
     // x = x - |(new_min_x - old_min_x)|
     // y = y + |(new_max_y - old_max_y)|
     int shift_x = abs(new_min_x - old_min_x);
     int shift_y = abs(new_max_y - old_max_y);
+    
 
     temp_a_x -= shift_x;
     temp_a_y += shift_y;
@@ -135,11 +129,49 @@ void Block::rotateccw()
 
 void Block::rotatecw()
 {
-    this->rotateccw();
-    this->rotateccw();
-    this->rotateccw();
-    if (getLevel() >= 3)
+    int old_min_x = min({a.first, b.first, c.first, d.first});
+    int old_max_y = max({a.second, b.second, c.second, d.second});
+
+    // (x, y) --> (-y, x)
+    int temp_a_x = -a.second, temp_a_y = a.first;
+    int temp_b_x = -b.second, temp_b_y = b.first;
+    int temp_c_x = -c.second, temp_c_y = c.first;
+    int temp_d_x = -d.second, temp_d_y = d.first;
+
+    int new_min_x = min({temp_a_x, temp_b_x, temp_c_x, temp_d_x});
+    int new_max_y = max({temp_a_y, temp_b_y, temp_c_y, temp_d_y});
+
+    // x = x - |(new_min_x - old_min_x)|
+    // y = y + |(new_max_y - old_max_y)|
+    int shift_x = abs(new_min_x - old_min_x);
+    int shift_y = abs(new_max_y - old_max_y);
+    
+
+    temp_a_x += shift_x;
+    temp_a_y += shift_y;
+    temp_b_x += shift_x;
+    temp_b_y += shift_y;
+    temp_c_x += shift_x;
+    temp_c_y += shift_y;
+    temp_d_x += shift_x;
+    temp_d_y += shift_y;
+
+    if (((temp_a_y <= dimY - 1) && (temp_b_y <= dimY - 1) && (temp_c_y <= dimY - 1) && (temp_d_y <= dimY - 1)) &&
+        ((temp_a_x >= 0) && (temp_b_x >= 0) && (temp_c_x >= 0) && (temp_d_x >= 0)) &&
+        (getGrid()[temp_a_x][temp_a_y] == ' ') && (getGrid()[temp_b_x][temp_b_y] == ' ') && (getGrid()[temp_c_x][temp_c_y] == ' ') && (getGrid()[temp_d_x][temp_d_y] == ' '))
     {
-        down();
+
+        a.first = temp_a_x;
+        a.second = temp_a_y;
+        b.first = temp_b_x;
+        b.second = temp_b_y;
+        c.first = temp_c_x;
+        c.second = temp_c_y;
+        d.first = temp_d_x;
+        d.second = temp_d_y;
+        if (getLevel() >= 3)
+        {
+            down();
+        }
     }
 }

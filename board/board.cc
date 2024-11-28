@@ -134,8 +134,8 @@ void Board::drop()
     addCell(*currentBlock);
     this->updateClearLines();
 
-    setCurrentBlock(nextBlock);
-    getNextBlock();
+    // setCurrentBlock(nextBlock);
+    // getNextBlock();
 }
 
 void Board::restart()
