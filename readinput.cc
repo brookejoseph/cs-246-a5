@@ -1,12 +1,56 @@
 #include <string>
-#include "../gameengine/gameengine.h"
-#include <string>
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include <fstream>
-#include <functional>
+#include "../gameengine/gameengine.h"
 
 using namespace std;
+
+// List of valid commands
+vector<string> validCommands = {
+    "left", "right", "down", "drop", "clockwise", "counterclockwise",
+    "levelup", "leveldown", "norandom", "random", "sequence", "restart",
+    "zBlock", "tBlock", "jBlock", "iBlock", "sBlock", "oBlock", "lBlock"};
+
+// Helper function to find the closest matching command
+string findMatchingCommand(const string &input)
+{
+    string matchedCommand;
+    for (const string &cmd : validCommands)
+    {
+        if (cmd.find(input) == 0) // Check if the command starts with the input
+        {
+            if (!matchedCommand.empty())
+            {
+                return "invalid"; // Ambiguous input (matches multiple commands)
+            }
+            matchedCommand = cmd;
+        }
+    }
+    return matchedCommand.empty() ? "invalid" : matchedCommand; // Return match or invalid
+}
+
+// Helper function to parse command and multiplier
+pair<string, int> parseCommand(const string &input)
+{
+    int multiplier = 1;
+    size_t pos = 0;
+
+    // Extract numeric prefix
+    while (pos < input.size() && isdigit(input[pos]))
+    {
+        pos++;
+    }
+    if (pos > 0)
+    {
+        multiplier = stoi(input.substr(0, pos));
+    }
+
+    // Extract the command portion and match it
+    string command = findMatchingCommand(input.substr(pos));
+    return {command, multiplier};
+}
 
 int main()
 {
@@ -15,20 +59,17 @@ int main()
 
     while (cin >> currentVal)
     {
-        int multiplier = 1;
-        string command;
+        // Parse the command and multiplier
+        auto [command, multiplier] = parseCommand(currentVal);
 
-        size_t pos = 0;
-        while (pos < currentVal.size() && isdigit(currentVal[pos]))
+        // Handle invalid commands gracefully
+        if (command == "invalid")
         {
-            pos++;
+            cerr << "Invalid command: " << currentVal << endl;
+            continue;
         }
-        if (pos > 0)
-        {
-            multiplier = stoi(currentVal.substr(0, pos));
-        }
-        command = currentVal.substr(pos);
 
+        // Special cases for restart, norandom, random, and sequence
         if (command == "sequence")
         {
             string filename;
@@ -43,7 +84,14 @@ int main()
                     string subCommand;
                     while (iss >> subCommand)
                     {
-                        newGame->executeCommand(subCommand, 1);
+                        auto [subCmd, subMult] = parseCommand(subCommand);
+                        if (subCmd != "invalid")
+                        {
+                            for (int i = 0; i < subMult; ++i)
+                            {
+                                newGame->executeCommand(subCmd, 1);
+                            }
+                        }
                     }
                 }
                 file.close();
@@ -54,24 +102,20 @@ int main()
             }
             continue;
         }
-        else if (command == "random")
-        {
-            newGame->executeCommand("random", 1);
-            continue;
-        }
         else if (command == "norandom")
         {
             string filename;
             cin >> filename;
-            newGame->executeCommand("norandom", 1);
+            newGame->executeCommand("norandom", 1); // Additional logic handled in GameEngine
             continue;
         }
-        else if (command == "restart")
+        else if (command == "random" || command == "restart")
         {
-            newGame->executeCommand("restart", 1);
+            newGame->executeCommand(command, 1);
             continue;
         }
 
+        // Execute valid commands with multiplier
         for (int i = 0; i < multiplier; ++i)
         {
             newGame->executeCommand(command, 1);
