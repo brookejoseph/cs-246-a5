@@ -13,7 +13,7 @@ using namespace std;
 class Block : public Board
 {
 protected:
-    Board *cells;
+    std::shared_ptr<Board> cells;
 
     pair<int, int> a;
     pair<int, int> b;
@@ -23,12 +23,12 @@ protected:
     int levelCreated;
 
 public:
-    Block(Board *cells,
+    Block(std::shared_ptr<Board> cells,
           pair<int, int> a,
           pair<int, int> b,
           pair<int, int> c,
           pair<int, int> d);
-    explicit Block(Board *cells);
+    explicit Block(std::shared_ptr<Board> cells);
     virtual ~Block();
 
     // virtual bool getHeavy();

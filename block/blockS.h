@@ -13,13 +13,13 @@ using namespace std;
 class SBlock : public Block
 {
 public:
-    SBlock(Board *cell,
+    SBlock(std::shared_ptr<Board> cells,
            pair<int, int> a,
            pair<int, int> b,
            pair<int, int> c,
            pair<int, int> d); // to change
     SBlock();
-    SBlock(Board *cell);
+    SBlock(std::shared_ptr<Board> cells);
     ~SBlock() override = default;
 
     virtual char getChar(int x, int y) const override;

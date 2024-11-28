@@ -8,15 +8,15 @@
 
 using namespace std;
 
-TBlock::TBlock(Board *cell,
+TBlock::TBlock(std::shared_ptr<Board> cells,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
-               pair<int, int> d) : Block(cell, a, b, c, d) {}
+               pair<int, int> d) : Block(cells, a, b, c, d) {}
 
 TBlock::TBlock() : Block(nullptr, {1, 4}, {0, 4}, {2, 4}, {1, 3}) {}
 
-TBlock::TBlock(Board *cell) : Block(cell, {1, 4}, {0, 4}, {2, 4}, {1, 3}) {}
+TBlock::TBlock(std::shared_ptr<Board> cells) : Block(cells, {1, 4}, {0, 4}, {2, 4}, {1, 3}) {}
 
 char TBlock::getChar(int x, int y) const
 {

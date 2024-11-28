@@ -8,15 +8,15 @@
 
 using namespace std;
 
-OBlock::OBlock(Board *cell,
+OBlock::OBlock(std::shared_ptr<Board> cells,
                pair<int, int> a,
                pair<int, int> b,
                pair<int, int> c,
-               pair<int, int> d) : Block(cell, a, b, c, d) {}
+               pair<int, int> d) : Block(cells, a, b, c, d) {}
 
 OBlock::OBlock() : Block(nullptr, {0, 3}, {1, 3}, {0, 4}, {1, 4}) {}
 
-OBlock::OBlock(Board *cell) : Block(cell, {0, 3}, {1, 3}, {0, 4}, {1, 4}) {}
+OBlock::OBlock(std::shared_ptr<Board> cells) : Block(cells, {0, 3}, {1, 3}, {0, 4}, {1, 4}) {}
 
 char OBlock::getChar(int x, int y) const
 {

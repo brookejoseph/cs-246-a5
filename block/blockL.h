@@ -11,13 +11,13 @@ using namespace std;
 class LBlock : public Block
 {
 public:
-    LBlock(Board *cell,
+    LBlock(std::shared_ptr<Board> cells,
            pair<int, int> a,
            pair<int, int> b,
            pair<int, int> c,
            pair<int, int> d); // to change
     LBlock();
-    LBlock(Board *cell);
+    LBlock(std::shared_ptr<Board> cells);
     ~LBlock() override = default;
 
     virtual char getChar(int x, int y) const override;
