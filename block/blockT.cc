@@ -36,3 +36,4 @@ char TBlock::getType() const
 {
     return 'T';
 }
+

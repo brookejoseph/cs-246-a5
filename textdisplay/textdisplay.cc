@@ -4,6 +4,8 @@
 #include <tuple>
 #include <map>
 
+// HELPER FUNCTIONS
+
 std::map<char, std::pair<std::string, std::string>> blockConfig = {{'I', {"    ", "IIII"}},
                                                                    {'J', {"J   ", "JJJ "}},
                                                                    {'L', {"   L", " LLL"}},
@@ -11,8 +13,6 @@ std::map<char, std::pair<std::string, std::string>> blockConfig = {{'I', {"    "
                                                                    {'S', {"  SS", "SS  "}},
                                                                    {'Z', {"ZZ  ", "  ZZ"}},
                                                                    {'T', {"TTT ", " T  "}}};
-
-// HELPER FUNCTIONS
 
 int numDigits(int x) {
     if (x == 0) return 1;
@@ -71,7 +71,7 @@ void TextDisplay::printDashes() const {
 void TextDisplay::printBoards() const {
     // dynamically print current block position
     std::vector<std::pair<int, int>> currentCoord = getGame()->currentBoard()->getCurrentBlockCoord();
-    char currentBlockType = getGame()->currentBoard()->getNextBlockType();
+    char currentBlockType = getGame()->currentBoard()->getCurrentBlockType();
     int currentPlayer = getGame()->grabPlayer();
 
     for (int j = 0; j < dimY; ++j) {
@@ -109,6 +109,7 @@ void TextDisplay::printNextBlocks() const {
 
 void TextDisplay::notify() {
     //printValue("High Score", getGame()->getHighScore());
+    std::cout << '\n';
     printValues("Level", getGame()->getPlayer1()->getLevel(), getGame()->getPlayer2()->getLevel());
     printValues("Score", getGame()->getPlayer1Score(), getGame()->getPlayer2Score());
     printDashes();

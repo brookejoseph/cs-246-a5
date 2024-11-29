@@ -1,27 +1,34 @@
 #ifndef GRAPHICDISPLAY_H
 #define GRAPHICDISPLAY_H
 #include "../observer/observer.h"
-#include "../board/board.h"
+#include "../gameengine/gameengine.h"
 #include "window.h"
 #include <string>
 #include <memory>
 
-
 class GraphicDisplay: public Observer {
     private:
-        std::weak_ptr<Board> player1;
-        std::weak_ptr<Board> player2;
+        std::weak_ptr<GameEngine> game;
 
         int dimX;
         int dimY;
 
-        int buffer = 20;
-        int sep = 40;
+        const int pixelSize = 20;
+        const int pixelPadding = 1;
+        const int buffer = 20;
+        const int sep = 160;
 
         std::unique_ptr<Xwindow> window;
 
+        std::shared_ptr<GameEngine> getGame() const;
+
+        void drawValue(int x, int y, int val);
+        void drawCell(int x, int y, char c);
+        void drawBoard();
+        void drawNextBlock();
+
     public:
-        GraphicDisplay(std::shared_ptr<Board> player1, std::shared_ptr<Board> player2, int dimX, int dimY);
+        GraphicDisplay(std::shared_ptr<GameEngine> game, int dimX, int dimY);
         ~GraphicDisplay() = default;
         virtual void notify() override;
 };

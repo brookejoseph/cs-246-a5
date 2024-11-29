@@ -224,10 +224,11 @@ int main(int argc, const char *argv[])
     game->attach(textView);
 
     // make graphical observers if not textOnly
+    std::shared_ptr<GraphicDisplay> graphicView;
     if (!textOnly)
     {
-        //std::shared_ptr<GraphicDisplay> graphicView = std::make_shared<GraphicDisplay>(game, dimX, dimY);
-        //game->attach(graphicView);
+        std::make_shared<GraphicDisplay>(game, dimX, dimY);
+        game->attach(graphicView);
     }
 
     // generate first blocks
@@ -313,7 +314,7 @@ int main(int argc, const char *argv[])
 
     // when game is over, detach observers
     game->detach(textView);
-    //if (!textOnly) { game->detach(graphicView); }
+    if (!textOnly) { game->detach(graphicView); }
 
     return 0;
 

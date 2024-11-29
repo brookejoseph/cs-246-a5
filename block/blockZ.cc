@@ -36,3 +36,4 @@ char ZBlock::getType() const
 {
     return 'Z';
 }
+
