@@ -169,6 +169,8 @@ void Board::restart()
     {
         std::fill(row.begin(), row.end(), ' ');
     }
+    setHeavy(false);
+    setBlind(false);
 }
 
 bool Board::gameOver()
@@ -424,12 +426,3 @@ bool Board::getBlind()
 {
     return blind;
 }
-
-void Board::setForce(bool val)
-{
-    force = val;
-}
-bool Board::getForce()
-{
-    return force;
-};

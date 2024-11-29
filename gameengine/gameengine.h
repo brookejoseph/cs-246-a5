@@ -44,7 +44,6 @@ public:
     int grabCurrentScore();
     void calScore();
     void restartGame();
-    void triggerSpecialAction();
 
     std::shared_ptr<Board> getPlayer1() const;
     std::shared_ptr<Board> getPlayer2() const;

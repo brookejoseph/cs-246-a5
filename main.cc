@@ -47,7 +47,7 @@ int charToBlockEnum(char blockType) {
         case 'L':
             return 7;
         default:
-            std::invalid_argument("Invalid BlockType");
+            throw std::invalid_argument("Invalid BlockType");
     }
 }
 
@@ -323,7 +323,7 @@ int main(int argc, const char *argv[])
         // drop
         } else if (command == "drop") {
             game->executeCommand("drop");
-            game->setPlayer();
+            if (!(game->getSpecial())) game->setPlayer();
             game->notifyObservers();
             continue;
 

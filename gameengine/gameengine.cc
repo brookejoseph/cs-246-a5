@@ -53,7 +53,7 @@ void GameEngine::calScore()
     int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
     int numBlocks = currentBoard()->checkClearBlock();
-    cout << "number of lines cleared" << numLines << endl;
+    //cout << "number of lines cleared" << numLines << endl;
 
     int blockPoints = 0;
     int linePoints = 0;
@@ -151,13 +151,19 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         {
             it->second(amount);
             calScore();
-            notifyObservers();
+
+            if (player1->gameOver() || player2->gameOver()) {
+                notifyObservers();
+                std::cout << "Game over! High Score: " << highScore << '\n';
+                restartGame();
+            }
         }
         else
         {
             it->second(amount);
             notifyObservers();
         }
+        setSpecial(false);
     }
     else
     {
@@ -216,8 +222,7 @@ void GameEngine::initializeCommandMap()
         {"heavy", [this](int)
          { currentBoard()->setHeavy(true); }},
         {"force", [this](int letter)
-         { applyForce(letter);
-            currentBoard()->setForce(true); }},
+         { applyForce(letter); }},
         {"blind", [this](int)
          { currentBoard()->setBlind(true); }},
         {"Z", [this](int)
@@ -247,10 +252,6 @@ void GameEngine::initializeCommandMap()
 //     std::cout << "Game over! High Score: " << highScore << '\n';
 //     restartGame();
 // }
-
-void GameEngine::triggerSpecialAction() {
-
-}
 
 bool GameEngine::getSpecial() const {
     return special;

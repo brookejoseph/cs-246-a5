@@ -52,11 +52,10 @@ protected:
 
     bool blind;
     bool heavy;
-    bool force;
 
 public:
     Board(int x, int y) noexcept;
-    ~Board() = default;
+    virtual ~Board() = default;
 
     void setLevel(int lvl);
     int getLevel() const;
@@ -90,8 +89,6 @@ public:
     bool getHeavy();
     void setBlind(bool val);
     bool getBlind();
-    void setForce(bool val);
-    bool getForce();
     // void applyBlind();
     // void removeBlind();
 
