@@ -12,53 +12,139 @@
 
 #include <map>
 
+// helpers
+bool all_of(vector<char> row)
+{
+    for (auto it = row.begin(); it != row.end(); it++)
+    {
+        if (*it == ' ')
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+// method implementations
 Board::Board(int x, int y) noexcept
     : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), noClearCount(0), numLinesCleared(0) {}
 
-void Board::setCurrentBlock(const std::shared_ptr<Block> &block)
+void Board::setLevel(int lvl)
 {
-    currentBlock = block;
-}
-
-void Board::getNextBlock()
-{
-    nextBlock = std::shared_ptr<Block>(parameter[level]->createBlock());
-};
-
-void Board::initBlocks()
-{
-    getNextBlock();
-    setCurrentBlock(nextBlock);
-    getNextBlock();
-}
-
-void Board::setDimX(int x)
-{
-    dimX = x;
-}
-
-void Board::setDimY(int y)
-{
-    dimY = y;
-}
-
-void Board::setValue(char newValue, int x, int y)
-{
-    if (x < 0 || x >= dimX || y < 0 || y >= dimY)
+    if (lvl < 0)
     {
-        throw std::out_of_range("Coordinates out of bounds");
+        level = 0;
     }
-    grid[x][y] = newValue;
-};
+    else if (lvl > 4)
+    {
+        level = 4;
+    }
+    else
+    {
+        level = lvl;
+    }
+}
 
-char Board::getChar(int x, int y) const
+int Board::getLevel() const
 {
-    return grid[x][y];
-};
+    return level;
+}
 
-std::vector<std::vector<char>> Board::getGrid()
+void Board::setRandom(bool isRandom)
 {
-    return grid;
+    parameter[level]->setRandom(isRandom);
+}
+
+int Board::checkClearLine()
+{
+    int temp = numLinesCleared;
+    numLinesCleared = 0;
+    return temp;
+}
+
+void Board::updateClearLines()
+{
+    int linesCleared = 0;
+    bool cleared = true;
+    while (cleared)
+    {
+        cleared = false;
+
+        for (int row = dimY - 1; row > 0; --row)
+        {
+            vector<char> selectedRow;
+            for (int col = 0; col < dimX; ++col)
+            {
+                selectedRow.push_back(grid[col][row]);
+            }
+            if (std::all_of(selectedRow.begin(), selectedRow.end(), [](char c)
+                            { return c != ' '; }))
+            {
+                cleared = true;
+                ++linesCleared;
+                ++numLinesCleared;
+                removeIncr(row);
+                for (int col = 0; col < dimX; ++col)
+                {
+                    grid[col][row] = ' ';
+                }
+
+                for (int row2 = row; row2 > 0; --row2)
+                {
+                    for (int col = 0; col < dimX; ++col)
+                    {
+                        grid[col][row2] = grid[col][row2 - 1];
+                    }
+                }
+
+                for (int col = 0; col < dimX; ++col)
+                {
+                    grid[col][0] = ' ';
+                }
+            }
+        }
+    }
+}
+
+void Board::removeIncr(int row)
+{
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end(); it++)
+    {
+        int counter = 0;
+        for (auto &coord : *it)
+        {
+            if (counter > 4)
+            {
+                break;
+            }
+            if (coord.second == row)
+            {
+                coord.first = -1;
+                coord.second = -1;
+            }
+            if (coord.second <= row - 1 && coord.second >= 0)
+            {
+                coord.second++;
+            }
+
+            counter++;
+        }
+    }
+
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
+    {
+        if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1)))
+        {
+            noBlocksCleared += 1;
+            temp_score += ((*it).at(4).first + 1) * ((*it).at(4).first + 1);
+
+            it = addedBlocks.erase(it);
+        }
+        else
+        {
+            it++;
+        }
+    }
 }
 
 void Board::left(int amount)
@@ -116,30 +202,10 @@ void Board::cw(int amount)
     };
     if (shouldDrop)
     {
-        //cout << "SHOULD DROP TRIGGERED" << endl;
         drop();
         shouldDrop = false;
     }
 };
-
-void Board::addCell(Block &thisBlock)
-{
-    for (auto &t : thisBlock.getCoord())
-    {
-        char letter = thisBlock.getType();
-        setValue(letter, t.first, t.second);
-    };
-};
-
-void Board::setLevel(int lvl) {
-    if (lvl < 0) {
-        level = 0;
-    } else if (lvl > 4) {
-        level = 4;
-    } else {
-        level = lvl;
-    }
-}
 
 void Board::drop()
 {
@@ -158,7 +224,6 @@ void Board::drop()
     setHeavy(false);
     setBlind(false);
 
-    // COMMENTED THESE OUT FOR NOW
     setCurrentBlock(nextBlock);
     getNextBlock();
 }
@@ -185,22 +250,14 @@ bool Board::gameOver()
     return false;
 }
 
-int Board::getLevel() const
+void Board::addCell(Block &thisBlock)
 {
-    return level;
-}
-
-void Board::setRandom(bool isRandom)
-{
-    parameter[level]->setRandom(isRandom);
-}
-
-int Board::checkClearLine()
-{
-    int temp = numLinesCleared;
-    numLinesCleared = 0;
-    return temp;
-}
+    for (auto &t : thisBlock.getCoord())
+    {
+        char letter = thisBlock.getType();
+        setValue(letter, t.first, t.second);
+    };
+};
 
 int Board::checkClearBlock()
 {
@@ -209,200 +266,14 @@ int Board::checkClearBlock()
     return temp;
 }
 
-bool all_of(vector<char> row)
+void Board::setDimX(int x)
 {
-    for (auto it = row.begin(); it != row.end(); it++)
-    {
-        //cout << *it;
-        if (*it == ' ')
-        {
-            return false;
-        }
-    }
-    return true;
+    dimX = x;
 }
 
-void Board::updateClearLines()
+void Board::setDimY(int y)
 {
-    int linesCleared = 0;
-    // cout << "*" << grid[12][10];
-    bool cleared = true;
-    while (cleared)
-    {
-        cleared = false;
-
-        for (int row = dimY - 1; row > 0; --row)
-        {
-            vector<char> selectedRow;
-            for (int col = 0; col < dimX; ++col)
-            {
-                selectedRow.push_back(grid[col][row]);
-            }
-
-            if (std::all_of(selectedRow.begin(), selectedRow.end(), [](char c)
-                            { return c != ' '; }))
-            {
-                cleared = true;
-                ++linesCleared;
-                ++numLinesCleared;
-                removeIncr(row);
-                for (int col = 0; col < dimX; ++col)
-                {
-                    grid[col][row] = ' ';
-                }
-
-                for (int row2 = row; row2 > 0; --row2)
-                {
-                    for (int col = 0; col < dimX; ++col)
-                    {
-                        grid[col][row2] = grid[col][row2 - 1];
-                    }
-                }
-
-                for (int col = 0; col < dimX; ++col)
-                {
-                    grid[col][0] = ' ';
-                }
-            }
-        }
-    }
-}
-
-void Board::setLvlSequence(const std::vector<char> &seq)
-{
-    for (int i = 0; i <= 4; ++i)
-    {
-        parameter[i]->setSequence(seq);
-    }
-}
-
-void Board::addBlockToVec(const std::shared_ptr<Block> &block)
-{
-    auto temp = block->getCoord();
-    vector<pair<int, int>> new_vec;
-    int level = block->getLevel();
-    for (auto i : temp)
-    {
-        new_vec.emplace_back(i);
-    }
-    new_vec.emplace_back(level, 0);
-    addedBlocks.emplace_back(new_vec);
-}
-
-void Board::removeIncr(int row)
-{
-    for (auto it = addedBlocks.begin(); it != addedBlocks.end(); it++)
-    {
-        // for (auto it_cell = it->begin(); it_cell != it->end(); it_cell++;) {
-        int counter = 0;
-        for (auto &coord : *it)
-        {
-            if (counter > 4)
-            {
-                break;
-            }
-            // auto &[a, b, c, d, e] = coord;
-
-
-            if (coord.second == row)
-            {
-                coord.first = -1;
-                coord.second = -1;
-            }
-            if (coord.second <= row - 1 && coord.second >= 0)
-            {
-                coord.second++;
-            }
-
-            counter++;
-        }
-    }
-
-    for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
-    {
-        if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1)))
-        {
-            noBlocksCleared += 1;
-            temp_score += ((*it).at(4).first + 1) * ((*it).at(4).first + 1);
-
-            it = addedBlocks.erase(it);
-            //cout << "block freaking cleared!!";
-
-        }
-        else
-        {
-            it++;
-        }
-    }
-}
-
-
-char Board::getNextBlockType() const { return nextBlock->getType(); }
-
-char Board::getCurrentBlockType() const { return currentBlock->getType(); }
-
-// addedBlocks = [[(-1,-1), (4,4), (5,6), (7,8)],
-//                 [(3,4), (4,5), (5,6), (7,8)]]
-// void Board::removeIncr(int row)
-// {
-//     for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
-//     {
-//         Block *block = it->get();
-
-//         auto coords = block->getCoord();
-
-//         int cellRemoved = 0;
-//         for (auto &coord : coords)
-//         {
-//             if (coord.second == row)
-//             {
-//                 coord.second = -1;
-//                 coord.first = -1;
-//                 cout << "cond 1" << endl;
-//             }
-//             if (coord.second <= row - 1)
-//             {
-//                 coord.second += 1;
-//                 cout << "cond 2" << endl;
-//             }
-//             if (coord.first == -1 && coord.second == -1 ) {
-//                 cellRemoved++;
-//                 cout << "cond 3" << endl;
-//                 cout << "total cells removed cond 3: " << cellRemoved << endl;
-//             }
-//             cout << "total cells removed: " << cellRemoved << endl;
-
-//         }
-//         //auto temp = it;
-//         if (cellRemoved == 4) {
-//             cout << "block removed" << endl;
-//             noBlocksCleared++;
-//             addedBlocks.erase(it);
-//             it = addedBlocks.erase(it);
-//         }
-//         ++it;
-//     }
-// }
-
-// void Board::blockRemoved()
-// {
-//     int clearedCount = 0;
-//     for (int x = 0; x < dimX; ++x)
-//     {
-//         for (int y = 0; y < dimY; ++y)
-//         {
-//             if (grid[x][y] == ' ')
-//             {
-//                 ++clearedCount;
-//             }
-//         }
-//     }
-//     noBlocksCleared += clearedCount;
-// }
-
-std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
-{
-    return currentBlock->getCoord();
+    dimY = y;
 }
 
 void Board::setHeavy(bool val)
@@ -433,3 +304,69 @@ bool Board::getForce()
 {
     return force;
 };
+
+void Board::getNextBlock()
+{
+    nextBlock = std::shared_ptr<Block>(parameter[level]->createBlock());
+};
+
+char Board::getNextBlockType() const { return nextBlock->getType(); }
+
+char Board::getCurrentBlockType() const { return currentBlock->getType(); }
+
+void Board::initBlocks()
+{
+    getNextBlock();
+    setCurrentBlock(nextBlock);
+    getNextBlock();
+}
+
+void Board::setValue(char newValue, int x, int y)
+{
+    if (x < 0 || x >= dimX || y < 0 || y >= dimY)
+    {
+        throw std::out_of_range("Coordinates out of bounds");
+    }
+    grid[x][y] = newValue;
+};
+
+char Board::getChar(int x, int y) const
+{
+    return grid[x][y];
+};
+
+void Board::addBlockToVec(const std::shared_ptr<Block> &block)
+{
+    auto temp = block->getCoord();
+    vector<pair<int, int>> new_vec;
+    int level = block->getLevel();
+    for (auto i : temp)
+    {
+        new_vec.emplace_back(i);
+    }
+    new_vec.emplace_back(level, 0);
+    addedBlocks.emplace_back(new_vec);
+}
+
+void Board::setLvlSequence(const std::vector<char> &seq)
+{
+    for (int i = 0; i <= 4; ++i)
+    {
+        parameter[i]->setSequence(seq);
+    }
+}
+
+void Board::setCurrentBlock(const std::shared_ptr<Block> &block)
+{
+    currentBlock = block;
+}
+
+std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
+{
+    return currentBlock->getCoord();
+}
+
+std::vector<std::vector<char>> Board::getGrid()
+{
+    return grid;
+}

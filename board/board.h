@@ -22,11 +22,8 @@ class Board
 {
 private:
     std::vector<std::vector<char>> grid;
-
     std::shared_ptr<Block> currentBlock;
     std::shared_ptr<Block> nextBlock;
-
-    int noClearCount;
 
 protected:
     std::vector<std::vector<char>> backupGrid;
@@ -35,24 +32,20 @@ protected:
     int noBlocksCleared = 0;
     int temp_score = 0;
     int numLinesCleared;
-
-
-    bool shouldDrop;
-
-    // std::vector<std::shared_ptr<Block>> addedBlocks;
-    std::vector<std::vector<std::pair<int, int>>> addedBlocks;
-
+    int noClearCount;
     int level;
+    bool shouldDrop;
+    bool blind;
+    bool heavy;
+    bool force;
+
+    std::vector<std::vector<std::pair<int, int>>> addedBlocks;
     std::array<std::shared_ptr<Level>, 5> parameter = {
         std::make_shared<Level0>(),
         std::make_shared<Level1>(),
         std::make_shared<Level2>(),
         std::make_shared<Level3>(),
         std::make_shared<Level4>()};
-
-    bool blind;
-    bool heavy;
-    bool force;
 
 public:
     Board(int x, int y) noexcept;
@@ -64,26 +57,21 @@ public:
 
     int checkClearLine();
     void updateClearLines();
-
-    bool isValidMove();
-    std::vector<std::vector<char>> getGrid();
-
-    void addBlockToVec(const std::shared_ptr<Block> &blockVal);
     void removeIncr(int row);
-    void blockRemoved();
 
-    void left(int amount);  // done
-    void right(int amount); // done
-    void down(int amount);  // done
-    void cw(int amount);    // done
-    void ccw(int amount);   // done
-    void drop();            // done
+    void left(int amount);
+    void right(int amount);
+    void down(int amount);
+    void cw(int amount);
+    void ccw(int amount);
+    void drop();
 
-    void restart(); // done
+    void restart();
     bool gameOver();
 
-    void addCell(Block &block); // done
+    void addCell(Block &block);
     int checkClearBlock();
+
     void setDimX(int x);
     void setDimY(int y);
     void setHeavy(bool val);
@@ -92,19 +80,20 @@ public:
     bool getBlind();
     void setForce(bool val);
     bool getForce();
-    // void applyBlind();
-    // void removeBlind();
 
-    void setLvlSequence(const std::vector<char> &seq); // added this <<<<
-    void setCurrentBlock(const std::shared_ptr<Block> &block);
     void getNextBlock();
     char getNextBlockType() const;
-    std::vector<std::pair<int, int>> getCurrentBlockCoord() const;
     char getCurrentBlockType() const;
     void initBlocks();
 
     void setValue(char newValue, int x, int y);
     virtual char getChar(int x, int y) const;
+
+    void addBlockToVec(const std::shared_ptr<Block> &blockVal);
+    void setLvlSequence(const std::vector<char> &seq);
+    void setCurrentBlock(const std::shared_ptr<Block> &block);
+    std::vector<std::pair<int, int>> getCurrentBlockCoord() const;
+    std::vector<std::vector<char>> getGrid();
 };
 
 #endif

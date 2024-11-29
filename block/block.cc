@@ -73,10 +73,6 @@ void Block::right()
 
 void Block::down()
 {
-    // ++a.second;
-    // ++b.second;
-    // ++c.second;
-    // ++d.second;
 
     if (((a.second < dimY - 1) && (b.second < dimY - 1) && (c.second < dimY - 1) && (d.second < dimY - 1)) &&
         (getGrid()[a.first][a.second + 1] == ' ') && (getGrid()[b.first][b.second + 1] == ' ') && (getGrid()[c.first][c.second + 1] == ' ') && (getGrid()[d.first][d.second + 1] == ' '))
@@ -90,7 +86,6 @@ void Block::down()
     {
         shouldDrop = true;
     }
-    // cout << "down triggered" << endl;
 }
 
 void Block::rotateccw()
@@ -98,7 +93,6 @@ void Block::rotateccw()
     int old_min_x = min({a.first, b.first, c.first, d.first});
     int old_max_y = max({a.second, b.second, c.second, d.second});
 
-    // (x, y) --> (y, -x)
     int temp_a_x = a.second, temp_a_y = -a.first;
     int temp_b_x = b.second, temp_b_y = -b.first;
     int temp_c_x = c.second, temp_c_y = -c.first;
