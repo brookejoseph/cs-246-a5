@@ -32,9 +32,13 @@ protected:
     int dimX = 11;
     int dimY = 18;
     int noBlocksCleared = 0;
+    int temp_score = 0;
     int numLinesCleared;
 
-    std::vector<std::shared_ptr<Block>> addedBlocks;
+
+    //std::vector<std::shared_ptr<Block>> addedBlocks;
+    std::vector<std::vector<std::pair<int, int>>> addedBlocks;
+
 
     int level;
     std::array<std::shared_ptr<Level>, 5> parameter = {

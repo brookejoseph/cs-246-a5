@@ -38,6 +38,7 @@ public:
     virtual int getLevel() const;
     virtual void setLevel(int lvl);
     virtual vector<pair<int, int>> getCoord() const;
+    //virtual vector<pair<int, int>>& getCoordNotConst();
 
     // void heavy();
     void rotateccw();

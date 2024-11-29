@@ -27,6 +27,8 @@ void Block::setLevel(int lvl) { levelCreated = lvl; }
 
 vector<pair<int, int>> Block::getCoord() const { return {a, b, c, d}; }
 
+//vector<pair<int, int>>& Block::getCoordNotConst() { return {(&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second)}; }
+
 void Block::left()
 {
     if ((a.first > 0) && (b.first > 0) && (c.first > 0) && (d.first > 0) &&

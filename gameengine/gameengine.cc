@@ -48,27 +48,34 @@ void GameEngine::updateHighScore()
 
 void GameEngine::calScore()
 {
+    
     int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
-    currentBoard()->blockRemoved();
+    //currentBoard()->blockRemoved();
     int numBlocks = currentBoard()->checkClearBlock();
-    cout << "number of lines cleared" << numLines;
-    cout << "number of blocks cleared" << numBlocks;
+    cout << "number of lines cleared" << numLines << endl;
+    cout << "number of blocks cleared" << numBlocks << endl;
+    int blockPoints = 0;
+    int linePoints = 0;
+    int totalPoints = 0;
 
-    int blockPoints = numBlocks * std::pow(level + 1, 2);
-    int linePoints = std::pow(level + numLines, 2);
-    int totalPoints = linePoints + blockPoints;
+    if (numLines > 0 || numBlocks > 0) {
+        blockPoints = numBlocks * std::pow(level + 1, 2);
+        linePoints = std::pow(level + numLines, 2);
+        totalPoints = linePoints + blockPoints;
 
-    if (currentPlayer == 1)
-    {
-        player1Score += totalPoints;
+        if (currentPlayer == 1)
+        {
+            player1Score += totalPoints;
+        }
+        else
+        {
+            player2Score += totalPoints;
+        }
+
+        updateHighScore();
     }
-    else
-    {
-        player2Score += totalPoints;
-    }
 
-    updateHighScore();
 }
 
 std::shared_ptr<Board> GameEngine::currentBoard()

@@ -163,8 +163,8 @@ int Board::checkClearLine()
 
 int Board::checkClearBlock()
 {
-    int temp = noBlocksCleared;
-    noBlocksCleared = 0;
+    int temp = temp_score;
+    temp_score = 0;
     return temp;
 }
 
@@ -237,7 +237,60 @@ void Board::setLvlSequence(const std::vector<char> &seq)
 
 void Board::addBlockToVec(const std::shared_ptr<Block> &block)
 {
-    addedBlocks.emplace_back(block);
+    auto temp = block->getCoord();
+    vector<pair<int, int>> new_vec;
+    int level = block->getLevel();
+    for (auto i : temp) {
+        new_vec.emplace_back(i);
+    }
+    new_vec.emplace_back(level, 0);
+    addedBlocks.emplace_back(new_vec);
+}
+
+void Board::removeIncr(int row) {
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end(); it++) {
+        // for (auto it_cell = it->begin(); it_cell != it->end(); it_cell++;) {
+        int counter = 0;
+        for (auto &coord : *it) {
+            if (counter > 4) {
+                break;
+            }
+              //auto &[a, b, c, d, e] = coord;
+            if (coord.second <= row - 1) {
+                coord.second++;
+            }
+            if (coord.second == row) {
+                // it_cell = it->erase(it_cell);
+                coord.first = -1;
+                coord.second = -1;
+                cout << "cell removed" << endl;
+            }
+            
+            counter++;
+        }
+        // cout << "did you ever run? 1x : " << (*it).at(0).first << endl;
+        // cout << "did you ever run? 1y : " << (*it).at(0).second << endl;
+        // cout << "did you ever run? 2x : " << (*it).at(0).first << endl;
+        // cout << "did you ever run? 2y : " << (*it).at(0).second << endl;
+        // cout << "did you ever run? 3x : " << (*it).at(0).first << endl;
+        // cout << "did you ever run? 3y : " << (*it).at(0).second << endl;
+        // cout << "did you ever run? 4x : " << (*it).at(0).first << endl;
+        // cout << "did you ever run? 4y : " << (*it).at(0).second << endl;
+    }
+    
+    
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end();) {        
+        if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1))) {
+            noBlocksCleared += 1;
+            temp_score += ((*it).at(4).first + 1)*((*it).at(4).first + 1);
+            
+            it = addedBlocks.erase(it);
+            cout << "block freaking cleared!!";
+        }
+        else {
+            it++;
+        }
+    }
 }
 
 char Board::getNextBlockType() const { return nextBlock->getType(); }
@@ -246,62 +299,62 @@ char Board::getCurrentBlockType() const { return currentBlock->getType(); }
 
 // addedBlocks = [[(-1,-1), (4,4), (5,6), (7,8)], 
 //                 [(3,4), (4,5), (5,6), (7,8)]]
-void Board::removeIncr(int row)
-{
-    for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
-    {
-        Block *block = it->get();
+// void Board::removeIncr(int row)
+// {
+//     for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
+//     {
+//         Block *block = it->get();
 
-        auto coords = block->getCoord();
+//         auto coords = block->getCoord();
 
-        int cellRemoved = 0;
-        for (auto &coord : coords)
-        {
-            if (coord.second == row)
-            {
-                coord.second = -1;
-                coord.first = -1;
-                cout << "cond 1" << endl;
-            }
-            if (coord.second <= row - 1)
-            {
-                coord.second += 1;
-                cout << "cond 2" << endl;
-            }
-            if (coord.first == -1 && coord.second == -1 ) {
-                cellRemoved++;
-                cout << "cond 3" << endl;
-                cout << "total cells removed cond 3: " << cellRemoved << endl;
-            }
-            cout << "total cells removed: " << cellRemoved << endl;
+//         int cellRemoved = 0;
+//         for (auto &coord : coords)
+//         {
+//             if (coord.second == row)
+//             {
+//                 coord.second = -1;
+//                 coord.first = -1;
+//                 cout << "cond 1" << endl;
+//             }
+//             if (coord.second <= row - 1)
+//             {
+//                 coord.second += 1;
+//                 cout << "cond 2" << endl;
+//             }
+//             if (coord.first == -1 && coord.second == -1 ) {
+//                 cellRemoved++;
+//                 cout << "cond 3" << endl;
+//                 cout << "total cells removed cond 3: " << cellRemoved << endl;
+//             }
+//             cout << "total cells removed: " << cellRemoved << endl;
 
-        }
-        //auto temp = it;
-        if (cellRemoved == 4) {
-            cout << "block removed" << endl;
-            noBlocksCleared++;
-            addedBlocks.erase(it);
-            it = addedBlocks.erase(it);
-        }
-        ++it;
-    }
-}
+//         }
+//         //auto temp = it;
+//         if (cellRemoved == 4) {
+//             cout << "block removed" << endl;
+//             noBlocksCleared++;
+//             addedBlocks.erase(it);
+//             it = addedBlocks.erase(it);
+//         }
+//         ++it;
+//     }
+// }
 
-void Board::blockRemoved()
-{
-    int clearedCount = 0;
-    for (int x = 0; x < dimX; ++x)
-    {
-        for (int y = 0; y < dimY; ++y)
-        {
-            if (grid[x][y] == ' ')
-            {
-                ++clearedCount;
-            }
-        }
-    }
-    noBlocksCleared += clearedCount;
-}
+// void Board::blockRemoved()
+// {
+//     int clearedCount = 0;
+//     for (int x = 0; x < dimX; ++x)
+//     {
+//         for (int y = 0; y < dimY; ++y)
+//         {
+//             if (grid[x][y] == ' ')
+//             {
+//                 ++clearedCount;
+//             }
+//         }
+//     }
+//     noBlocksCleared += clearedCount;
+// }
 
 std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
 {
