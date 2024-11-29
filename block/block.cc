@@ -113,19 +113,21 @@ void Block::rotateccw()
     int new_min_x = min({temp_a_x, temp_b_x, temp_c_x, temp_d_x});
     int new_max_y = max({temp_a_y, temp_b_y, temp_c_y, temp_d_y});
 
-    // x = x - |(new_min_x - old_min_x)|
-    // y = y + |(new_max_y - old_max_y)|
-    int shift_x = abs(new_min_x - old_min_x);
-    int shift_y = abs(new_max_y - old_max_y);
+    // x = x - |(new_min_x - old_min_x)| // x = x + |(new_min_x - old_min_x)|  // x = x - (new_min_x - old_min_x)
+    // y = y + |(new_max_y - old_max_y)| // y = y + |(old_max_y - new_max_y)|  // y = y - (new_max_y - old_max_y)
+    int shift_x = new_min_x - old_min_x;
+    int shift_y = new_max_y - old_max_y ;
+    
 
     temp_a_x -= shift_x;
-    temp_a_y += shift_y;
+    temp_a_y -= shift_y;
     temp_b_x -= shift_x;
-    temp_b_y += shift_y;
+    temp_b_y -= shift_y;
     temp_c_x -= shift_x;
-    temp_c_y += shift_y;
+    temp_c_y -= shift_y;
     temp_d_x -= shift_x;
-    temp_d_y += shift_y;
+    temp_d_y -= shift_y;
+
 
     if (((temp_a_y <= dimY - 1) && (temp_b_y <= dimY - 1) && (temp_c_y <= dimY - 1) && (temp_d_y <= dimY - 1)) &&
         ((temp_a_x >= 0) && (temp_b_x >= 0) && (temp_c_x >= 0) && (temp_d_x >= 0)) &&
@@ -139,11 +141,13 @@ void Block::rotateccw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
+
         if (heavy)
         {
             down();
             down();
         }
+
         if (getLevel() >= 3)
         {
             down();
@@ -165,19 +169,20 @@ void Block::rotatecw()
     int new_min_x = min({temp_a_x, temp_b_x, temp_c_x, temp_d_x});
     int new_max_y = max({temp_a_y, temp_b_y, temp_c_y, temp_d_y});
 
-    // x = x - |(new_min_x - old_min_x)|
-    // y = y + |(new_max_y - old_max_y)|
-    int shift_x = abs(new_min_x - old_min_x);
-    int shift_y = abs(new_max_y - old_max_y);
+    // x = x - |(new_min_x - old_min_x)| // x = x + |(new_min_x - old_min_x)| // x = x - (new_min_x - old_min_x)
+    // y = y + |(new_max_y - old_max_y)|                                      // y = y - (new_max_y - old_max_y)
+    int shift_x = new_min_x - old_min_x;
+    int shift_y = new_max_y - old_max_y;
+    
 
-    temp_a_x += shift_x;
-    temp_a_y += shift_y;
-    temp_b_x += shift_x;
-    temp_b_y += shift_y;
-    temp_c_x += shift_x;
-    temp_c_y += shift_y;
-    temp_d_x += shift_x;
-    temp_d_y += shift_y;
+    temp_a_x -= shift_x;
+    temp_a_y -= shift_y;
+    temp_b_x -= shift_x;
+    temp_b_y -= shift_y;
+    temp_c_x -= shift_x;
+    temp_c_y -= shift_y;
+    temp_d_x -= shift_x;
+    temp_d_y -= shift_y;
 
     if (((temp_a_y <= dimY - 1) && (temp_b_y <= dimY - 1) && (temp_c_y <= dimY - 1) && (temp_d_y <= dimY - 1)) &&
         ((temp_a_x >= 0) && (temp_b_x >= 0) && (temp_c_x >= 0) && (temp_d_x >= 0)) &&
