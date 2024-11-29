@@ -68,7 +68,8 @@ void Board::left(int amount)
     {
         currentBlock->left();
     };
-    if (shouldDrop) {
+    if (shouldDrop)
+    {
         drop();
         shouldDrop = false;
     }
@@ -80,7 +81,8 @@ void Board::right(int amount)
     {
         currentBlock->right();
     };
-    if (shouldDrop) {
+    if (shouldDrop)
+    {
         drop();
         shouldDrop = false;
     }
@@ -100,7 +102,8 @@ void Board::ccw(int amount)
     {
         currentBlock->rotateccw();
     };
-    if (shouldDrop) {
+    if (shouldDrop)
+    {
         drop();
         shouldDrop = false;
     }
@@ -112,7 +115,8 @@ void Board::cw(int amount)
     {
         currentBlock->rotatecw();
     };
-    if (shouldDrop) {
+    if (shouldDrop)
+    {
         cout << "SHOULD DROP TRIGGERED" << endl;
         drop();
         shouldDrop = false;
@@ -257,54 +261,52 @@ void Board::addBlockToVec(const std::shared_ptr<Block> &block)
     auto temp = block->getCoord();
     vector<pair<int, int>> new_vec;
     int level = block->getLevel();
-    for (auto i : temp) {
+    for (auto i : temp)
+    {
         new_vec.emplace_back(i);
     }
     new_vec.emplace_back(level, 0);
     addedBlocks.emplace_back(new_vec);
 }
 
-void Board::removeIncr(int row) {
-    for (auto it = addedBlocks.begin(); it != addedBlocks.end(); it++) {
+void Board::removeIncr(int row)
+{
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end(); it++)
+    {
         // for (auto it_cell = it->begin(); it_cell != it->end(); it_cell++;) {
         int counter = 0;
-        for (auto &coord : *it) {
-            if (counter > 4) {
+        for (auto &coord : *it)
+        {
+            if (counter > 4)
+            {
                 break;
             }
-              //auto &[a, b, c, d, e] = coord;
+            // auto &[a, b, c, d, e] = coord;
 
-            if (coord.second == row) {
-                // it_cell = it->erase(it_cell);
-                cout << "cell removed: cell.x: " << coord.first << "; cell.y: " << coord.second << endl;
+            if (coord.second == row)
+            {
                 coord.first = -1;
                 coord.second = -1;
-                // cout << "cell removed" << endl;
             }
-            if (coord.second <= row - 1 && coord.second >= 0) {
+            if (coord.second <= row - 1 && coord.second >= 0)
+            {
                 coord.second++;
             }
             counter++;
         }
-        // cout << "did you ever run? 1x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 1y : " << (*it).at(0).second << endl;
-        // cout << "did you ever run? 2x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 2y : " << (*it).at(0).second << endl;
-        // cout << "did you ever run? 3x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 3y : " << (*it).at(0).second << endl;
-        // cout << "did you ever run? 4x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 4y : " << (*it).at(0).second << endl;
     }
-    
-    for (auto it = addedBlocks.begin(); it != addedBlocks.end();) {        
-        if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1))) {
+
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
+    {
+        if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1)))
+        {
             noBlocksCleared += 1;
-            temp_score += ((*it).at(4).first + 1)*((*it).at(4).first + 1);
-            
+            temp_score += ((*it).at(4).first + 1) * ((*it).at(4).first + 1);
+
             it = addedBlocks.erase(it);
-            cout << "block freaking cleared!!";
         }
-        else {
+        else
+        {
             it++;
         }
     }
@@ -313,7 +315,7 @@ char Board::getNextBlockType() const { return nextBlock->getType(); }
 
 char Board::getCurrentBlockType() const { return currentBlock->getType(); }
 
-// addedBlocks = [[(-1,-1), (4,4), (5,6), (7,8)], 
+// addedBlocks = [[(-1,-1), (4,4), (5,6), (7,8)],
 //                 [(3,4), (4,5), (5,6), (7,8)]]
 // void Board::removeIncr(int row)
 // {
@@ -377,13 +379,65 @@ std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
     return currentBlock->getCoord();
 }
 
-void Board::setHeavy() {
-    cout << "This board is now heavy" << endl;
+void Board::setHeavy()
+{
     heavy = true;
-    cout << "BREAKPOINT 5: Heavy: " << getHeavy() << endl;
 }
 
-bool Board::getHeavy() {
-    cout << "BREAKPOINT 3 REACHED Heavy:" << heavy << endl;
+bool Board::getHeavy()
+{
     return heavy;
+}
+
+void Board::setBlind(bool val)
+{
+    blind = val;
+}
+
+bool Board::getBlind()
+{
+    return blind;
+}
+
+void Board::applyBlind()
+{
+    std::cout << "Applying blind effect...\n";
+
+    int startRow = 3;
+    int endRow = 12;
+    int startCol = 3;
+    int endCol = 9;
+
+    backupGrid = grid;
+
+    for (int y = startRow; y <= endRow && y < grid.size(); ++y)
+    {
+        for (int x = startCol; x <= endCol && x < grid[y].size(); ++x)
+        {
+            backupGrid[y][x] = grid[y][x];
+            grid[y][x] = '?';
+            std::cout << "Updated char at (" << x << ", " << y << ") to " << grid[y][x] << "\n";
+        }
+    }
+
+    setBlind(true);
+}
+
+void Board::removeBlind()
+{
+    if (backupGrid.empty())
+    {
+        std::cerr << "No backup available to restore." << std::endl;
+        return;
+    }
+
+    for (int y = 0; y < grid.size(); ++y)
+    {
+        for (int x = 0; x < grid[y].size(); ++x)
+        {
+            grid[y][x] = backupGrid[y][x];
+        }
+    }
+    setBlind(false);
+    backupGrid.clear();
 }

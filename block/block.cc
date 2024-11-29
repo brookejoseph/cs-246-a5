@@ -27,7 +27,7 @@ void Block::setLevel(int lvl) { levelCreated = lvl; }
 
 vector<pair<int, int>> Block::getCoord() const { return {a, b, c, d}; }
 
-//vector<pair<int, int>>& Block::getCoordNotConst() { return {(&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second)}; }
+// vector<pair<int, int>>& Block::getCoordNotConst() { return {(&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second)}; }
 
 void Block::left()
 {
@@ -38,7 +38,8 @@ void Block::left()
         --b.first;
         --c.first;
         --d.first;
-        if (getHeavy()) {
+        if (getHeavy())
+        {
             down();
             down();
         }
@@ -47,7 +48,6 @@ void Block::left()
             down();
         }
     }
-    
 }
 
 void Block::right()
@@ -59,7 +59,8 @@ void Block::right()
         ++b.first;
         ++c.first;
         ++d.first;
-        if (getHeavy()) {
+        if (getHeavy())
+        {
             down();
             down();
         }
@@ -84,8 +85,9 @@ void Block::down()
         ++b.second;
         ++c.second;
         ++d.second;
-    } 
-    else if (getHeavy()) {
+    }
+    else if (getHeavy())
+    {
         shouldDrop = true;
     }
     // cout << "down triggered" << endl;
@@ -111,7 +113,6 @@ void Block::rotateccw()
     // y = y + |(new_max_y - old_max_y)|
     int shift_x = abs(new_min_x - old_min_x);
     int shift_y = abs(new_max_y - old_max_y);
-    
 
     temp_a_x -= shift_x;
     temp_a_y += shift_y;
@@ -134,7 +135,8 @@ void Block::rotateccw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
-        if (getHeavy()) {
+        if (getHeavy())
+        {
             down();
             down();
         }
@@ -163,7 +165,6 @@ void Block::rotatecw()
     // y = y + |(new_max_y - old_max_y)|
     int shift_x = abs(new_min_x - old_min_x);
     int shift_y = abs(new_max_y - old_max_y);
-    
 
     temp_a_x += shift_x;
     temp_a_y += shift_y;
@@ -187,10 +188,9 @@ void Block::rotatecw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
-        cout << "BREAKPOINT 2 REACHED" << getHeavy() << endl;
 
-        if (getHeavy()) {
-            cout << "BREAKPOINT 1 REACHED" << endl;
+        if (getHeavy())
+        {
             down();
             down();
         }

@@ -24,12 +24,13 @@
 
 using namespace std;
 
-GameEngine::GameEngine(int x, int y)
-    : player1(std::make_shared<Board>(x, y)),
-      player2(std::make_shared<Board>(x, y)),
-      currentPlayer(1),
-      highScore(0),
-      currentChar(' ') {}
+GameEngine::GameEngine(int x, int y) : player1(std::make_shared<Board>(x, y)),
+                                       player2(std::make_shared<Board>(x, y)),
+                                       currentPlayer(1),
+                                       highScore(0),
+                                       currentChar(' ')
+{
+}
 
 int GameEngine::grabCurrentScore()
 {
@@ -48,24 +49,23 @@ void GameEngine::updateHighScore()
 
 void GameEngine::calScore()
 {
-    
+
     int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
-    //currentBoard()->blockRemoved();
     int numBlocks = currentBoard()->checkClearBlock();
     cout << "number of lines cleared" << numLines << endl;
-    cout << "number of blocks cleared" << numBlocks << endl;
 
-    //comment this later
-    if (numLines >= 2) {
+    if (numLines >= 2)
+    {
         currentBoard()->setHeavy();
-        //cout << "BREAKPOINT 4: " << currentBoard()->getHeavy();
+        currentBoard()->applyBlind();
     }
     int blockPoints = 0;
     int linePoints = 0;
     int totalPoints = 0;
 
-    if (numLines > 0 || numBlocks > 0) {
+    if (numLines > 0 || numBlocks > 0)
+    {
         blockPoints = numBlocks * std::pow(level + 1, 2);
         linePoints = std::pow(level + numLines, 2);
         totalPoints = linePoints + blockPoints;
@@ -81,7 +81,6 @@ void GameEngine::calScore()
 
         updateHighScore();
     }
-
 }
 
 std::shared_ptr<Board> GameEngine::currentBoard()
@@ -132,6 +131,13 @@ std::shared_ptr<Board> GameEngine::getPlayer2() const
     return player2;
 }
 
+void GameEngine::applyForce(std::shared_ptr<Block> b)
+{
+    char b_type = b->getType();
+    std::string b_type_str(1, b_type);
+    executeCommand(b_type_str);
+};
+
 void GameEngine::initializeCommandMap()
 {
     commandMap = {
@@ -151,7 +157,7 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->levelUp(); }},
         {"leveldown", [this](int amount)
          { currentBoard()->levelDown(); }},
-         {"heavy", [this](int)
+        {"heavy", [this](int)
          { currentBoard()->setHeavy(); }},
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
@@ -191,18 +197,22 @@ void GameEngine::executeCommand(const std::string &command, int amount)
             it->second(amount);
             calScore();
             notifyObservers();
+            // if ((currentBoard()->getBlind()) && (currentBoard()->checkClearLine() < 2))
+            // {
+            //     currentBoard()->removeBlind();
+            // };
 
             // if (player1->gameOver() || player2->gameOver()) {
             //     notifyObservers();
             //     std::cout << "Game over! High Score: " << highScore << '\n';
             //     restartGame();
             // }
-
-        } else {
+        }
+        else
+        {
             it->second(amount);
             notifyObservers();
         }
-
     }
     else
     {

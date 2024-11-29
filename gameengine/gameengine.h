@@ -51,6 +51,7 @@ public:
 
     int getCurrentScore();
     int getHighScore() const;
+    void GameEngine::applyForce(std::shared_ptr<Block> b);
     void setPlayer();
     std::shared_ptr<Board> currentBoard();
     int grabPlayer();
