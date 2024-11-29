@@ -101,10 +101,10 @@ void TextDisplay::printBoards() const {
                 } else if (std::find(currentCoord.begin(), currentCoord.end(), std::make_pair(i, j)) != currentCoord.end()) {
                     std::cout << currentBlockType;
                 } else {
-                    std::cout << getGame()->getPlayer1()->getChar(i, j);
+                    std::cout << getGame()->getPlayer2()->getChar(i, j);
                 }
             } else {
-                std::cout << getGame()->getPlayer1()->getChar(i, j);
+                std::cout << getGame()->getPlayer2()->getChar(i, j);
             }
         }
         std::cout << '\n';

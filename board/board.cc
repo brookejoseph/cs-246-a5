@@ -13,7 +13,7 @@
 #include <map>
 
 Board::Board(int x, int y) noexcept
-    : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), numLinesCleared(0), noClearCount(0) {}
+    : dimX(x), dimY(y), grid(x, std::vector<char>(y, ' ')), level(0), noClearCount(0), numLinesCleared(0) {}
 
 void Board::setCurrentBlock(const std::shared_ptr<Block> &block)
 {

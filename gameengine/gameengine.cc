@@ -209,7 +209,6 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->setLevel(currentBoard()->getLevel() + amount); }},
         {"leveldown", [this](int amount)
          { currentBoard()->setLevel(currentBoard()->getLevel() - amount); }},
-
         {"heavy", [this](int)
          { currentBoard()->setHeavy(true); }},
         {"force", [this](int letter)
