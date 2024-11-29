@@ -36,7 +36,7 @@ private:
 public:
     GameEngine(int x, int y);
     ~GameEngine() = default;
-    void GameEngine::applyForce(int b);
+    void applyForce(int b);
 
     void executeCommand(const std::string &command, int amount = 1);
 
@@ -52,7 +52,6 @@ public:
 
     int getCurrentScore();
     int getHighScore() const;
-    void GameEngine::applyForce(std::shared_ptr<Block> b);
     void setPlayer();
     std::shared_ptr<Board> currentBoard();
     int grabPlayer();

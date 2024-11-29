@@ -131,50 +131,6 @@ std::shared_ptr<Board> GameEngine::getPlayer2() const
     return player2;
 }
 
-void GameEngine::applyForce(std::shared_ptr<Block> b)
-{
-    char b_type = b->getType();
-    std::string b_type_str(1, b_type);
-    executeCommand(b_type_str);
-};
-
-void GameEngine::initializeCommandMap()
-{
-    commandMap = {
-        {"left", [this](int amount)
-         { currentBoard()->left(amount); }},
-        {"right", [this](int amount)
-         { currentBoard()->right(amount); }},
-        {"down", [this](int amount)
-         { currentBoard()->down(amount); }},
-        {"drop", [this](int)
-         { currentBoard()->drop(); }},
-        {"counterclockwise", [this](int amount)
-         { currentBoard()->ccw(amount); }},
-        {"clockwise", [this](int amount)
-         { currentBoard()->cw(amount); }},
-        {"levelup", [this](int amount)
-         { currentBoard()->levelUp(); }},
-        {"leveldown", [this](int amount)
-         { currentBoard()->levelDown(); }},
-        {"heavy", [this](int)
-         { currentBoard()->setHeavy(); }},
-        {"Z", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
-        {"T", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<TBlock>()); }},
-        {"J", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<JBlock>()); }},
-        {"I", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<IBlock>()); }},
-        {"S", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<SBlock>()); }},
-        {"O", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<OBlock>()); }},
-        {"L", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); }},
-    };
-}
 void GameEngine::executeCommand(const std::string &command, int amount)
 {
     if (amount < 0)
