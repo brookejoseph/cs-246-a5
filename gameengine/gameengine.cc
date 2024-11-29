@@ -7,6 +7,7 @@
 #include "../block/blockT.h"
 #include "../block/blockS.h"
 #include "../block/blockL.h"
+#include "../block/blockstar.h"
 #include "../level/level.h"
 #include "../level/level.h"
 #include "../level/level0.h"
@@ -152,8 +153,14 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         {
             it->second(amount);
             calScore();
-            cout << "score called";
+            notifyObservers();
 
+            if ((currentBoard()->getLevel() == 4) && (currentBoard()->dropStar()))
+            {
+                cout << "within *" << endl;
+                executeCommand("*");
+                currentBoard()->setDropStart(true);
+            };
             if (player1->gameOver() || player2->gameOver())
             {
                 notifyObservers();
@@ -228,6 +235,8 @@ void GameEngine::initializeCommandMap()
          { applyForce(letter); }},
         {"blind", [this](int)
          { currentBoard()->setBlind(true); }},
+        {"*", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<BlockStar>(currentBoard()->midVal())); }},
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>());
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel()); }},

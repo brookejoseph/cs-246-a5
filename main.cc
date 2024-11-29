@@ -304,7 +304,6 @@ int main(int argc, const char *argv[])
 
         if (command == "invalid")
         {
-
             cerr << "Invalid command: " << command << endl;
             // continue;
         }

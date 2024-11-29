@@ -116,7 +116,7 @@ void Board::cw(int amount)
     };
     if (shouldDrop)
     {
-        //cout << "SHOULD DROP TRIGGERED" << endl;
+        // cout << "SHOULD DROP TRIGGERED" << endl;
         drop();
         shouldDrop = false;
     }
@@ -131,12 +131,18 @@ void Board::addCell(Block &thisBlock)
     };
 };
 
-void Board::setLevel(int lvl) {
-    if (lvl < 0) {
+void Board::setLevel(int lvl)
+{
+    if (lvl < 0)
+    {
         level = 0;
-    } else if (lvl > 4) {
+    }
+    else if (lvl > 4)
+    {
         level = 4;
-    } else {
+    }
+    else
+    {
         level = lvl;
     }
 }
@@ -214,7 +220,7 @@ bool all_of(vector<char> row)
 {
     for (auto it = row.begin(); it != row.end(); it++)
     {
-        //cout << *it;
+        // cout << *it;
         if (*it == ' ')
         {
             return false;
@@ -266,7 +272,38 @@ void Board::updateClearLines()
                 }
             }
         }
+
+        if (linesCleared > 0)
+        {
+            numClearedPerFive = 0;
+            setDropStart(false);
+        }
+        else
+        {
+            setDropStart(false);
+            ++numClearedPerFive;
+        }
+        if (level == 4 && numClearedPerFive % 5 == 0)
+        {
+            cout << "within the level-4 cd" << endl;
+            setDropStart(true);
+        }
     }
+}
+
+int Board::midVal()
+{
+    return dimX / 2;
+}
+
+void Board::setDropStart(bool val)
+{
+    dropStarFive = val;
+};
+
+bool Board::dropStar()
+{
+    return dropStarFive;
 }
 
 void Board::setLvlSequence(const std::vector<char> &seq)
@@ -304,7 +341,6 @@ void Board::removeIncr(int row)
             }
             // auto &[a, b, c, d, e] = coord;
 
-
             if (coord.second == row)
             {
                 coord.first = -1;
@@ -327,8 +363,7 @@ void Board::removeIncr(int row)
             temp_score += ((*it).at(4).first + 1) * ((*it).at(4).first + 1);
 
             it = addedBlocks.erase(it);
-            //cout << "block freaking cleared!!";
-
+            // cout << "block freaking cleared!!";
         }
         else
         {
@@ -336,7 +371,6 @@ void Board::removeIncr(int row)
         }
     }
 }
-
 
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
