@@ -47,7 +47,7 @@ void Block::left()
             down();
             down();
         }
-        if (getLevel() >= 3)
+        if (levelCreated >= 3)
         {
             down();
         }
@@ -68,7 +68,7 @@ void Block::right()
             down();
             down();
         }
-        if (getLevel() >= 3)
+        if (levelCreated >= 3)
         {
             down();
         }
@@ -142,13 +142,7 @@ void Block::rotateccw()
         d.first = temp_d_x;
         d.second = temp_d_y;
 
-        if (heavy)
-        {
-            down();
-            down();
-        }
-
-        if (getLevel() >= 3)
+        if (levelCreated >= 3)
         {
             down();
         }
@@ -198,12 +192,7 @@ void Block::rotatecw()
         d.first = temp_d_x;
         d.second = temp_d_y;
 
-        if (heavy)
-        {
-            down();
-            down();
-        }
-        if (getLevel() >= 3)
+        if (levelCreated >= 3)
         {
             down();
         }

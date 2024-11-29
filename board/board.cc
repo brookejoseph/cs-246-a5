@@ -285,7 +285,7 @@ void Board::updateClearLines()
         }
         if (level == 4 && numClearedPerFive % 5 == 0)
         {
-            cout << "within the level-4 cd" << endl;
+            //cout << "within the level-4 cd" << endl;
             setDropStart(true);
         }
     }
@@ -457,3 +457,4 @@ std::shared_ptr<Block> Board::getCurrentBlock() const {
 void Board::setHeavy(bool isHeavy) {
     currentBlock->setHeavy(isHeavy);
 }
+

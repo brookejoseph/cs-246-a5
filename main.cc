@@ -300,7 +300,7 @@ int main(int argc, const char *argv[])
             break;
         }
         auto [command, multiplier] = parseCommand(input);
-        cout << "B: " << command << endl;
+        //cout << "B: " << command << endl;
 
         if (command == "invalid")
         {
