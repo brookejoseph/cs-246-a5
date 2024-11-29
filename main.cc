@@ -27,7 +27,7 @@ const vector<char> blockTypes = {'I', 'J', 'L', 'O', 'S', 'Z', 'T'};
 vector<string> validCommands = {
     "left", "right", "down", "drop", "clockwise", "counterclockwise",
     "levelup", "leveldown", "norandom", "random", "sequence", "restart",
-    "Z", "T", "J", "I", "S", "O", "L"};
+    "Z", "T", "J", "I", "S", "O", "L", "blind", "force", "heavy"};
 
 int charToBlockEnum(char blockType)
 {
@@ -135,7 +135,17 @@ void executeSequence(const string &sequenceFile, shared_ptr<GameEngine> game)
 
                 if (subCmd != "invalid")
                 {
-                    game->executeCommand(subCmd, subMult);
+                    if (subCmd == "drop")
+                    {
+                        game->executeCommand("drop");
+                        if (!(game->getSpecial()))
+                            game->setPlayer();
+                        game->notifyObservers();
+                    }
+                    else
+                    {
+                        game->executeCommand(subCmd, subMult);
+                    }
                 }
             }
         }
@@ -278,7 +288,6 @@ int main(int argc, const char *argv[])
         if (game->getSpecial())
         {
             cout << "Player " << game->grabPlayer() << "'s turn, enter special action: ";
-            cout << "within the grabbing person" << game->getSpecial() << endl;
         }
         else
         {
@@ -291,14 +300,14 @@ int main(int argc, const char *argv[])
             break;
         }
         auto [command, multiplier] = parseCommand(input);
+        cout << "B: " << command << endl;
 
         if (command == "invalid")
         {
-            cerr << "Invalid command: " << input << endl;
-            cout << "first invalid special val " << game->getSpecial() << endl;
-            continue;
-        }
 
+            cerr << "Invalid command: " << command << endl;
+            // continue;
+        }
         if (game->getSpecial() && command == "force")
         {
             char forceBlock;
@@ -313,7 +322,6 @@ int main(int argc, const char *argv[])
 
             catch (...)
             {
-                cout << "catch all block invalid special val " << game->getSpecial() << endl;
 
                 cerr << "Invalid block type for force" << endl;
             }
@@ -333,8 +341,6 @@ int main(int argc, const char *argv[])
             game->currentBoard()->setBlind(true);
             game->setSpecial(false);
             continue;
-
-            // drop
         }
         else if (command == "drop")
         {

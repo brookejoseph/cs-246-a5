@@ -76,12 +76,10 @@ void GameEngine::calScore()
 
         updateHighScore();
     }
-    cout << "set special to within score";
 
     if (numLines > 1)
     { // special action triggered
         setSpecial(true);
-        cout << "set special to true";
     }
 }
 
