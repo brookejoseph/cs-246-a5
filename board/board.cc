@@ -379,9 +379,9 @@ std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
     return currentBlock->getCoord();
 }
 
-void Board::setHeavy()
+void Board::setHeavy(bool val)
 {
-    heavy = true;
+    heavy = val;
 }
 
 bool Board::getHeavy()
@@ -399,45 +399,11 @@ bool Board::getBlind()
     return blind;
 }
 
-void Board::applyBlind()
+void Board::setForce(bool val)
 {
-    std::cout << "Applying blind effect...\n";
-
-    int startRow = 3;
-    int endRow = 12;
-    int startCol = 3;
-    int endCol = 9;
-
-    backupGrid = grid;
-
-    for (int y = startRow; y <= endRow && y < grid.size(); ++y)
-    {
-        for (int x = startCol; x <= endCol && x < grid[y].size(); ++x)
-        {
-            backupGrid[y][x] = grid[y][x];
-            grid[y][x] = '?';
-            std::cout << "Updated char at (" << x << ", " << y << ") to " << grid[y][x] << "\n";
-        }
-    }
-
-    setBlind(true);
+    force = val;
 }
-
-void Board::removeBlind()
+bool Board::getForce()
 {
-    if (backupGrid.empty())
-    {
-        std::cerr << "No backup available to restore." << std::endl;
-        return;
-    }
-
-    for (int y = 0; y < grid.size(); ++y)
-    {
-        for (int x = 0; x < grid[y].size(); ++x)
-        {
-            grid[y][x] = backupGrid[y][x];
-        }
-    }
-    setBlind(false);
-    backupGrid.clear();
-}
+    return force;
+};

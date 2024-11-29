@@ -384,7 +384,6 @@ void test4()
     cout << "BREAKPOINT 6 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
     gameEngine.executeCommand("J");
     // gameEngine.executeCommand("right", );
-    // gameEngine.executeCommand("right", );
     cout << "BREAKPOINT 7 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
     gameEngine.executeCommand("clockwise", 20);
     cout << "BREAKPOINT 8 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
@@ -399,10 +398,10 @@ void test4()
 void test5()
 {
     GameEngine gameEngine(11, 18);
-    gameEngine.executeCommand("T");
-    // gameEngine.executeCommand("right", );
     gameEngine.executeCommand("levelup");
-    gameEngine.executeCommand("right", 2);
+    gameEngine.executeCommand("J");
+    // gameEngine.executeCommand("right", );
+    gameEngine.executeCommand("right", 5);
     gameEngine.executeCommand("counterclockwise", 1);
     gameEngine.executeCommand("drop");
     cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
@@ -413,7 +412,7 @@ void test5()
 
 int main()
 {
-    test5();
+    test4();
     return 0;
 }
 

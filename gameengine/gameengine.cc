@@ -55,11 +55,6 @@ void GameEngine::calScore()
     int numBlocks = currentBoard()->checkClearBlock();
     cout << "number of lines cleared" << numLines << endl;
 
-    if (numLines >= 2)
-    {
-        currentBoard()->setHeavy();
-        currentBoard()->applyBlind();
-    }
     int blockPoints = 0;
     int linePoints = 0;
     int totalPoints = 0;
@@ -153,16 +148,6 @@ void GameEngine::executeCommand(const std::string &command, int amount)
             it->second(amount);
             calScore();
             notifyObservers();
-            // if ((currentBoard()->getBlind()) && (currentBoard()->checkClearLine() < 2))
-            // {
-            //     currentBoard()->removeBlind();
-            // };
-
-            // if (player1->gameOver() || player2->gameOver()) {
-            //     notifyObservers();
-            //     std::cout << "Game over! High Score: " << highScore << '\n';
-            //     restartGame();
-            // }
         }
         else
         {
@@ -226,11 +211,12 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->levelDown(); }},
 
         {"heavy", [this](int)
-         { currentBoard()->setHeavy(); }},
+         { currentBoard()->setHeavy(true); }},
         {"force", [this](int letter)
-         { applyForce(letter); }},
+         { applyForce(letter);
+            currentBoard()->setForce(true); }},
         {"blind", [this](int)
-         { currentBoard()->applyBlind(); }},
+         { currentBoard()->setBlind(true); }},
 
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
@@ -248,3 +234,14 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); }},
     };
 }
+
+// if ((currentBoard()->getBlind()) && (currentBoard()->checkClearLine() < 2))
+// {
+//     currentBoard()->removeBlind();
+// };
+
+// if (player1->gameOver() || player2->gameOver()) {
+//     notifyObservers();
+//     std::cout << "Game over! High Score: " << highScore << '\n';
+//     restartGame();
+// }
