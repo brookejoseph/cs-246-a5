@@ -8,6 +8,10 @@
 
 using namespace std;
 
+void Block::setBoard(std::shared_ptr<Board> board) {
+    cells = board;
+}
+
 // Block::Block(Board *cells) : Board(dimX, dimY), cells{cells} {};
 Block::Block(std::shared_ptr<Board> cells,
              pair<int, int> a,

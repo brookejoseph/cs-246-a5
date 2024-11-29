@@ -23,7 +23,7 @@ void Board::setCurrentBlock(const std::shared_ptr<Block> &block)
 void Board::getNextBlock()
 {
     nextBlock = std::shared_ptr<Block>(parameter[level]->createBlock());
-};
+}
 
 void Board::initBlocks()
 {

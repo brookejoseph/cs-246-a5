@@ -32,6 +32,8 @@ public:
     explicit Block(std::shared_ptr<Board> cells);
     virtual ~Block();
 
+    void setBoard(std::shared_ptr<Board> board);
+
     void setHeavy(bool isHeavy);
     virtual char getChar(int x, int y) const override = 0;
     virtual char getType() const = 0;

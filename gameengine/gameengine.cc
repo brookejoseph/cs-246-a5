@@ -238,25 +238,25 @@ void GameEngine::initializeCommandMap()
         {"*", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<BlockStar>(currentBoard()->midVal())); }},
         {"Z", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>());
+         { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>(currentBoard()));
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel()); }},
         {"T", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<TBlock>());
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel()); }},
         {"J", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<JBlock>()); 
+         { currentBoard()->setCurrentBlock(std::make_shared<JBlock>(currentBoard())); 
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"I", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<IBlock>()); 
+         { currentBoard()->setCurrentBlock(std::make_shared<IBlock>(currentBoard())); 
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"S", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<SBlock>()); 
+         { currentBoard()->setCurrentBlock(std::make_shared<SBlock>(currentBoard())); 
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"O", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<OBlock>()); 
+         { currentBoard()->setCurrentBlock(std::make_shared<OBlock>(currentBoard())); 
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"L", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); 
+         { currentBoard()->setCurrentBlock(std::make_shared<LBlock>(currentBoard())); 
            currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel()); }},
     };
 }

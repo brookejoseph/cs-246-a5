@@ -382,6 +382,7 @@ int main(int argc, const char *argv[])
             {
                 game->currentBoard()->setLvlSequence(parseSequence(file));
                 game->currentBoard()->setRandom(false);
+                game->notifyObservers();
             }
 
             catch (logic_error &e)
@@ -396,6 +397,7 @@ int main(int argc, const char *argv[])
         else if (command == "random")
         {
             game->currentBoard()->setRandom(true);
+            game->notifyObservers();
             continue;
 
             // restart
