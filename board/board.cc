@@ -155,12 +155,16 @@ void Board::setRandom(bool isRandom)
 
 int Board::checkClearLine()
 {
-    return numLinesCleared;
+    int temp = numLinesCleared;
+    numLinesCleared = 0;
+    return temp;
 }
 
 int Board::checkClearBlock()
 {
-    return noBlocksCleared;
+    int temp = noBlocksCleared;
+    noBlocksCleared = 0;
+    return temp;
 }
 
 bool all_of(vector<char> row)
@@ -221,51 +225,6 @@ void Board::updateClearLines()
     }
 }
 
-// bool Board::isValidMove()
-// {
-//     for (auto &t : currentBlock->getCoord())
-//     {
-//         if ((t.first > dimX) || (t.first < 0))
-//         {
-//             return false;
-//         }
-//         if (t.second > dimY)
-//         {
-//             return false;
-//         }
-//         if (grid[t.first][t.second] != ' ')
-//         {
-//             return false;
-//         }
-//     }
-//     return true;
-// }
-
-// bool Board::blockRemoved()
-//{
-//     int acc = 0;
-//     for (auto k : addedBlocks)
-//     {
-//         for (auto i : k->getCoord())
-//         {
-//             if ((i.second == -1) && (i.first == -1))
-//             {
-//                 ++acc;
-//             };
-//         }
-//         if (acc == 4)
-//         {
-//             return true;
-//        };
-//    };
-//     return false;
-// };
-
-void Board::addBlockToVec(const std::shared_ptr<Block> &block)
-{
-    addedBlocks.emplace_back(block);
-}
-
 void Board::setLvlSequence(const std::vector<char> &seq)
 {
     for (int i = 0; i <= 4; ++i)
@@ -274,71 +233,15 @@ void Board::setLvlSequence(const std::vector<char> &seq)
     }
 }
 
-/*
-void Board::drop()
+void Board::addBlockToVec(const std::shared_ptr<Block> &block)
 {
-
-    for (auto &t : currentBlock->getCoord())
-    {
-        cout << "current Block's get corrd";
-        cout << t.first << " ";
-        cout << t.second << endl;
-        while (t.second != dimY)
-        {
-            ++t.second;
-        };
-        cout << "within the drop method ";
-        cout << t.second << endl;
-    };
-
-    addCell(*currentBlock);
-};
-
-
-*/
+    addedBlocks.emplace_back(block);
+}
 
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
 char Board::getCurrentBlockType() const { return currentBlock->getType(); }
 
-// void Board::updateClearLines()
-// {
-//     cout << "within the updateClearlines" << endl;
-//     int linesCleared = 0;
-//     //cout << "*" << grid[12][10];
-//     bool cleared = true;
-//     while (cleared) {
-//         cleared = false;
-//         for (int row = 17; row > 0; --row) {
-//             vector<char> selectedRow;
-//             for (int col = 0; col < 11; ++col) {
-//                 selectedRow.push_back(grid[col][row]);
-//             }
-
-//             if (all_of(selectedRow)) {
-//                 cleared = true;
-//                 removeIncr(row);
-//                 for (int col = 0; col < 11; ++col) {
-//                     grid[col][row] = ' ';
-//                 }
-
-//                 for (int row2 = row; row2 > 0; --row2) {
-//                     for (int col = 0; col < 11; ++col) {
-//                         grid[col][row2] = grid[col][row2 - 1];
-//                     }
-//                 }
-
-//                 for (int col = 0; col < 11; ++col) {
-//                     grid[col][0] = ' ';
-//                 }
-
-//             }
-
-//         }
-
-//     }
-
-// }
 void Board::removeIncr(int row)
 {
     for (auto it = addedBlocks.begin(); it != addedBlocks.end();)

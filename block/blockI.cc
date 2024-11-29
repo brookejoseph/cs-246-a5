@@ -13,8 +13,11 @@ IBlock::IBlock(std::shared_ptr<Board> cell,
                pair<int, int> c,
                pair<int, int> d) : Block(cell, a, b, c, d) {};
 
-IBlock::IBlock() : Block(nullptr, {0, 3}, {1, 3}, {2, 3}, {3, 3}) {}
-IBlock::IBlock(std::shared_ptr<Board> cell) : Block(cell, {0, 3}, {1, 3}, {2, 3}, {3, 3}) {}
+// IBlock::IBlock() : Block(nullptr, {0, 3}, {1, 3}, {2, 3}, {3, 3}) {}
+
+IBlock::IBlock() : Block(nullptr, {0, 4}, {1, 4}, {2, 4}, {3, 4}) {}
+
+IBlock::IBlock(std::shared_ptr<Board> cell) : Block(cell, {0, 4}, {1, 4}, {2, 4}, {3, 4}) {}
 
 char IBlock::getChar(int x, int y) const
 {
