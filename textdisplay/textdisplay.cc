@@ -32,7 +32,7 @@ void printHeader(const std::string &text, int space) {
 
 void printValue(const std::string &text, int value, int space) {
     std::cout << text << ":";
-    printChar(' ', space - numDigits(value) - 1);
+    printChar(' ', space - numDigits(value));
     std::cout << value;
 }
 
