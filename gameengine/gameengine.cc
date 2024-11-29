@@ -223,25 +223,32 @@ void GameEngine::initializeCommandMap()
         {"leveldown", [this](int amount)
          { currentBoard()->setLevel(currentBoard()->getLevel() - amount); }},
         {"heavy", [this](int)
-         { currentBoard()->setHeavy(true); }},
+         { currentBoard()->getCurrentBlock()->setHeavy(true); }},
         {"force", [this](int letter)
          { applyForce(letter); }},
         {"blind", [this](int)
          { currentBoard()->setBlind(true); }},
         {"Z", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
+         { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>());
+           currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel()); }},
         {"T", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<TBlock>()); }},
+         { currentBoard()->setCurrentBlock(std::make_shared<TBlock>());
+           currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel()); }},
         {"J", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<JBlock>()); }},
+         { currentBoard()->setCurrentBlock(std::make_shared<JBlock>()); 
+           currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"I", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<IBlock>()); }},
+         { currentBoard()->setCurrentBlock(std::make_shared<IBlock>()); 
+           currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"S", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<SBlock>()); }},
+         { currentBoard()->setCurrentBlock(std::make_shared<SBlock>()); 
+           currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"O", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<OBlock>()); }},
+         { currentBoard()->setCurrentBlock(std::make_shared<OBlock>()); 
+           currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel());}},
         {"L", [this](int)
-         { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); }},
+         { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); 
+           currentBoard()->getCurrentBlock()->setLevel(currentBoard()->getLevel()); }},
     };
 }
 

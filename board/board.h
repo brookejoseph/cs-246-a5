@@ -36,7 +36,6 @@ protected:
     int temp_score = 0;
     int numLinesCleared;
 
-
     bool shouldDrop;
 
     // std::vector<std::shared_ptr<Block>> addedBlocks;
