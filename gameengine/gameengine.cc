@@ -76,6 +76,10 @@ void GameEngine::calScore()
 
         updateHighScore();
     }
+
+    if (numLines > 1) { // special action triggered
+        setSpecial(true);
+    }
 }
 
 std::shared_ptr<Board> GameEngine::currentBoard()
@@ -188,7 +192,7 @@ void GameEngine::applyForce(int b)
 {
     string blockType = blockTypeToString(b);
     executeCommand(blockType);
-};
+}
 
 void GameEngine::initializeCommandMap()
 {
@@ -243,3 +247,15 @@ void GameEngine::initializeCommandMap()
 //     std::cout << "Game over! High Score: " << highScore << '\n';
 //     restartGame();
 // }
+
+void GameEngine::triggerSpecialAction() {
+
+}
+
+bool GameEngine::getSpecial() const {
+    return special;
+}
+
+void GameEngine::setSpecial(bool isSpecial) {
+    special = isSpecial;
+}

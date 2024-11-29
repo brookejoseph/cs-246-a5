@@ -30,6 +30,27 @@ vector<string> validCommands = {
     "Z", "T", "J", "I", "S", "O", "L"};
 
 
+int charToBlockEnum(char blockType) {
+    switch (blockType) {
+        case 'Z':
+            return 1;
+        case 'T':
+            return 2;
+        case 'J':
+            return 3;
+        case 'I':
+            return 4;
+        case 'S':
+            return 5;
+        case 'O':
+            return 6;
+        case 'L':
+            return 7;
+        default:
+            std::invalid_argument("Invalid BlockType");
+    }
+}
+
 string findMatchingCommand(const string &input)
 {
     string matchedCommand;
@@ -245,7 +266,11 @@ int main(int argc, const char *argv[])
     string input;
 
     while (continueGame) {
-        cout << "Player " << game->grabPlayer() << "'s turn, enter move: ";
+        if (game->getSpecial()) {
+            cout << "Player " << game->grabPlayer() << "'s turn, enter special action: ";
+        } else {
+            cout << "Player " << game->grabPlayer() << "'s turn, enter move: ";
+        }
 
         // check for EOF and quit game
         if (!(cin >> input)) {
@@ -262,10 +287,41 @@ int main(int argc, const char *argv[])
             continue;
         }
 
-        // special cases for drop, sequence, norandom, random, sequence
+        // special cases for drop, sequence, norandom, random, sequence, special actions
+
+        // force
+        if (game->getSpecial() && command == "force") {
+            char forceBlock;
+            cin >> forceBlock;
+
+            try {
+                game->setPlayer();
+                game->executeCommand(command, charToBlockEnum(forceBlock));
+                game->setSpecial(false);
+            }
+
+            catch (...) {
+                cerr << "Invalid block type for force" << endl;
+            }
+
+            continue;
+
+        // heavy
+        } else if (game->getSpecial() && command == "heavy") {
+            game->setPlayer();
+            game->currentBoard()->setHeavy(true);
+            game->setSpecial(false);
+            continue;
+
+
+        } else if (game->getSpecial() && command == "blind") {
+            game->setPlayer();
+            game->currentBoard()->setBlind(true);
+            game->setSpecial(false);
+            continue;
 
         // drop
-        if (command == "drop") {
+        } else if (command == "drop") {
             game->executeCommand("drop");
             game->setPlayer();
             game->notifyObservers();
@@ -311,7 +367,13 @@ int main(int argc, const char *argv[])
         } else if (command == "restart") {
             game->executeCommand(command);
             continue;
+
+        // special actions out of turn
+        } else if ((!(game->getSpecial())) && command == "heavy" || command == "force" || command == "blind") {
+            cerr << "Cannot trigger special action: " + command << "\n";
+            continue;
         }
+
         game->executeCommand(command, multiplier);
     } // while
 

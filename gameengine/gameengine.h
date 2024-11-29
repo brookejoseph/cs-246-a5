@@ -27,6 +27,8 @@ private:
     int player2Score = 0;
     int highScore = 0;
 
+    bool special = false;
+
     std::map<std::string, std::function<void(int)>> commandMap;
 
     void initializeCommandMap();
@@ -42,6 +44,7 @@ public:
     int grabCurrentScore();
     void calScore();
     void restartGame();
+    void triggerSpecialAction();
 
     std::shared_ptr<Board> getPlayer1() const;
     std::shared_ptr<Board> getPlayer2() const;
@@ -54,6 +57,9 @@ public:
     void setPlayer();
     std::shared_ptr<Board> currentBoard();
     int grabPlayer();
+
+    bool getSpecial() const;
+    void setSpecial(bool isSpecial);
 };
 
 #endif

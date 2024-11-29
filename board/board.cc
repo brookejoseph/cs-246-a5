@@ -116,7 +116,7 @@ void Board::cw(int amount)
     };
     if (shouldDrop)
     {
-        cout << "SHOULD DROP TRIGGERED" << endl;
+        //cout << "SHOULD DROP TRIGGERED" << endl;
         drop();
         shouldDrop = false;
     }
@@ -155,6 +155,8 @@ void Board::drop()
     addBlockToVec(currentBlock);
     this->updateClearLines();
 
+    setHeavy(false);
+    setBlind(false);
 
     // COMMENTED THESE OUT FOR NOW
     setCurrentBlock(nextBlock);
