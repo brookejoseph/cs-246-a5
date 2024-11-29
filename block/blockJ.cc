@@ -15,9 +15,10 @@ JBlock::JBlock(std::shared_ptr<Board> cells,
                pair<int, int> c,
                pair<int, int> d) : Block(cells, a, b, c, d) {}
 
-JBlock::JBlock() : Block(nullptr, {0, 4}, {1, 4}, {1, 3}, {1, 2}) {}
+// JBlock::JBlock() : Block(nullptr, {0, 4}, {1, 4}, {1, 3}, {1, 2}) {}
+JBlock::JBlock() : Block(nullptr, {0, 3}, {0, 4}, {1, 4}, {2, 4}) {}
 
-JBlock::JBlock(std::shared_ptr<Board> cells) : Block(cells, {0, 4}, {1, 4}, {1, 3}, {1, 2}) {}
+JBlock::JBlock(std::shared_ptr<Board> cells) : Block(cells, {0, 3}, {0, 4}, {1, 3}, {2, 3}) {}
 
 char JBlock::getChar(int x, int y) const
 {

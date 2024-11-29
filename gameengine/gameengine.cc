@@ -50,10 +50,10 @@ void GameEngine::calScore()
 {
     int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
+    currentBoard()->blockRemoved();
     int numBlocks = currentBoard()->checkClearBlock();
-
-    int linePoints = std::pow(level + numLines, 2);
     int blockPoints = numBlocks * std::pow(level + 1, 2);
+    int linePoints = std::pow(level + numLines, 2);
     int totalPoints = linePoints + blockPoints;
 
     if (currentPlayer == 1)
@@ -180,77 +180,3 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         std::cerr << "Invalid command: " << command << std::endl;
     }
 }
-
-/*
-GameEngine::GameEngine(int x, int y)
-{
-    baseBoard = new Board(11, 18);
-    initializeCommandMap();
-};
-
-GameEngine::~GameEngine()
-{
-    delete baseBoard;
-};
-
-
-
-void GameEngine::executeCommand(const std::string &command, int amount)
-{
-    auto it = commandMap.find(command);
-    if (it != commandMap.end())
-    {
-        it->second(amount);
-    }
-    else
-    {
-        std::cerr << "Invalid command: " << command << std::endl;
-    }
-};
-*/
-
-/*
-void GameEngine::initializeCommandMap()
-{
-    commandMap = {
-        {"left", [this](int amount)
-         { baseBoard->left(amount); }},
-        {"right", [this](int amount)
-         { baseBoard->right(amount); }},
-        {"down", [this](int amount)
-         { baseBoard->down(amount); }},
-        {"drop", [this](int)
-         { baseBoard->drop(); }},
-        {"counterclockwise", [this](int amount)
-         { baseBoard->ccw(amount); }},
-        {"clockwise", [this](int amount)
-         { baseBoard->cw(amount); }},
-        {"validMove", [this](int)
-         { baseBoard->isValidMove(); }},
-        {"levelup", [this](int)
-         { ++currentLevel; }},
-        {"leveldown", [this](int)
-         { --currentLevel; }},
-        {"zBlock", [this](int)
-         { ZBlock *newBlock = new ZBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"tBlock", [this](int)
-         { TBlock *newBlock = new TBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"jBlock", [this](int)
-         { JBlock *newBlock = new JBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"iBlock", [this](int)
-         { IBlock *newBlock = new IBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"sBlock", [this](int)
-         { SBlock *newBlock = new SBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"oBlock", [this](int)
-         { OBlock *newBlock = new OBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-        {"lBlock", [this](int)
-         { LBlock *newBlock = new LBlock();
-           baseBoard->setCurrentBlock(newBlock); }},
-    };
-}*/

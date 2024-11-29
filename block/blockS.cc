@@ -15,9 +15,11 @@ SBlock::SBlock(std::shared_ptr<Board> cells,
                pair<int, int> c,
                pair<int, int> d) : Block(cells, a, b, c, d) {}
 
-SBlock::SBlock() : Block(nullptr, {1, 3}, {2, 3}, {0, 4}, {1, 4}) {}
+// SBlock::SBlock() : Block(nullptr, {1, 3}, {2, 3}, {0, 4}, {1, 4}) {}
 
-SBlock::SBlock(std::shared_ptr<Board> cells) : Block(cells, {1, 3}, {2, 3}, {0, 4}, {1, 4}) {}
+SBlock::SBlock() : Block(nullptr, {0, 4}, {1, 4}, {1, 3}, {2, 3}) {}
+
+SBlock::SBlock(std::shared_ptr<Board> cells) : Block(cells, {0, 4}, {1, 4}, {1, 3}, {2, 3}) {}
 
 char SBlock::getChar(int x, int y) const
 {
