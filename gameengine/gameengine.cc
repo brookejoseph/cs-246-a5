@@ -209,6 +209,14 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->setLevel(currentBoard()->getLevel() + amount); }},
         {"leveldown", [this](int amount)
          { currentBoard()->setLevel(currentBoard()->getLevel() - amount); }},
+
+        {"heavy", [this](int)
+         { currentBoard()->setHeavy(true); }},
+        {"force", [this](int letter)
+         { applyForce(letter);
+            currentBoard()->setForce(true); }},
+        {"blind", [this](int)
+         { currentBoard()->setBlind(true); }},
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
         {"T", [this](int)
