@@ -52,6 +52,9 @@ void GameEngine::calScore()
     int numLines = currentBoard()->checkClearLine();
     currentBoard()->blockRemoved();
     int numBlocks = currentBoard()->checkClearBlock();
+    cout << "number of lines cleared" << numLines;
+    cout << "number of blocks cleared" << numBlocks;
+
     int blockPoints = numBlocks * std::pow(level + 1, 2);
     int linePoints = std::pow(level + numLines, 2);
     int totalPoints = linePoints + blockPoints;
