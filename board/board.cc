@@ -136,8 +136,8 @@ void Board::drop()
     this->updateClearLines();
 
     // COMMENTED THESE OUT FOR NOW
-    // setCurrentBlock(nextBlock);
-    // getNextBlock();
+    setCurrentBlock(nextBlock);
+    getNextBlock();
 }
 
 void Board::restart()
@@ -148,16 +148,18 @@ void Board::restart()
     }
 }
 
-void Board::gameOver(Block *tryingtoAdd)
+bool Board::gameOver()
 {
-    auto coord = tryingtoAdd->getCoord();
+    auto coord = nextBlock->getCoord();
     if (!(grid[coord.at(0).first][coord.at(0).second] == ' ') ||
         !(grid[coord.at(1).first][coord.at(1).second] == ' ') ||
         !(grid[coord.at(2).first][coord.at(2).second] == ' ') ||
         !(grid[coord.at(3).first][coord.at(3).second] == ' '))
     {
-        restart();
+        return true;
     };
+
+    return false;
 }
 
 int Board::getLevel() const

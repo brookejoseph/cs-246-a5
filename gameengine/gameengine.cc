@@ -94,6 +94,7 @@ void GameEngine::restartGame()
     player2Score = 0;
     player1->restart();
     player2->restart();
+    std::cout << "Starting a new game. . .\n";
 }
 
 int GameEngine::getCurrentScore()
@@ -183,6 +184,13 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         {
             it->second(amount);
             calScore();
+
+            if (player1->gameOver() || player2->gameOver()) {
+                notifyObservers();
+                std::cout << "Game over! High Score: " << highScore << '\n';
+                restartGame();
+            }
+
         } else {
             it->second(amount);
             notifyObservers();

@@ -72,7 +72,7 @@ public:
     void drop();            // done
 
     void restart(); // done
-    void gameOver(Block *tryingtoAdd);
+    bool gameOver();
 
     void addCell(Block &block); // done
     int checkClearBlock();
