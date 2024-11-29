@@ -132,6 +132,7 @@ void Board::drop()
         coords = currentBlock->getCoord();
     }
     addCell(*currentBlock);
+    addBlockToVec(currentBlock);
     this->updateClearLines();
 
     // setCurrentBlock(nextBlock);
@@ -203,6 +204,7 @@ void Board::updateClearLines()
                 cleared = true;
                 ++linesCleared;
                 ++numLinesCleared;
+                removeIncr(row);
                 for (int col = 0; col < 11; ++col)
                 {
                     grid[col][row] = ' ';
@@ -242,6 +244,8 @@ char Board::getNextBlockType() const { return nextBlock->getType(); }
 
 char Board::getCurrentBlockType() const { return currentBlock->getType(); }
 
+// addedBlocks = [[(-1,-1), (4,4), (5,6), (7,8)], 
+//                 [(3,4), (4,5), (5,6), (7,8)]]
 void Board::removeIncr(int row)
 {
     for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
@@ -249,35 +253,37 @@ void Board::removeIncr(int row)
         Block *block = it->get();
 
         auto coords = block->getCoord();
-        std::vector<std::pair<int, int>> newCoords;
 
-        bool blockCleared = false;
-
+        int cellRemoved = 0;
         for (auto &coord : coords)
         {
             if (coord.second == row)
             {
-                blockCleared = true;
+                coord.second = -1;
+                coord.first = -1;
+                cout << "cond 1" << endl;
             }
-            else if (coord.second == row - 1)
+            if (coord.second <= row - 1)
             {
-                newCoords.emplace_back(coord.first, coord.second + 1);
+                coord.second += 1;
+                cout << "cond 2" << endl;
             }
-            else
-            {
-                newCoords.push_back(coord);
+            if (coord.first == -1 && coord.second == -1 ) {
+                cellRemoved++;
+                cout << "cond 3" << endl;
+                cout << "total cells removed cond 3: " << cellRemoved << endl;
             }
-        }
+            cout << "total cells removed: " << cellRemoved << endl;
 
-        if (blockCleared)
-        {
-            delete block;
+        }
+        //auto temp = it;
+        if (cellRemoved == 4) {
+            cout << "block removed" << endl;
+            noBlocksCleared++;
+            addedBlocks.erase(it);
             it = addedBlocks.erase(it);
         }
-        else
-        {
-            ++it;
-        }
+        ++it;
     }
 }
 
