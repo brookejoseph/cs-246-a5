@@ -147,6 +147,18 @@ void Board::restart()
     }
 }
 
+void Board::gameOver(Block *tryingtoAdd)
+{
+    auto coord = tryingtoAdd->getCoord();
+    if (!(grid[coord.at(0).first][coord.at(0).second] == ' ') ||
+        !(grid[coord.at(1).first][coord.at(1).second] == ' ') ||
+        !(grid[coord.at(2).first][coord.at(2).second] == ' ') ||
+        !(grid[coord.at(3).first][coord.at(3).second] == ' '))
+    {
+        restart();
+    };
+}
+
 int Board::getLevel() const
 {
     return level;

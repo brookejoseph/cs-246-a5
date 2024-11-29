@@ -35,10 +35,8 @@ protected:
     int temp_score = 0;
     int numLinesCleared;
 
-
-    //std::vector<std::shared_ptr<Block>> addedBlocks;
+    // std::vector<std::shared_ptr<Block>> addedBlocks;
     std::vector<std::vector<std::pair<int, int>>> addedBlocks;
-
 
     int level;
     std::array<std::shared_ptr<Level>, 5> parameter = {
@@ -75,6 +73,7 @@ public:
     void drop();            // done
 
     void restart(); // done
+    void gameOver(Block *tryingtoAdd);
 
     void addCell(Block &block); // done
     int checkClearBlock();
