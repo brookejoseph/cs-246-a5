@@ -223,7 +223,9 @@ void test1() {
 
 
 void test4() {
+
     GameEngine gameEngine(11, 18);
+    //gameEngine.currentBoard()->initBlocks();
     // Player 1's turn
     cout << "Current player before drop: " << gameEngine.grabPlayer() << endl;
     gameEngine.executeCommand("levelup");
@@ -265,7 +267,7 @@ void test4() {
     board = gameEngine.currentBoard(); 
     printBoard(board, 11, 18);
 
-    gameEngine.executeCommand("leveldown");
+    //gameEngine.executeCommand("leveldown");
     gameEngine.executeCommand("J");
     gameEngine.executeCommand("right", 7);
     gameEngine.executeCommand("down", 12);
