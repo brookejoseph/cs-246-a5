@@ -27,6 +27,10 @@ void Block::setLevel(int lvl) { levelCreated = lvl; }
 
 vector<pair<int, int>> Block::getCoord() const { return {a, b, c, d}; }
 
+void Block::setHeavy(bool isHeavy) {
+    heavy = isHeavy;
+}
+
 // vector<pair<int, int>>& Block::getCoordNotConst() { return {(&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second)}; }
 
 void Block::left()
@@ -38,7 +42,7 @@ void Block::left()
         --b.first;
         --c.first;
         --d.first;
-        if (getHeavy())
+        if (heavy)
         {
             down();
             down();
@@ -59,7 +63,7 @@ void Block::right()
         ++b.first;
         ++c.first;
         ++d.first;
-        if (getHeavy())
+        if (heavy)
         {
             down();
             down();
@@ -86,7 +90,7 @@ void Block::down()
         ++c.second;
         ++d.second;
     }
-    else if (getHeavy())
+    else if (heavy)
     {
         shouldDrop = true;
     }
@@ -135,7 +139,7 @@ void Block::rotateccw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
-        if (getHeavy())
+        if (heavy)
         {
             down();
             down();
@@ -189,7 +193,7 @@ void Block::rotatecw()
         d.first = temp_d_x;
         d.second = temp_d_y;
 
-        if (getHeavy())
+        if (heavy)
         {
             down();
             down();

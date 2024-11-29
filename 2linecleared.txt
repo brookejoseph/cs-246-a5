@@ -11,15 +11,16 @@ drop
 4ri
 drop
 drop
-clock
+drop
+clockwise
 10ri
 drop
 drop
-clock
+clockwise
 9ri
 drop
 drop
-clock
+clockwise
 8ri
 drop
 

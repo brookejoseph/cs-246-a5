@@ -51,7 +51,6 @@ protected:
         std::make_shared<Level4>()};
 
     bool blind;
-    bool heavy;
 
 public:
     Board(int x, int y) noexcept;
@@ -60,6 +59,7 @@ public:
     void setLevel(int lvl);
     int getLevel() const;
     void setRandom(bool isRandom);
+    void setHeavy(bool isHeavy);
 
     int checkClearLine();
     void updateClearLines();
@@ -85,8 +85,6 @@ public:
     int checkClearBlock();
     void setDimX(int x);
     void setDimY(int y);
-    void setHeavy(bool val);
-    bool getHeavy();
     void setBlind(bool val);
     bool getBlind();
     // void applyBlind();
@@ -94,6 +92,7 @@ public:
 
     void setLvlSequence(const std::vector<char> &seq); // added this <<<<
     void setCurrentBlock(const std::shared_ptr<Block> &block);
+    std::shared_ptr<Block> getCurrentBlock() const;
     void getNextBlock();
     char getNextBlockType() const;
     std::vector<std::pair<int, int>> getCurrentBlockCoord() const;
