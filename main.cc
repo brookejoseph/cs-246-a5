@@ -1,6 +1,6 @@
 #include "board/board.h"
 #include "textdisplay/textdisplay.h"
-//#include "graphicdisplay/graphicdisplay.h"
+// #include "graphicdisplay/graphicdisplay.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -29,25 +29,26 @@ vector<string> validCommands = {
     "levelup", "leveldown", "norandom", "random", "sequence", "restart",
     "Z", "T", "J", "I", "S", "O", "L"};
 
-
-int charToBlockEnum(char blockType) {
-    switch (blockType) {
-        case 'Z':
-            return 1;
-        case 'T':
-            return 2;
-        case 'J':
-            return 3;
-        case 'I':
-            return 4;
-        case 'S':
-            return 5;
-        case 'O':
-            return 6;
-        case 'L':
-            return 7;
-        default:
-            throw std::invalid_argument("Invalid BlockType");
+int charToBlockEnum(char blockType)
+{
+    switch (blockType)
+    {
+    case 'Z':
+        return 1;
+    case 'T':
+        return 2;
+    case 'J':
+        return 3;
+    case 'I':
+        return 4;
+    case 'S':
+        return 5;
+    case 'O':
+        return 6;
+    case 'L':
+        return 7;
+    default:
+        throw std::invalid_argument("Invalid BlockType");
     }
 }
 
@@ -115,25 +116,32 @@ vector<char> parseSequence(const string &sequenceFile)
     return sequence;
 }
 
-void executeSequence(const string &sequenceFile, shared_ptr<GameEngine> game) {
+void executeSequence(const string &sequenceFile, shared_ptr<GameEngine> game)
+{
     ifstream file{sequenceFile};
 
-    if (file.is_open()) {
+    if (file.is_open())
+    {
         string line;
 
-        while(getline(file, line)) {
-            istringstream iss {line};
+        while (getline(file, line))
+        {
+            istringstream iss{line};
             string subCommand;
 
-            while (iss >> subCommand) {
+            while (iss >> subCommand)
+            {
                 auto [subCmd, subMult] = parseCommand(subCommand);
 
-                if (subCmd != "invalid") {
+                if (subCmd != "invalid")
+                {
                     game->executeCommand(subCmd, subMult);
                 }
             }
         }
-    } else { // file is unable to open
+    }
+    else
+    { // file is unable to open
         throw logic_error{"Invalid sequence file provided: " + string(sequenceFile)};
     }
 }
@@ -208,7 +216,8 @@ int main(int argc, const char *argv[])
                 try
                 {
                     startLevel = stoi(argv[++i]);
-                    if (startLevel < 0 || startLevel > 4) throw logic_error{"Missing value for -startlevel: must be an integer value 0-4"};
+                    if (startLevel < 0 || startLevel > 4)
+                        throw logic_error{"Missing value for -startlevel: must be an integer value 0-4"};
                     game->getPlayer1()->setLevel(startLevel);
                     game->getPlayer2()->setLevel(startLevel);
                 }
@@ -246,8 +255,8 @@ int main(int argc, const char *argv[])
     // make graphical observers if not textOnly
     if (!textOnly)
     {
-        //std::shared_ptr<GraphicDisplay> graphicView = std::make_shared<GraphicDisplay>(game, dimX, dimY);
-        //game->attach(graphicView);
+        // std::shared_ptr<GraphicDisplay> graphicView = std::make_shared<GraphicDisplay>(game, dimX, dimY);
+        // game->attach(graphicView);
     }
 
     // generate first blocks
@@ -259,117 +268,139 @@ int main(int argc, const char *argv[])
     cout << "Player 2 sequence file: " << sequenceFile2 << "\n";
     cout << "Random seed: " << seed << "\n";
 
-
     game->notifyObservers();
 
     bool continueGame = true;
     string input;
 
-    while (continueGame) {
-        if (game->getSpecial()) {
+    while (continueGame)
+    {
+        if (game->getSpecial())
+        {
             cout << "Player " << game->grabPlayer() << "'s turn, enter special action: ";
-        } else {
+            cout << "within the grabbing person" << game->getSpecial() << endl;
+        }
+        else
+        {
             cout << "Player " << game->grabPlayer() << "'s turn, enter move: ";
         }
-
-        // check for EOF and quit game
-        if (!(cin >> input)) {
+        if (!(cin >> input))
+        {
             cout << "Exiting game . . .\n";
             continueGame = false;
             break;
         }
-
-        // run command from input
         auto [command, multiplier] = parseCommand(input);
 
-        if (command == "invalid") {
+        if (command == "invalid")
+        {
             cerr << "Invalid command: " << input << endl;
+            cout << "first invalid special val " << game->getSpecial() << endl;
             continue;
         }
 
-        // special cases for drop, sequence, norandom, random, sequence, special actions
-
-        // force
-        if (game->getSpecial() && command == "force") {
+        if (game->getSpecial() && command == "force")
+        {
             char forceBlock;
             cin >> forceBlock;
 
-            try {
+            try
+            {
                 game->setPlayer();
                 game->executeCommand(command, charToBlockEnum(forceBlock));
                 game->setSpecial(false);
             }
 
-            catch (...) {
+            catch (...)
+            {
+                cout << "catch all block invalid special val " << game->getSpecial() << endl;
+
                 cerr << "Invalid block type for force" << endl;
             }
 
             continue;
-
-        // heavy
-        } else if (game->getSpecial() && command == "heavy") {
+        }
+        else if (game->getSpecial() && command == "heavy")
+        {
             game->setPlayer();
             game->currentBoard()->setHeavy(true);
             game->setSpecial(false);
             continue;
-
-
-        } else if (game->getSpecial() && command == "blind") {
+        }
+        else if (game->getSpecial() && command == "blind")
+        {
             game->setPlayer();
             game->currentBoard()->setBlind(true);
             game->setSpecial(false);
             continue;
 
-        // drop
-        } else if (command == "drop") {
+            // drop
+        }
+        else if (command == "drop")
+        {
             game->executeCommand("drop");
-            if (!(game->getSpecial())) game->setPlayer();
+            if (!(game->getSpecial()))
+                game->setPlayer();
             game->notifyObservers();
             continue;
 
-        // sequence
-        } else if (input == "sequence") {
+            // sequence
+        }
+        else if (input == "sequence")
+        {
             string file;
             cin >> file;
 
-            try {
+            try
+            {
                 executeSequence(file, game);
             }
 
-            catch (logic_error &e) {
+            catch (logic_error &e)
+            {
                 cerr << e.what() << endl;
             }
 
             continue;
 
-        // norandom
-        } else if (command == "norandom") {
+            // norandom
+        }
+        else if (command == "norandom")
+        {
             string file;
             cin >> file;
 
-            try {
+            try
+            {
                 game->currentBoard()->setLvlSequence(parseSequence(file));
                 game->currentBoard()->setRandom(false);
             }
 
-            catch (logic_error &e) {
+            catch (logic_error &e)
+            {
                 cerr << e.what() << endl;
             }
 
             continue;
 
-        // random
-        } else if (command == "random") {
+            // random
+        }
+        else if (command == "random")
+        {
             game->currentBoard()->setRandom(true);
             continue;
-        
-        // restart
-        } else if (command == "restart") {
+
+            // restart
+        }
+        else if (command == "restart")
+        {
             game->executeCommand(command);
             continue;
 
-        // special actions out of turn
-        } else if ((!(game->getSpecial())) && command == "heavy" || command == "force" || command == "blind") {
+            // special actions out of turn
+        }
+        else if ((!(game->getSpecial())) && command == "heavy" || command == "force" || command == "blind")
+        {
             cerr << "Cannot trigger special action: " + command << "\n";
             continue;
         }
@@ -379,7 +410,7 @@ int main(int argc, const char *argv[])
 
     // when game is over, detach observers
     game->detach(textView);
-    //if (!textOnly) { game->detach(graphicView); }
+    // if (!textOnly) { game->detach(graphicView); }
 
     return 0;
 

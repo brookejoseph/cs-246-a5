@@ -53,7 +53,7 @@ void GameEngine::calScore()
     int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
     int numBlocks = currentBoard()->checkClearBlock();
-    //cout << "number of lines cleared" << numLines << endl;
+    // cout << "number of lines cleared" << numLines << endl;
 
     int blockPoints = 0;
     int linePoints = 0;
@@ -76,9 +76,12 @@ void GameEngine::calScore()
 
         updateHighScore();
     }
+    cout << "set special to within score";
 
-    if (numLines > 1) { // special action triggered
+    if (numLines > 1)
+    { // special action triggered
         setSpecial(true);
+        cout << "set special to true";
     }
 }
 
@@ -151,8 +154,10 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         {
             it->second(amount);
             calScore();
+            cout << "score called";
 
-            if (player1->gameOver() || player2->gameOver()) {
+            if (player1->gameOver() || player2->gameOver())
+            {
                 notifyObservers();
                 std::cout << "Game over! High Score: " << highScore << '\n';
                 restartGame();
@@ -163,7 +168,7 @@ void GameEngine::executeCommand(const std::string &command, int amount)
             it->second(amount);
             notifyObservers();
         }
-        setSpecial(false);
+        // setSpecial(false);
     }
     else
     {
@@ -253,10 +258,12 @@ void GameEngine::initializeCommandMap()
 //     restartGame();
 // }
 
-bool GameEngine::getSpecial() const {
+bool GameEngine::getSpecial() const
+{
     return special;
 }
 
-void GameEngine::setSpecial(bool isSpecial) {
+void GameEngine::setSpecial(bool isSpecial)
+{
     special = isSpecial;
 }
