@@ -38,11 +38,16 @@ void Block::left()
         --b.first;
         --c.first;
         --d.first;
+        if (getHeavy()) {
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();
         }
     }
+    
 }
 
 void Block::right()
@@ -54,6 +59,10 @@ void Block::right()
         ++b.first;
         ++c.first;
         ++d.first;
+        if (getHeavy()) {
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();
@@ -75,6 +84,9 @@ void Block::down()
         ++b.second;
         ++c.second;
         ++d.second;
+    } 
+    else if (getHeavy()) {
+        shouldDrop = true;
     }
     // cout << "down triggered" << endl;
 }
@@ -122,6 +134,10 @@ void Block::rotateccw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
+        if (getHeavy()) {
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();
@@ -171,6 +187,13 @@ void Block::rotatecw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
+        cout << "BREAKPOINT 2 REACHED" << getHeavy() << endl;
+
+        if (getHeavy()) {
+            cout << "BREAKPOINT 1 REACHED" << endl;
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();

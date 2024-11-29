@@ -55,6 +55,12 @@ void GameEngine::calScore()
     int numBlocks = currentBoard()->checkClearBlock();
     cout << "number of lines cleared" << numLines << endl;
     cout << "number of blocks cleared" << numBlocks << endl;
+
+    //comment this later
+    if (numLines >= 2) {
+        currentBoard()->setHeavy();
+        //cout << "BREAKPOINT 4: " << currentBoard()->getHeavy();
+    }
     int blockPoints = 0;
     int linePoints = 0;
     int totalPoints = 0;
@@ -145,6 +151,8 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->levelUp(); }},
         {"leveldown", [this](int amount)
          { currentBoard()->levelDown(); }},
+         {"heavy", [this](int)
+         { currentBoard()->setHeavy(); }},
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
         {"T", [this](int)
@@ -161,7 +169,6 @@ void GameEngine::initializeCommandMap()
          { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); }},
     };
 }
-
 void GameEngine::executeCommand(const std::string &command, int amount)
 {
     if (amount < 0)
@@ -179,11 +186,23 @@ void GameEngine::executeCommand(const std::string &command, int amount)
 
     if (it != commandMap.end())
     {
-        it->second(amount);
         if (command == "drop")
         {
+            it->second(amount);
             calScore();
+            notifyObservers();
+
+            // if (player1->gameOver() || player2->gameOver()) {
+            //     notifyObservers();
+            //     std::cout << "Game over! High Score: " << highScore << '\n';
+            //     restartGame();
+            // }
+
+        } else {
+            it->second(amount);
+            notifyObservers();
         }
+
     }
     else
     {

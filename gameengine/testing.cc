@@ -347,19 +347,29 @@ void test4() {
     board = gameEngine.currentBoard(); 
     printBoard(board, 11, 18);
 
-    gameEngine.executeCommand("O");
-    //gameEngine.executeCommand("right", );
-    gameEngine.executeCommand("clockwise", 2);
-    gameEngine.executeCommand("right", 10);
-    gameEngine.executeCommand("drop");
-    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
-    cout << "High score: " << gameEngine.getHighScore() << endl;
-    board = gameEngine.currentBoard(); 
-    printBoard(board, 11, 18);
+    // gameEngine.executeCommand("O");
+    // //gameEngine.executeCommand("right", );
+    // gameEngine.executeCommand("clockwise", 2);
+    // gameEngine.executeCommand("right", 10);
+    // gameEngine.executeCommand("drop");
+    // cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
+    // cout << "High score: " << gameEngine.getHighScore() << endl;
+    // board = gameEngine.currentBoard(); 
+    // printBoard(board, 11, 18);
 
-    gameEngine.executeCommand("O");
+    // gameEngine.executeCommand("O");
+    // //gameEngine.executeCommand("right", );
+    // gameEngine.executeCommand("clockwise", 2);
+    // gameEngine.executeCommand("right", 10);
+    // gameEngine.executeCommand("drop");
+    // cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
+    // cout << "High score: " << gameEngine.getHighScore() << endl;
+    // board = gameEngine.currentBoard(); 
+    // printBoard(board, 11, 18);
+
+    gameEngine.executeCommand("J");
     //gameEngine.executeCommand("right", );
-    gameEngine.executeCommand("clockwise", 2);
+    gameEngine.executeCommand("clockwise", 20);
     gameEngine.executeCommand("right", 10);
     gameEngine.executeCommand("drop");
     cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;

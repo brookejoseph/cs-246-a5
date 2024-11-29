@@ -34,6 +34,8 @@ protected:
     int noBlocksCleared = 0;
     int temp_score = 0;
     int numLinesCleared;
+    bool heavy;
+    bool shouldDrop;
 
 
     //std::vector<std::shared_ptr<Block>> addedBlocks;
@@ -80,6 +82,8 @@ public:
     int checkClearBlock();
     void setDimX(int x);
     void setDimY(int y);
+    void setHeavy();
+    bool getHeavy();
 
     void setLvlSequence(const std::vector<char> &seq); // added this <<<<
     void setCurrentBlock(const std::shared_ptr<Block> &block);

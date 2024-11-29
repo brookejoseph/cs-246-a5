@@ -68,6 +68,10 @@ void Board::left(int amount)
     {
         currentBlock->left();
     };
+    if (shouldDrop) {
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::right(int amount)
@@ -76,6 +80,10 @@ void Board::right(int amount)
     {
         currentBlock->right();
     };
+    if (shouldDrop) {
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::down(int amount)
@@ -92,6 +100,10 @@ void Board::ccw(int amount)
     {
         currentBlock->rotateccw();
     };
+    if (shouldDrop) {
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::cw(int amount)
@@ -100,6 +112,11 @@ void Board::cw(int amount)
     {
         currentBlock->rotatecw();
     };
+    if (shouldDrop) {
+        cout << "SHOULD DROP TRIGGERED" << endl;
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::addCell(Block &thisBlock)
@@ -190,10 +207,10 @@ void Board::updateClearLines()
     {
         cleared = false;
 
-        for (int row = 17; row > 0; --row)
+        for (int row = dimY - 1; row > 0; --row)
         {
             vector<char> selectedRow;
-            for (int col = 0; col < 11; ++col)
+            for (int col = 0; col < dimX; ++col)
             {
                 selectedRow.push_back(grid[col][row]);
             }
@@ -205,20 +222,20 @@ void Board::updateClearLines()
                 ++linesCleared;
                 ++numLinesCleared;
                 removeIncr(row);
-                for (int col = 0; col < 11; ++col)
+                for (int col = 0; col < dimX; ++col)
                 {
                     grid[col][row] = ' ';
                 }
 
                 for (int row2 = row; row2 > 0; --row2)
                 {
-                    for (int col = 0; col < 11; ++col)
+                    for (int col = 0; col < dimX; ++col)
                     {
                         grid[col][row2] = grid[col][row2 - 1];
                     }
                 }
 
-                for (int col = 0; col < 11; ++col)
+                for (int col = 0; col < dimX; ++col)
                 {
                     grid[col][0] = ' ';
                 }
@@ -358,4 +375,15 @@ char Board::getCurrentBlockType() const { return currentBlock->getType(); }
 std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
 {
     return currentBlock->getCoord();
+}
+
+void Board::setHeavy() {
+    cout << "This board is now heavy" << endl;
+    heavy = true;
+    cout << "BREAKPOINT 5: Heavy: " << getHeavy() << endl;
+}
+
+bool Board::getHeavy() {
+    cout << "BREAKPOINT 3 REACHED Heavy:" << heavy << endl;
+    return heavy;
 }
