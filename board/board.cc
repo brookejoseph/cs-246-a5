@@ -256,16 +256,17 @@ void Board::removeIncr(int row) {
                 break;
             }
               //auto &[a, b, c, d, e] = coord;
-            if (coord.second <= row - 1) {
-                coord.second++;
-            }
+
             if (coord.second == row) {
                 // it_cell = it->erase(it_cell);
+                cout << "cell removed: cell.x: " << coord.first << "; cell.y: " << coord.second << endl;
                 coord.first = -1;
                 coord.second = -1;
-                cout << "cell removed" << endl;
+                // cout << "cell removed" << endl;
             }
-            
+            if (coord.second <= row - 1 && coord.second >= 0) {
+                coord.second++;
+            }
             counter++;
         }
         // cout << "did you ever run? 1x : " << (*it).at(0).first << endl;
@@ -277,7 +278,6 @@ void Board::removeIncr(int row) {
         // cout << "did you ever run? 4x : " << (*it).at(0).first << endl;
         // cout << "did you ever run? 4y : " << (*it).at(0).second << endl;
     }
-    
     
     for (auto it = addedBlocks.begin(); it != addedBlocks.end();) {        
         if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1))) {
@@ -292,7 +292,6 @@ void Board::removeIncr(int row) {
         }
     }
 }
-
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
 char Board::getCurrentBlockType() const { return currentBlock->getType(); }
