@@ -27,7 +27,7 @@ void Block::setLevel(int lvl) { levelCreated = lvl; }
 
 vector<pair<int, int>> Block::getCoord() const { return {a, b, c, d}; }
 
-//vector<pair<int, int>>& Block::getCoordNotConst() { return {(&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second)}; }
+// vector<pair<int, int>>& Block::getCoordNotConst() { return {(&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second), (&a.first,&a.second)}; }
 
 void Block::left()
 {
@@ -38,6 +38,11 @@ void Block::left()
         --b.first;
         --c.first;
         --d.first;
+        if (getHeavy())
+        {
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();
@@ -54,6 +59,11 @@ void Block::right()
         ++b.first;
         ++c.first;
         ++d.first;
+        if (getHeavy())
+        {
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();
@@ -75,6 +85,10 @@ void Block::down()
         ++b.second;
         ++c.second;
         ++d.second;
+    }
+    else if (getHeavy())
+    {
+        shouldDrop = true;
     }
     // cout << "down triggered" << endl;
 }
@@ -99,7 +113,6 @@ void Block::rotateccw()
     // y = y + |(new_max_y - old_max_y)|
     int shift_x = abs(new_min_x - old_min_x);
     int shift_y = abs(new_max_y - old_max_y);
-    
 
     temp_a_x -= shift_x;
     temp_a_y += shift_y;
@@ -111,7 +124,7 @@ void Block::rotateccw()
     temp_d_y += shift_y;
 
     if (((temp_a_y <= dimY - 1) && (temp_b_y <= dimY - 1) && (temp_c_y <= dimY - 1) && (temp_d_y <= dimY - 1)) &&
-        ((temp_a_x >= 0) && (temp_b_x > 0) && (temp_c_x >= 0) && (temp_d_x >= 0)) &&
+        ((temp_a_x >= 0) && (temp_b_x >= 0) && (temp_c_x >= 0) && (temp_d_x >= 0)) &&
         (getGrid()[temp_a_x][temp_a_y] == ' ') && (getGrid()[temp_b_x][temp_b_y] == ' ') && (getGrid()[temp_c_x][temp_c_y] == ' ') && (getGrid()[temp_d_x][temp_d_y] == ' '))
     {
         a.first = temp_a_x;
@@ -122,6 +135,11 @@ void Block::rotateccw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
+        if (getHeavy())
+        {
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();
@@ -147,7 +165,6 @@ void Block::rotatecw()
     // y = y + |(new_max_y - old_max_y)|
     int shift_x = abs(new_min_x - old_min_x);
     int shift_y = abs(new_max_y - old_max_y);
-    
 
     temp_a_x += shift_x;
     temp_a_y += shift_y;
@@ -171,6 +188,12 @@ void Block::rotatecw()
         c.second = temp_c_y;
         d.first = temp_d_x;
         d.second = temp_d_y;
+
+        if (getHeavy())
+        {
+            down();
+            down();
+        }
         if (getLevel() >= 3)
         {
             down();

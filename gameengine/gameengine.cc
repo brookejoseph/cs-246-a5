@@ -24,12 +24,13 @@
 
 using namespace std;
 
-GameEngine::GameEngine(int x, int y)
-    : player1(std::make_shared<Board>(x, y)),
-      player2(std::make_shared<Board>(x, y)),
-      currentPlayer(1),
-      highScore(0),
-      currentChar(' ') {}
+GameEngine::GameEngine(int x, int y) : player1(std::make_shared<Board>(x, y)),
+                                       player2(std::make_shared<Board>(x, y)),
+                                       currentPlayer(1),
+                                       highScore(0),
+                                       currentChar(' ')
+{
+}
 
 int GameEngine::grabCurrentScore()
 {
@@ -48,18 +49,18 @@ void GameEngine::updateHighScore()
 
 void GameEngine::calScore()
 {
-    
+
     int level = currentBoard()->getLevel();
     int numLines = currentBoard()->checkClearLine();
-    //currentBoard()->blockRemoved();
     int numBlocks = currentBoard()->checkClearBlock();
-    //cout << "number of lines cleared" << numLines << endl;
-    //cout << "number of blocks cleared" << numBlocks << endl;
+    cout << "number of lines cleared" << numLines << endl;
+
     int blockPoints = 0;
     int linePoints = 0;
     int totalPoints = 0;
 
-    if (numLines > 0 || numBlocks > 0) {
+    if (numLines > 0 || numBlocks > 0)
+    {
         blockPoints = numBlocks * std::pow(level + 1, 2);
         linePoints = std::pow(level + numLines, 2);
         totalPoints = linePoints + blockPoints;
@@ -75,7 +76,6 @@ void GameEngine::calScore()
 
         updateHighScore();
     }
-
 }
 
 std::shared_ptr<Board> GameEngine::currentBoard()
@@ -127,6 +127,70 @@ std::shared_ptr<Board> GameEngine::getPlayer2() const
     return player2;
 }
 
+void GameEngine::executeCommand(const std::string &command, int amount)
+{
+    if (amount < 0)
+    {
+        std::cerr << "Invalid multiplier: " << amount << std::endl;
+        return;
+    }
+
+    if (commandMap.empty())
+    {
+        initializeCommandMap();
+    }
+
+    auto it = commandMap.find(command);
+
+    if (it != commandMap.end())
+    {
+        if (command == "drop")
+        {
+            it->second(amount);
+            calScore();
+            notifyObservers();
+        }
+        else
+        {
+            it->second(amount);
+            notifyObservers();
+        }
+    }
+    else
+    {
+        std::cerr << "Invalid command: " << command << std::endl;
+    }
+}
+
+std::string blockTypeToString(int blockType)
+{
+    switch (blockType)
+    {
+    case 1:
+        return "Z";
+    case 2:
+        return "T";
+    case 3:
+        return "J";
+    case 4:
+        return "I";
+    case 5:
+        return "S";
+    case 6:
+        return "O";
+    case 7:
+        return "L";
+    default:
+        throw std::invalid_argument("Invalid BlockType");
+    }
+}
+
+void GameEngine::applyForce(int b)
+{
+    string blockType = blockTypeToString(b);
+    executeCommand(blockType);
+};
+
 void GameEngine::initializeCommandMap()
 {
     commandMap = {
@@ -145,7 +209,19 @@ void GameEngine::initializeCommandMap()
         {"levelup", [this](int amount)
          { currentBoard()->setLevel(currentBoard()->getLevel() + amount); }},
         {"leveldown", [this](int amount)
+         { currentBoard()->levelDown(); }},
+
+        {"heavy", [this](int)
+         { currentBoard()->setHeavy(true); }},
+        {"force", [this](int letter)
+         { applyForce(letter);
+            currentBoard()->setForce(true); }},
+        {"blind", [this](int)
+         { currentBoard()->setBlind(true); }},
+
+
          { currentBoard()->setLevel(currentBoard()->getLevel() - amount); }},
+
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
         {"T", [this](int)
@@ -163,18 +239,17 @@ void GameEngine::initializeCommandMap()
     };
 }
 
-void GameEngine::executeCommand(const std::string &command, int amount)
-{
-    if (amount < 0)
-    {
-        std::cerr << "Invalid multiplier: " << amount << std::endl;
-        return;
-    }
+// if ((currentBoard()->getBlind()) && (currentBoard()->checkClearLine() < 2))
+// {
+//     currentBoard()->removeBlind();
+// };
 
-    if (commandMap.empty())
-    {
-        initializeCommandMap();
-    }
+
+// if (player1->gameOver() || player2->gameOver()) {
+//     notifyObservers();
+//     std::cout << "Game over! High Score: " << highScore << '\n';
+//     restartGame();
+// }
 
     auto it = commandMap.find(command);
 
@@ -202,3 +277,4 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         std::cerr << "Invalid command: " << command << std::endl;
     }
 }
+

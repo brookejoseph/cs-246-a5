@@ -67,6 +67,11 @@ void Board::left(int amount)
     {
         currentBlock->left();
     };
+    if (shouldDrop)
+    {
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::right(int amount)
@@ -75,6 +80,11 @@ void Board::right(int amount)
     {
         currentBlock->right();
     };
+    if (shouldDrop)
+    {
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::down(int amount)
@@ -91,6 +101,11 @@ void Board::ccw(int amount)
     {
         currentBlock->rotateccw();
     };
+    if (shouldDrop)
+    {
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::cw(int amount)
@@ -99,6 +114,12 @@ void Board::cw(int amount)
     {
         currentBlock->rotatecw();
     };
+    if (shouldDrop)
+    {
+        cout << "SHOULD DROP TRIGGERED" << endl;
+        drop();
+        shouldDrop = false;
+    }
 };
 
 void Board::addCell(Block &thisBlock)
@@ -133,6 +154,7 @@ void Board::drop()
     addCell(*currentBlock);
     addBlockToVec(currentBlock);
     this->updateClearLines();
+
 
     // COMMENTED THESE OUT FOR NOW
     setCurrentBlock(nextBlock);
@@ -207,10 +229,10 @@ void Board::updateClearLines()
     {
         cleared = false;
 
-        for (int row = 17; row > 0; --row)
+        for (int row = dimY - 1; row > 0; --row)
         {
             vector<char> selectedRow;
-            for (int col = 0; col < 11; ++col)
+            for (int col = 0; col < dimX; ++col)
             {
                 selectedRow.push_back(grid[col][row]);
             }
@@ -222,20 +244,20 @@ void Board::updateClearLines()
                 ++linesCleared;
                 ++numLinesCleared;
                 removeIncr(row);
-                for (int col = 0; col < 11; ++col)
+                for (int col = 0; col < dimX; ++col)
                 {
                     grid[col][row] = ' ';
                 }
 
                 for (int row2 = row; row2 > 0; --row2)
                 {
-                    for (int col = 0; col < 11; ++col)
+                    for (int col = 0; col < dimX; ++col)
                     {
                         grid[col][row2] = grid[col][row2 - 1];
                     }
                 }
 
-                for (int col = 0; col < 11; ++col)
+                for (int col = 0; col < dimX; ++col)
                 {
                     grid[col][0] = ' ';
                 }
@@ -278,28 +300,20 @@ void Board::removeIncr(int row)
                 break;
             }
             // auto &[a, b, c, d, e] = coord;
-            if (coord.second <= row - 1)
-            {
-                coord.second++;
-            }
+
+
             if (coord.second == row)
             {
-                // it_cell = it->erase(it_cell);
                 coord.first = -1;
                 coord.second = -1;
-                //cout << "cell removed" << endl;
+            }
+            if (coord.second <= row - 1 && coord.second >= 0)
+            {
+                coord.second++;
             }
 
             counter++;
         }
-        // cout << "did you ever run? 1x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 1y : " << (*it).at(0).second << endl;
-        // cout << "did you ever run? 2x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 2y : " << (*it).at(0).second << endl;
-        // cout << "did you ever run? 3x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 3y : " << (*it).at(0).second << endl;
-        // cout << "did you ever run? 4x : " << (*it).at(0).first << endl;
-        // cout << "did you ever run? 4y : " << (*it).at(0).second << endl;
     }
 
     for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
@@ -311,6 +325,7 @@ void Board::removeIncr(int row)
 
             it = addedBlocks.erase(it);
             //cout << "block freaking cleared!!";
+
         }
         else
         {
@@ -318,6 +333,7 @@ void Board::removeIncr(int row)
         }
     }
 }
+
 
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
@@ -386,3 +402,32 @@ std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
 {
     return currentBlock->getCoord();
 }
+
+void Board::setHeavy(bool val)
+{
+    heavy = val;
+}
+
+bool Board::getHeavy()
+{
+    return heavy;
+}
+
+void Board::setBlind(bool val)
+{
+    blind = val;
+}
+
+bool Board::getBlind()
+{
+    return blind;
+}
+
+void Board::setForce(bool val)
+{
+    force = val;
+}
+bool Board::getForce()
+{
+    return force;
+};

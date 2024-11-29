@@ -29,11 +29,15 @@ private:
     int noClearCount;
 
 protected:
+    std::vector<std::vector<char>> backupGrid;
     int dimX = 11;
     int dimY = 18;
     int noBlocksCleared = 0;
     int temp_score = 0;
     int numLinesCleared;
+
+
+    bool shouldDrop;
 
     // std::vector<std::shared_ptr<Block>> addedBlocks;
     std::vector<std::vector<std::pair<int, int>>> addedBlocks;
@@ -45,6 +49,10 @@ protected:
         std::make_shared<Level2>(),
         std::make_shared<Level3>(),
         std::make_shared<Level4>()};
+
+    bool blind;
+    bool heavy;
+    bool force;
 
 public:
     Board(int x, int y) noexcept;
@@ -78,6 +86,14 @@ public:
     int checkClearBlock();
     void setDimX(int x);
     void setDimY(int y);
+    void setHeavy(bool val);
+    bool getHeavy();
+    void setBlind(bool val);
+    bool getBlind();
+    void setForce(bool val);
+    bool getForce();
+    // void applyBlind();
+    // void removeBlind();
 
     void setLvlSequence(const std::vector<char> &seq); // added this <<<<
     void setCurrentBlock(const std::shared_ptr<Block> &block);
