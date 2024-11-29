@@ -12,4 +12,5 @@ gameengine/gameengine.o: gameengine/gameengine.cc gameengine/gameengine.h \
   gameengine/../block/../board/board.h gameengine/../block/blockZ.h \
   gameengine/../block/blockJ.h gameengine/../block/blockO.h \
   gameengine/../block/blockI.h gameengine/../block/blockT.h \
-  gameengine/../block/blockS.h gameengine/../block/blockL.h
+  gameengine/../block/blockS.h gameengine/../block/blockL.h \
+  gameengine/../block/blockstar.h

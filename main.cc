@@ -304,7 +304,6 @@ int main(int argc, const char *argv[])
 
         if (command == "invalid")
         {
-
             cerr << "Invalid command: " << command << endl;
             // continue;
         }
@@ -318,6 +317,7 @@ int main(int argc, const char *argv[])
                 game->setPlayer();
                 game->executeCommand(command, charToBlockEnum(forceBlock));
                 game->setSpecial(false);
+                game->notifyObservers();
             }
 
             catch (...)
@@ -333,6 +333,7 @@ int main(int argc, const char *argv[])
             game->setPlayer();
             game->currentBoard()->setHeavy(true);
             game->setSpecial(false);
+            game->notifyObservers();
             continue;
         }
         else if (game->getSpecial() && command == "blind")
@@ -340,6 +341,7 @@ int main(int argc, const char *argv[])
             game->setPlayer();
             game->currentBoard()->setBlind(true);
             game->setSpecial(false);
+            game->notifyObservers();
             continue;
         }
         else if (command == "drop")

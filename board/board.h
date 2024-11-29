@@ -35,7 +35,8 @@ protected:
     int noBlocksCleared = 0;
     int temp_score = 0;
     int numLinesCleared;
-
+    int numClearedPerFive;
+    bool dropStarFive;
 
     bool shouldDrop;
 
@@ -54,8 +55,13 @@ protected:
     bool heavy;
 
 public:
+    bool clearedPerFive();
     Board(int x, int y) noexcept;
     virtual ~Board() = default;
+
+    int midVal();
+    bool dropStar();
+    void setDropStart(bool val);
 
     void setLevel(int lvl);
     int getLevel() const;
@@ -63,13 +69,10 @@ public:
 
     int checkClearLine();
     void updateClearLines();
-
-    bool isValidMove();
     std::vector<std::vector<char>> getGrid();
 
     void addBlockToVec(const std::shared_ptr<Block> &blockVal);
     void removeIncr(int row);
-    void blockRemoved();
 
     void left(int amount);  // done
     void right(int amount); // done

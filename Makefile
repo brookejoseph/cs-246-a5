@@ -12,6 +12,7 @@ SRC = main.cc \
       block/blockJ.cc \
       block/blockO.cc \
       block/blockS.cc \
+      block/blockstar.cc \
       level/level.cc \
       level/level0.cc  \
       level/level1.cc \
