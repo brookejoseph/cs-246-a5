@@ -6,8 +6,6 @@
 #include <memory>
 #include <fstream>
 #include <stdexcept>
-// all the includes
-
 using namespace std;
 
 // Default game options
