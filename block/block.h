@@ -21,6 +21,7 @@ protected:
     pair<int, int> d;
 
     int levelCreated;
+    bool heavy;
 
 public:
     Block(std::shared_ptr<Board> cells,
@@ -31,8 +32,7 @@ public:
     explicit Block(std::shared_ptr<Board> cells);
     virtual ~Block();
 
-    // virtual bool getHeavy();
-    // virtual void setHeavy();
+    void setHeavy(bool isHeavy);
     virtual char getChar(int x, int y) const override = 0;
     virtual char getType() const = 0;
     virtual int getLevel() const;

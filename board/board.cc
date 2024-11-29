@@ -161,7 +161,6 @@ void Board::drop()
     addBlockToVec(currentBlock);
     this->updateClearLines();
 
-    setHeavy(false);
     setBlind(false);
 
     // COMMENTED THESE OUT FOR NOW
@@ -175,7 +174,7 @@ void Board::restart()
     {
         std::fill(row.begin(), row.end(), ' ');
     }
-    setHeavy(false);
+
     setBlind(false);
 }
 
@@ -441,16 +440,6 @@ std::vector<std::pair<int, int>> Board::getCurrentBlockCoord() const
     return currentBlock->getCoord();
 }
 
-void Board::setHeavy(bool val)
-{
-    heavy = val;
-}
-
-bool Board::getHeavy()
-{
-    return heavy;
-}
-
 void Board::setBlind(bool val)
 {
     blind = val;
@@ -459,4 +448,12 @@ void Board::setBlind(bool val)
 bool Board::getBlind()
 {
     return blind;
+}
+
+std::shared_ptr<Block> Board::getCurrentBlock() const {
+    return currentBlock;
+}
+
+void Board::setHeavy(bool isHeavy) {
+    currentBlock->setHeavy(isHeavy);
 }

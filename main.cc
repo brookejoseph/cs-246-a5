@@ -331,7 +331,7 @@ int main(int argc, const char *argv[])
         else if (game->getSpecial() && command == "heavy")
         {
             game->setPlayer();
-            game->currentBoard()->setHeavy(true);
+            game->executeCommand(command);
             game->setSpecial(false);
             game->notifyObservers();
             continue;
@@ -339,7 +339,7 @@ int main(int argc, const char *argv[])
         else if (game->getSpecial() && command == "blind")
         {
             game->setPlayer();
-            game->currentBoard()->setBlind(true);
+            game->executeCommand(command);
             game->setSpecial(false);
             game->notifyObservers();
             continue;
