@@ -48,8 +48,7 @@ public:
     Board(int x, int y) noexcept;
     ~Board() = default;
 
-    void levelUp();
-    void levelDown();
+    void setLevel(int lvl);
     int getLevel() const;
     void setRandom(bool isRandom);
 

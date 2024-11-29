@@ -132,9 +132,9 @@ void GameEngine::initializeCommandMap()
         {"clockwise", [this](int amount)
          { currentBoard()->cw(amount); }},
         {"levelup", [this](int amount)
-         { currentBoard()->levelUp(); }},
+         { currentBoard()->setLevel(currentBoard()->getLevel() + amount); }},
         {"leveldown", [this](int amount)
-         { currentBoard()->levelDown(); }},
+         { currentBoard()->setLevel(currentBoard()->getLevel() - amount); }},
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
         {"T", [this](int)
@@ -169,11 +169,15 @@ void GameEngine::executeCommand(const std::string &command, int amount)
 
     if (it != commandMap.end())
     {
-        it->second(amount);
         if (command == "drop")
         {
+            it->second(amount);
             calScore();
+        } else {
+            it->second(amount);
+            notifyObservers();
         }
+
     }
     else
     {

@@ -111,15 +111,15 @@ void Board::addCell(Block &thisBlock)
     };
 };
 
-void Board::levelUp()
-{
-    ++level;
-};
-
-void Board::levelDown()
-{
-    --level;
-};
+void Board::setLevel(int lvl) {
+    if (lvl < 0) {
+        level = 0;
+    } else if (lvl > 4) {
+        level = 4;
+    } else {
+        level = lvl;
+    }
+}
 
 void Board::drop()
 {
@@ -134,6 +134,7 @@ void Board::drop()
     addCell(*currentBlock);
     this->updateClearLines();
 
+    // COMMENTED THESE OUT FOR NOW
     // setCurrentBlock(nextBlock);
     // getNextBlock();
 }
