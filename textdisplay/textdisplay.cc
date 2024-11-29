@@ -74,20 +74,37 @@ void TextDisplay::printBoards() const {
     char currentBlockType = getGame()->currentBoard()->getCurrentBlockType();
     int currentPlayer = getGame()->grabPlayer();
 
+    int blindYStart = 6;
+    int blindYEnd = dimY - 3;
+    int blindXStart = 3;
+    int blindXEnd = dimX - 3;
+
     for (int j = 0; j < dimY; ++j) {
         for (int i = 0; i < dimX; ++i) {
-            if (currentPlayer == 1 && std::find(currentCoord.begin(), currentCoord.end(), std::make_pair(i, j)) != currentCoord.end()) {
-                std::cout << currentBlockType;
+            if (currentPlayer == 1) {
+                if (getGame()->currentBoard()->getBlind() && (j >= blindYStart && j < blindYEnd) && (i >= blindXStart && i < blindXEnd)) {
+                    std::cout << '?';
+                } else if (std::find(currentCoord.begin(), currentCoord.end(), std::make_pair(i, j)) != currentCoord.end()) {
+                    std::cout << currentBlockType;
+                } else {
+                    std::cout << getGame()->getPlayer1()->getChar(i, j);
+                }
             } else {
                 std::cout << getGame()->getPlayer1()->getChar(i, j);
             }
         }
         printChar(' ', sep);
         for (int i = 0; i < dimX; ++i) {
-            if (currentPlayer == 2 && std::find(currentCoord.begin(), currentCoord.end(), std::make_pair(i, j)) != currentCoord.end()) {
-                std::cout << currentBlockType;
+            if (currentPlayer == 2) {
+                if (getGame()->currentBoard()->getBlind() && (j >= blindYStart && j < blindYEnd) && (i >= blindXStart && i < blindXEnd)) {
+                    std::cout << '?';
+                } else if (std::find(currentCoord.begin(), currentCoord.end(), std::make_pair(i, j)) != currentCoord.end()) {
+                    std::cout << currentBlockType;
+                } else {
+                    std::cout << getGame()->getPlayer1()->getChar(i, j);
+                }
             } else {
-                std::cout << getGame()->getPlayer2()->getChar(i, j);
+                std::cout << getGame()->getPlayer1()->getChar(i, j);
             }
         }
         std::cout << '\n';
