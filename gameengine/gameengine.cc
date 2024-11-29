@@ -219,3 +219,76 @@ void GameEngine::executeCommand(const std::string &command, int amount)
         std::cerr << "Invalid command: " << command << std::endl;
     }
 }
+
+std::string blockTypeToString(int blockType)
+{
+    switch (blockType)
+    {
+    case 1:
+        return "Z";
+    case 2:
+        return "T";
+    case 3:
+        return "J";
+    case 4:
+        return "I";
+    case 5:
+        return "S";
+    case 6:
+        return "O";
+    case 7:
+        return "L";
+    default:
+        throw std::invalid_argument("Invalid BlockType");
+    }
+}
+
+void GameEngine::applyForce(int b)
+{
+    string blockType = blockTypeToString(b);
+    executeCommand(blockType);
+};
+
+void GameEngine::initializeCommandMap()
+{
+    commandMap = {
+        {"left", [this](int amount)
+         { currentBoard()->left(amount); }},
+        {"right", [this](int amount)
+         { currentBoard()->right(amount); }},
+        {"down", [this](int amount)
+         { currentBoard()->down(amount); }},
+        {"drop", [this](int)
+         { currentBoard()->drop(); }},
+        {"counterclockwise", [this](int amount)
+         { currentBoard()->ccw(amount); }},
+        {"clockwise", [this](int amount)
+         { currentBoard()->cw(amount); }},
+        {"levelup", [this](int amount)
+         { currentBoard()->levelUp(); }},
+        {"leveldown", [this](int amount)
+         { currentBoard()->levelDown(); }},
+
+        {"heavy", [this](int)
+         { currentBoard()->setHeavy(); }},
+        {"force", [this](int letter)
+         { applyForce(letter); }},
+        {"blind", [this](int)
+         { currentBoard()->applyBlind(); }},
+
+        {"Z", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
+        {"T", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<TBlock>()); }},
+        {"J", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<JBlock>()); }},
+        {"I", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<IBlock>()); }},
+        {"S", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<SBlock>()); }},
+        {"O", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<OBlock>()); }},
+        {"L", [this](int)
+         { currentBoard()->setCurrentBlock(std::make_shared<LBlock>()); }},
+    };
+}

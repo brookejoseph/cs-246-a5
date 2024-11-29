@@ -36,6 +36,7 @@ private:
 public:
     GameEngine(int x, int y);
     ~GameEngine() = default;
+    void GameEngine::applyForce(int b);
 
     void executeCommand(const std::string &command, int amount = 1);
 
