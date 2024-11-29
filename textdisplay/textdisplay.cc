@@ -109,6 +109,7 @@ void TextDisplay::printNextBlocks() const {
 
 void TextDisplay::notify() {
     //printValue("High Score", getGame()->getHighScore());
+    std::cout << '\n';
     printValues("Level", getGame()->getPlayer1()->getLevel(), getGame()->getPlayer2()->getLevel());
     printValues("Score", getGame()->getPlayer1Score(), getGame()->getPlayer2Score());
     printDashes();

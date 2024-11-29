@@ -189,7 +189,7 @@ bool all_of(vector<char> row)
 {
     for (auto it = row.begin(); it != row.end(); it++)
     {
-        cout << *it;
+        //cout << *it;
         if (*it == ' ')
         {
             return false;
@@ -287,7 +287,7 @@ void Board::removeIncr(int row)
                 // it_cell = it->erase(it_cell);
                 coord.first = -1;
                 coord.second = -1;
-                cout << "cell removed" << endl;
+                //cout << "cell removed" << endl;
             }
 
             counter++;
@@ -310,7 +310,7 @@ void Board::removeIncr(int row)
             temp_score += ((*it).at(4).first + 1) * ((*it).at(4).first + 1);
 
             it = addedBlocks.erase(it);
-            cout << "block freaking cleared!!";
+            //cout << "block freaking cleared!!";
         }
         else
         {

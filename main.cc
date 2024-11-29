@@ -234,6 +234,11 @@ int main(int argc, const char *argv[])
     game->getPlayer2()->initBlocks();
 
     // game loop
+    cout << "\nPlayer 1 sequence file: " << sequenceFile1 << "\n";
+    cout << "Player 2 sequence file: " << sequenceFile2 << "\n";
+    cout << "Random seed: " << seed << "\n";
+
+
     game->notifyObservers();
 
     bool continueGame = true;
