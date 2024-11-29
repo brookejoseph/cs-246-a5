@@ -156,8 +156,8 @@ void Board::drop()
     addBlockToVec(currentBlock);
     this->updateClearLines();
 
-    // setCurrentBlock(nextBlock);
-    // getNextBlock();
+    setCurrentBlock(nextBlock);
+    getNextBlock();
 }
 
 void Board::restart()

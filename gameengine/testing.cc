@@ -368,10 +368,26 @@ void test4()
     // cout << "High score: " << gameEngine.getHighScore() << endl;
     // board = gameEngine.currentBoard();
     // printBoard(board, 11, 18);
+    cout << "BREAKPOINT 6 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
+    gameEngine.executeCommand("J");
+    //gameEngine.executeCommand("right", );
+    cout << "BREAKPOINT 7 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
+    gameEngine.executeCommand("clockwise", 20);
+    cout << "BREAKPOINT 8 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
+    gameEngine.executeCommand("right", 10);
+    gameEngine.executeCommand("drop");
+    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
+    cout << "High score: " << gameEngine.getHighScore() << endl;
+    board = gameEngine.currentBoard(); 
+    printBoard(board, 11, 18);
 
+    cout << "BREAKPOINT 6 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
     gameEngine.executeCommand("J");
     // gameEngine.executeCommand("right", );
+    //gameEngine.executeCommand("right", );
+    cout << "BREAKPOINT 7 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
     gameEngine.executeCommand("clockwise", 20);
+    cout << "BREAKPOINT 8 Heavy: " << gameEngine.currentBoard()->getHeavy() << endl;
     gameEngine.executeCommand("right", 10);
     gameEngine.executeCommand("drop");
     cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
@@ -380,9 +396,26 @@ void test4()
     printBoard(board, 11, 18);
 }
 
+void test5() {
+    GameEngine gameEngine(11, 18);
+    gameEngine.executeCommand("T");
+    //gameEngine.executeCommand("right", );
+    gameEngine.executeCommand("levelup");
+    gameEngine.executeCommand("right", 2);
+    gameEngine.executeCommand("counterclockwise", 1);
+    gameEngine.executeCommand("drop");
+    cout << "Player 1 score: " << gameEngine.grabCurrentScore() << endl;
+    cout << "High score: " << gameEngine.getHighScore() << endl;
+    auto board = gameEngine.currentBoard(); 
+    printBoard(board, 11, 18);
+
+
+
+
+
 int main()
-{
-    test4();
+{    
+    test5();
     return 0;
 }
 

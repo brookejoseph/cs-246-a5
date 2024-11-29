@@ -27,6 +27,7 @@ private:
     std::shared_ptr<Block> nextBlock;
 
     int noClearCount;
+    
 
 protected:
     std::vector<std::vector<char>> backupGrid;
@@ -35,7 +36,7 @@ protected:
     int noBlocksCleared = 0;
     int temp_score = 0;
     int numLinesCleared;
-    bool heavy;
+    
     bool shouldDrop;
 
     // std::vector<std::shared_ptr<Block>> addedBlocks;
@@ -54,6 +55,7 @@ protected:
 public:
     Board(int x, int y) noexcept;
     ~Board() = default;
+    bool heavy;
 
     void levelUp();
     void levelDown();
