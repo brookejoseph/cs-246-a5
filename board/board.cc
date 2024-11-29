@@ -141,8 +141,11 @@ void Board::drop()
 
 void Board::restart()
 {
-    grid.clear();
-};
+    for (auto &row : grid)
+    {
+        std::fill(row.begin(), row.end(), ' ');
+    }
+}
 
 int Board::getLevel() const
 {
@@ -240,32 +243,39 @@ void Board::addBlockToVec(const std::shared_ptr<Block> &block)
     auto temp = block->getCoord();
     vector<pair<int, int>> new_vec;
     int level = block->getLevel();
-    for (auto i : temp) {
+    for (auto i : temp)
+    {
         new_vec.emplace_back(i);
     }
     new_vec.emplace_back(level, 0);
     addedBlocks.emplace_back(new_vec);
 }
 
-void Board::removeIncr(int row) {
-    for (auto it = addedBlocks.begin(); it != addedBlocks.end(); it++) {
+void Board::removeIncr(int row)
+{
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end(); it++)
+    {
         // for (auto it_cell = it->begin(); it_cell != it->end(); it_cell++;) {
         int counter = 0;
-        for (auto &coord : *it) {
-            if (counter > 4) {
+        for (auto &coord : *it)
+        {
+            if (counter > 4)
+            {
                 break;
             }
-              //auto &[a, b, c, d, e] = coord;
-            if (coord.second <= row - 1) {
+            // auto &[a, b, c, d, e] = coord;
+            if (coord.second <= row - 1)
+            {
                 coord.second++;
             }
-            if (coord.second == row) {
+            if (coord.second == row)
+            {
                 // it_cell = it->erase(it_cell);
                 coord.first = -1;
                 coord.second = -1;
                 cout << "cell removed" << endl;
             }
-            
+
             counter++;
         }
         // cout << "did you ever run? 1x : " << (*it).at(0).first << endl;
@@ -277,17 +287,19 @@ void Board::removeIncr(int row) {
         // cout << "did you ever run? 4x : " << (*it).at(0).first << endl;
         // cout << "did you ever run? 4y : " << (*it).at(0).second << endl;
     }
-    
-    
-    for (auto it = addedBlocks.begin(); it != addedBlocks.end();) {        
-        if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1))) {
+
+    for (auto it = addedBlocks.begin(); it != addedBlocks.end();)
+    {
+        if (((*it).at(0).first == -1) && ((*it).at(0).second == -1) && (((*it).at(1).first == -1) && ((*it).at(1).second == -1)) && (((*it).at(2).first == -1) && ((*it).at(2).second == -1)) && (((*it).at(3).first == -1) && ((*it).at(3).second == -1)))
+        {
             noBlocksCleared += 1;
-            temp_score += ((*it).at(4).first + 1)*((*it).at(4).first + 1);
-            
+            temp_score += ((*it).at(4).first + 1) * ((*it).at(4).first + 1);
+
             it = addedBlocks.erase(it);
             cout << "block freaking cleared!!";
         }
-        else {
+        else
+        {
             it++;
         }
     }
@@ -297,7 +309,7 @@ char Board::getNextBlockType() const { return nextBlock->getType(); }
 
 char Board::getCurrentBlockType() const { return currentBlock->getType(); }
 
-// addedBlocks = [[(-1,-1), (4,4), (5,6), (7,8)], 
+// addedBlocks = [[(-1,-1), (4,4), (5,6), (7,8)],
 //                 [(3,4), (4,5), (5,6), (7,8)]]
 // void Board::removeIncr(int row)
 // {
