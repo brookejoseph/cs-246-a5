@@ -71,7 +71,7 @@ void TextDisplay::printDashes() const {
 void TextDisplay::printBoards() const {
     // dynamically print current block position
     std::vector<std::pair<int, int>> currentCoord = getGame()->currentBoard()->getCurrentBlockCoord();
-    char currentBlockType = getGame()->currentBoard()->getNextBlockType();
+    char currentBlockType = getGame()->currentBoard()->getCurrentBlockType();
     int currentPlayer = getGame()->grabPlayer();
 
     for (int j = 0; j < dimY; ++j) {
