@@ -94,6 +94,7 @@ void GameEngine::restartGame()
     player2Score = 0;
     player1->restart();
     player2->restart();
+    std::cout << "Starting a new game. . .\n";
 }
 
 int GameEngine::getCurrentScore()
@@ -206,7 +207,7 @@ void GameEngine::initializeCommandMap()
         {"clockwise", [this](int amount)
          { currentBoard()->cw(amount); }},
         {"levelup", [this](int amount)
-         { currentBoard()->levelUp(); }},
+         { currentBoard()->setLevel(currentBoard()->getLevel() + amount); }},
         {"leveldown", [this](int amount)
          { currentBoard()->levelDown(); }},
 
@@ -217,6 +218,9 @@ void GameEngine::initializeCommandMap()
             currentBoard()->setForce(true); }},
         {"blind", [this](int)
          { currentBoard()->setBlind(true); }},
+
+
+         { currentBoard()->setLevel(currentBoard()->getLevel() - amount); }},
 
         {"Z", [this](int)
          { currentBoard()->setCurrentBlock(std::make_shared<ZBlock>()); }},
@@ -240,8 +244,37 @@ void GameEngine::initializeCommandMap()
 //     currentBoard()->removeBlind();
 // };
 
+
 // if (player1->gameOver() || player2->gameOver()) {
 //     notifyObservers();
 //     std::cout << "Game over! High Score: " << highScore << '\n';
 //     restartGame();
 // }
+
+    auto it = commandMap.find(command);
+
+    if (it != commandMap.end())
+    {
+        if (command == "drop")
+        {
+            it->second(amount);
+            calScore();
+
+            if (player1->gameOver() || player2->gameOver()) {
+                notifyObservers();
+                std::cout << "Game over! High Score: " << highScore << '\n';
+                restartGame();
+            }
+
+        } else {
+            it->second(amount);
+            notifyObservers();
+        }
+
+    }
+    else
+    {
+        std::cerr << "Invalid command: " << command << std::endl;
+    }
+}
+

@@ -2,18 +2,19 @@
 #define TEXTDISPLAY_H
 
 #include "../observer/observer.h"
-#include "../board/board.h"
 #include "../gameengine/gameengine.h"
 #include <string>
 
 class TextDisplay : public Observer
 {
 private:
-    GameEngine *game;
+    std::weak_ptr<GameEngine> game;
 
     int dimX;
     int dimY;
     int sep = 7; // how many chars to seperate boards
+
+    std::shared_ptr<GameEngine> getGame() const;
     
     void printHeaders(const std::string &text) const;
     void printValues(const std::string &text, int value1, int value2) const;
@@ -22,7 +23,7 @@ private:
     void printNextBlocks() const;
 
 public:
-    TextDisplay(GameEngine *game, int dimX, int dimY);
+    TextDisplay(std::shared_ptr<GameEngine> game, int dimX, int dimY);
     ~TextDisplay();
     virtual void notify() override;
 };

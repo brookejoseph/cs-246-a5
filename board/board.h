@@ -36,6 +36,7 @@ protected:
     int temp_score = 0;
     int numLinesCleared;
 
+
     bool shouldDrop;
 
     // std::vector<std::shared_ptr<Block>> addedBlocks;
@@ -57,8 +58,7 @@ public:
     Board(int x, int y) noexcept;
     ~Board() = default;
 
-    void levelUp();
-    void levelDown();
+    void setLevel(int lvl);
     int getLevel() const;
     void setRandom(bool isRandom);
 
@@ -80,6 +80,7 @@ public:
     void drop();            // done
 
     void restart(); // done
+    bool gameOver();
 
     void addCell(Block &block); // done
     int checkClearBlock();

@@ -1,20 +1,19 @@
 #include "board/board.h"
 #include "textdisplay/textdisplay.h"
-#include "graphicdisplay/graphicdisplay.h"
+//#include "graphicdisplay/graphicdisplay.h"
 #include <string>
 #include <vector>
 #include <memory>
 #include <fstream>
+#include <sstream>
 #include <stdexcept>
-// all the includes
-
 using namespace std;
 
 // Default game options
 bool textOnly = false;
 int seed = 416;
-std::string sequenceFile1 = "sequence1.txt";
-std::string sequenceFile2 = "sequence2.txt";
+string sequenceFile1 = "sequence1.txt";
+string sequenceFile2 = "sequence2.txt";
 int startLevel = 0;
 
 // Default board dimensions
@@ -76,45 +75,45 @@ vector<char> parseSequence(const string &sequenceFile)
         char c;
         while (file >> c)
         {
-            auto it = find(blockTypes.begin(); blockTypes.end(), c);
+            auto it = find(blockTypes.begin(), blockTypes.end(), c);
             if (it != blockTypes.end())
                 sequence.push_back(c);
         }
     }
     else
     { // file is unable to open
-        throw logic_error{"Error opening sequence file: " + sequenceFile};
+        throw logic_error{"Error opening sequence file: " + string(sequenceFile)};
     }
 
     // unable to parse given file
     if (sequence.size() == 0)
     {
-        throw logic_error{"Invalid sequence file provided: " + sequenceFile};
+        throw logic_error{"Invalid sequence file provided: " + string(sequenceFile)};
     }
 
     return sequence;
 }
 
-void executeSequence(const string &sequenceFile, const GameEngine &game) {
+void executeSequence(const string &sequenceFile, shared_ptr<GameEngine> game) {
     ifstream file{sequenceFile};
 
     if (file.is_open()) {
         string line;
 
         while(getline(file, line)) {
-            istreamstring iss(line);
+            istringstream iss {line};
             string subCommand;
 
             while (iss >> subCommand) {
                 auto [subCmd, subMult] = parseCommand(subCommand);
 
                 if (subCmd != "invalid") {
-                    game.executeCommand(subCmd, subMult);
+                    game->executeCommand(subCmd, subMult);
                 }
             }
         }
     } else { // file is unable to open
-        throw logic_error{"Invalid sequence file provided: " + sequenceFile};
+        throw logic_error{"Invalid sequence file provided: " + string(sequenceFile)};
     }
 }
 
@@ -122,21 +121,22 @@ int main(int argc, const char *argv[])
 {
 
     // instantiate game and players
-    GameEngine game{dimX, dimY};
+    shared_ptr<GameEngine> game = make_shared<GameEngine>(dimX, dimY);
 
     // try reading command-line arguments
     try
     {
         for (int i = 1; i < argc; ++i)
         {
+            string arg = argv[i];
             // - text
-            if (argv[i] == "-text")
+            if (arg == "-text")
             {
                 textOnly = true;
 
                 // -seed
             }
-            else if (argv[i] == "-seed")
+            else if (arg == "-seed")
             {
                 if (i + 1 >= argc)
                 {
@@ -146,7 +146,6 @@ int main(int argc, const char *argv[])
                 try
                 {
                     seed = stoi(argv[++i]);
-                    srand(seed);
                 }
 
                 catch (...)
@@ -156,7 +155,7 @@ int main(int argc, const char *argv[])
 
                 // -scriptfile1
             }
-            else if (argv[i] == "-scriptfile1")
+            else if (arg == "-scriptfile1")
             {
                 if (i + 1 >= argc)
                 {
@@ -164,11 +163,10 @@ int main(int argc, const char *argv[])
                 }
 
                 sequenceFile1 = argv[++i];
-                game.getPlayer1()->setSequence(parseSequence(sequenceFile1));
 
                 // -scriptfile2
             }
-            else if (argv[i] == "-scriptfile2")
+            else if (arg == "-scriptfile2")
             {
                 if (i + 1 >= argc)
                 {
@@ -176,11 +174,10 @@ int main(int argc, const char *argv[])
                 }
 
                 sequenceFile2 = argv[++i];
-                game.getPlayer1()->setSequence(parseSequence(sequenceFile2));
 
                 // -startlevel
             }
-            else if (argv[i] == "-startlevel")
+            else if (arg == "-startlevel")
             {
                 if (i + 1 >= argc)
                 {
@@ -190,9 +187,9 @@ int main(int argc, const char *argv[])
                 try
                 {
                     startLevel = stoi(argv[++i]);
-                    if (startLevel < 0 || startLevel > 4) throw logic_error();
-                    game.getPlayer1()->setLevel(startLevel);
-                    game.getPlayer2()->setLevel(startLevel);
+                    if (startLevel < 0 || startLevel > 4) throw logic_error{"Missing value for -startlevel: must be an integer value 0-4"};
+                    game->getPlayer1()->setLevel(startLevel);
+                    game->getPlayer2()->setLevel(startLevel);
                 }
 
                 catch (...)
@@ -204,22 +201,26 @@ int main(int argc, const char *argv[])
             }
             else
             {
-                throw logic_error{"Unknown command-line argument: " + argv[i]};
+                throw logic_error{"Unknown command-line argument: " + string(argv[i])};
             }
         }
+
+        srand(seed);
+        game->getPlayer1()->setLvlSequence(parseSequence(sequenceFile1));
+        game->getPlayer2()->setLvlSequence(parseSequence(sequenceFile2));
     }
 
     // quit game if invalid command-line input
-    catch (std::logic_error &e)
+    catch (logic_error &e)
     {
-        err << e.what() << "\n";
-        err << "Usage: ./biquadris [-text] [-seed xxx] [-scriptfile1 xxx] [-scriptfile2 xxx] [-startlevel n]" << std::endl;
+        cerr << e.what() << "\n";
+        cerr << "Usage: ./biquadris [-text] [-seed xxx] [-scriptfile1 xxx] [-scriptfile2 xxx] [-startlevel n]" << endl;
         return 1;
     }
 
     // make text observers
-    std::shared_ptr<TextDisplay> textView = std::make_shared<TextDisplay>(game, dimX, dimY);
-    game.attach(textView);
+    shared_ptr<TextDisplay> textView = make_shared<TextDisplay>(game, dimX, dimY);
+    game->attach(textView);
 
     // make graphical observers if not textOnly
     if (!textOnly)
@@ -229,17 +230,22 @@ int main(int argc, const char *argv[])
     }
 
     // generate first blocks
-    game.getPlayer1()->initBlocks();
-    game.getPlayer2()->initBlocks();
+    game->getPlayer1()->initBlocks();
+    game->getPlayer2()->initBlocks();
 
     // game loop
-    game.notifyObservers();
+    cout << "\nPlayer 1 sequence file: " << sequenceFile1 << "\n";
+    cout << "Player 2 sequence file: " << sequenceFile2 << "\n";
+    cout << "Random seed: " << seed << "\n";
+
+
+    game->notifyObservers();
 
     bool continueGame = true;
     string input;
 
     while (continueGame) {
-        cout << "Player " << game.getCurrentPlayer() << "'s turn, enter move: ";
+        cout << "Player " << game->grabPlayer() << "'s turn, enter move: ";
 
         // check for EOF and quit game
         if (!(cin >> input)) {
@@ -260,8 +266,9 @@ int main(int argc, const char *argv[])
 
         // drop
         if (command == "drop") {
-            game.executeCommand("drop");
-            game.setPlayer();
+            game->executeCommand("drop");
+            game->setPlayer();
+            game->notifyObservers();
             continue;
 
         // sequence
@@ -270,11 +277,11 @@ int main(int argc, const char *argv[])
             cin >> file;
 
             try {
-                parseCommandFile(file);
+                executeSequence(file, game);
             }
 
             catch (logic_error &e) {
-                err << e.what() << endl;
+                cerr << e.what() << endl;
             }
 
             continue;
@@ -285,31 +292,31 @@ int main(int argc, const char *argv[])
             cin >> file;
 
             try {
-                game.currentBoard()->setLvlSequence(parseSequence(file));
-                game.currentBoard()->setRandom(false);
+                game->currentBoard()->setLvlSequence(parseSequence(file));
+                game->currentBoard()->setRandom(false);
             }
 
             catch (logic_error &e) {
-                err << e.what() << endl;
+                cerr << e.what() << endl;
             }
 
             continue;
 
         // random
         } else if (command == "random") {
-            game.currentBoard()->setRandom(true);
+            game->currentBoard()->setRandom(true);
             continue;
         
         // restart
         } else if (command == "restart") {
-            game.executeCommand(command);
+            game->executeCommand(command);
             continue;
         }
-        game.executeCommand(command, multiplier);
+        game->executeCommand(command, multiplier);
     } // while
 
     // when game is over, detach observers
-    game.detach(textView);
+    game->detach(textView);
     //if (!textOnly) { game->detach(graphicView); }
 
     return 0;

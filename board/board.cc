@@ -3,7 +3,6 @@
 #include <iostream>
 #include <ostream>
 #include "../block/block.h"
-// #include "../cell/cell.h"
 #include "../level/level.h"
 #include "../level/level0.h"
 #include "../level/level1.h"
@@ -132,15 +131,15 @@ void Board::addCell(Block &thisBlock)
     };
 };
 
-void Board::levelUp()
-{
-    ++level;
-};
-
-void Board::levelDown()
-{
-    --level;
-};
+void Board::setLevel(int lvl) {
+    if (lvl < 0) {
+        level = 0;
+    } else if (lvl > 4) {
+        level = 4;
+    } else {
+        level = lvl;
+    }
+}
 
 void Board::drop()
 {
@@ -156,14 +155,33 @@ void Board::drop()
     addBlockToVec(currentBlock);
     this->updateClearLines();
 
+
+    // COMMENTED THESE OUT FOR NOW
     setCurrentBlock(nextBlock);
     getNextBlock();
 }
 
 void Board::restart()
 {
-    grid.clear();
-};
+    for (auto &row : grid)
+    {
+        std::fill(row.begin(), row.end(), ' ');
+    }
+}
+
+bool Board::gameOver()
+{
+    auto coord = nextBlock->getCoord();
+    if (!(grid[coord.at(0).first][coord.at(0).second] == ' ') ||
+        !(grid[coord.at(1).first][coord.at(1).second] == ' ') ||
+        !(grid[coord.at(2).first][coord.at(2).second] == ' ') ||
+        !(grid[coord.at(3).first][coord.at(3).second] == ' '))
+    {
+        return true;
+    };
+
+    return false;
+}
 
 int Board::getLevel() const
 {
@@ -193,7 +211,7 @@ bool all_of(vector<char> row)
 {
     for (auto it = row.begin(); it != row.end(); it++)
     {
-        cout << *it;
+        //cout << *it;
         if (*it == ' ')
         {
             return false;
@@ -283,6 +301,7 @@ void Board::removeIncr(int row)
             }
             // auto &[a, b, c, d, e] = coord;
 
+
             if (coord.second == row)
             {
                 coord.first = -1;
@@ -292,6 +311,7 @@ void Board::removeIncr(int row)
             {
                 coord.second++;
             }
+
             counter++;
         }
     }
@@ -304,6 +324,8 @@ void Board::removeIncr(int row)
             temp_score += ((*it).at(4).first + 1) * ((*it).at(4).first + 1);
 
             it = addedBlocks.erase(it);
+            //cout << "block freaking cleared!!";
+
         }
         else
         {
@@ -311,6 +333,8 @@ void Board::removeIncr(int row)
         }
     }
 }
+
+
 char Board::getNextBlockType() const { return nextBlock->getType(); }
 
 char Board::getCurrentBlockType() const { return currentBlock->getType(); }
