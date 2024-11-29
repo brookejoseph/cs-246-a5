@@ -1,10 +1,11 @@
 #include "board/board.h"
 #include "textdisplay/textdisplay.h"
-#include "graphicdisplay/graphicdisplay.h"
+//#include "graphicdisplay/graphicdisplay.h"
 #include <string>
 #include <vector>
 #include <memory>
 #include <fstream>
+#include <sstream>
 #include <stdexcept>
 using namespace std;
 

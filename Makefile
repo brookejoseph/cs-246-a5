@@ -1,33 +1,33 @@
-# Universal makefile for single C++ program
-#
-# Use gcc flag -MMD (user) or -MD (user/system) to generate dependencies among source files.
-# Use make default rules for commonly used file-name suffixes and make variables names.
-#
-# % make [ a.out ]
+CXX = g++								
+CXXFLAGS = -std=c++20 -g -Wall -Werror=vla -MMD
 
-########## Variables ##########
+SRC = main.cc \
+	  observer/subject.cc \
+      gameengine/gameengine.cc \
+      board/board.cc \
+      block/blockZ.cc \
+      block/blockT.cc \
+      block/blockI.cc \
+      block/blockL.cc \
+      block/blockJ.cc \
+      block/blockO.cc \
+      block/blockS.cc \
+      level/level.cc \
+      level/level0.cc  \
+      level/level1.cc \
+      level/level2.cc \
+      level/level3.cc \
+      level/level4.cc \
+      block/block.cc \
+	  textdisplay/textdisplay.cc \
 
-CXX = g++-11									# compiler
-CXXFLAGS = -std=c++20 -g -Wall -Werror=vla -MMD	# compiler flags
-MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
-SOURCES = $(wildcard *.cc)			# source files (*.cc)
-OBJECTS = ${SOURCES:.cc=.o}			# object files forming executable
-DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
-EXEC = biquadris					# executable name
+OBJ = $(SRC:.cc=.o)
 
-########## Targets ##########
+all: biquadris
 
-.PHONY : clean						# not file names
+biquadris: $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJ)
 
-${EXEC} : ${OBJECTS}				# link step
-	${CXX} ${CXXFLAGS} $^ -o $@ -lX11
-
-${OBJECTS} : ${MAKEFILE_NAME}		# OPTIONAL : changes to this file => recompile
-
-# make implicitly generates rules to compile C++ files that generate .o files
-
--include ${DEPENDS}					# include *.d files containing program dependences
-
-clean :								# remove files that can be regenerated
-	rm -f ${DEPENDS} ${OBJECTS} ${EXEC}
+clean:
+	rm -f biquadris $(OBJ)
